@@ -20,7 +20,7 @@ In Xcode: File → Add Package Dependencies
 Paste: https://github.com/aks5686/ios-ui-library
 
 ## Components
-- Buttons: PrimaryButton, SecondaryButton, DestructiveButton, IconButton
+- Buttons: PrimaryButton, SecondaryButton, DestructiveButton, GhostButton, IconButton
 - Inputs: TextInput, SecureInput
 - Feedback: LoadingView, EmptyStateView, ToastView
 - Cards: CardView

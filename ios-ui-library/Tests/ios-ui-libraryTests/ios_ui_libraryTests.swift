@@ -61,6 +61,10 @@ struct ComponentInitTests {
         _ = DestructiveButton("Delete") {}
     }
 
+    @Test func ghostButton() {
+        _ = GhostButton("Learn More") {}
+    }
+
     @Test func iconButton() {
         _ = IconButton(systemImage: "heart", accessibilityLabel: "Favorite") {}
     }

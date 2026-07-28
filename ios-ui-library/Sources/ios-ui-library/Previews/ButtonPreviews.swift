@@ -36,6 +36,18 @@ import SwiftUI
         .preferredColorScheme(.dark)
 }
 
+#Preview("GhostButton - Light") {
+    GhostButton("Learn More") {}
+        .padding()
+        .preferredColorScheme(.light)
+}
+
+#Preview("GhostButton - Dark") {
+    GhostButton("Learn More") {}
+        .padding()
+        .preferredColorScheme(.dark)
+}
+
 #Preview("IconButton - Light") {
     IconButton(systemImage: "heart", accessibilityLabel: "Favorite") {}
         .padding()

@@ -1,0 +1,31 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  release:
+    if: startsWith(github.event.head_commit.message, 'release:')
+    runs-on: macos-15
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract version
+        id: version
+        run: |
+          MESSAGE="${{ github.event.head_commit.message }}"
+          VERSION=$(echo "$MESSAGE" | head -n1 | sed -E 's/^release:[[:space:]]*//' | sed -E 's/[[:space:]]*—.*$//' | sed -E 's/[[:space:]]*-{1,2}.*$//' | xargs)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ steps.version.outputs.version }}" \
+            --title "${{ steps.version.outputs.version }}" \
+            --notes "${{ github.event.head_commit.message }}"
