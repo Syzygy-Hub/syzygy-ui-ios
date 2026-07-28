@@ -19,6 +19,65 @@ In Xcode: File → Add Package Dependencies
 
 Paste: https://github.com/aks5686/ios-ui-library
 
+## Usage
+
+### Add import
+```swift
+import ios_ui_library
+```
+
+### Apply design tokens
+```swift
+import ios_ui_library
+
+// Use color tokens
+let background = UIColorToken.background
+let primary = UIColorToken.primary
+
+// Use typography tokens
+Text("Hello")
+    .font(UIFontToken.title)
+```
+
+### Use components
+```swift
+// Primary button
+PrimaryButton("Get Started") {
+    // handle tap
+}
+
+// Text input
+TextInput(
+    label: "Email",
+    text: $email,
+    placeholder: "you@example.com"
+)
+
+// Secure input
+SecureInput(
+    label: "Password",
+    text: $password
+)
+
+// Loading view
+LoadingView(message: "Please wait...")
+
+// Empty state
+EmptyStateView(
+    systemImage: "tray",
+    title: "Nothing here yet",
+    subtitle: "Add something to get started"
+)
+
+// Badge
+Badge("New", style: .primary)
+
+// Card
+CardView {
+    Text("Your content here")
+}
+```
+
 ## Components
 - Buttons: PrimaryButton, SecondaryButton, DestructiveButton, GhostButton, IconButton
 - Inputs: TextInput, SecureInput
