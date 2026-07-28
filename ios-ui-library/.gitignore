@@ -1,0 +1,11 @@
+.DS_Store
+.build/
+/Packages
+*.o
+*.d
+*.swp
+xcuserdata/
+*.xcworkspace/
+DerivedData/
+.swiftpm/
+.netrc
