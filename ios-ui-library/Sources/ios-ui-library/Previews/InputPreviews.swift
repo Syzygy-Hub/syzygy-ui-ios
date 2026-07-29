@@ -4,6 +4,7 @@ import SwiftUI
     VStack(spacing: UISpacing.md) {
         TextInput(label: "Email", text: .constant(""), placeholder: "you@example.com")
         TextInput(label: "Email", text: .constant("bad"), placeholder: "you@example.com", errorMessage: "Enter a valid email")
+        TextInput(label: "Bio", text: .constant("Hello there"), placeholder: "Tell us about yourself", maxLength: 100)
     }
     .padding()
     .preferredColorScheme(.light)
@@ -13,6 +14,7 @@ import SwiftUI
     VStack(spacing: UISpacing.md) {
         TextInput(label: "Email", text: .constant(""), placeholder: "you@example.com")
         TextInput(label: "Email", text: .constant("bad"), placeholder: "you@example.com", errorMessage: "Enter a valid email")
+        TextInput(label: "Bio", text: .constant("Hello there"), placeholder: "Tell us about yourself", maxLength: 100)
     }
     .padding()
     .preferredColorScheme(.dark)

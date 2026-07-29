@@ -73,6 +73,10 @@ struct ComponentInitTests {
         _ = TextInput(label: "Email", text: .constant(""))
     }
 
+    @Test func textInputWithMaxLength() {
+        _ = TextInput(label: "Bio", text: .constant("Hello"), maxLength: 100)
+    }
+
     @Test func secureInput() {
         _ = SecureInput(label: "Password", text: .constant(""))
     }

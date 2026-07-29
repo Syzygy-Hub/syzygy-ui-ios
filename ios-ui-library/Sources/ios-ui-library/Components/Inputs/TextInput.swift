@@ -7,17 +7,20 @@ public struct TextInput: View {
     @Binding private var text: String
     private let placeholder: String
     private let errorMessage: String?
+    private let maxLength: Int?
 
     public init(
         label: String,
         text: Binding<String>,
         placeholder: String = "",
-        errorMessage: String? = nil
+        errorMessage: String? = nil,
+        maxLength: Int? = nil
     ) {
         self.label = label
         self._text = text
         self.placeholder = placeholder
         self.errorMessage = errorMessage
+        self.maxLength = maxLength
     }
 
     public var body: some View {
@@ -43,6 +46,13 @@ public struct TextInput: View {
                 Text(errorMessage)
                     .font(UIFontToken.caption)
                     .foregroundStyle(UIColorToken.destructive)
+            }
+
+            if let maxLength {
+                Text("\(text.count)/\(maxLength)")
+                    .font(UIFontToken.caption)
+                    .foregroundStyle(UIColorToken.textSecondary)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
             }
         }
     }

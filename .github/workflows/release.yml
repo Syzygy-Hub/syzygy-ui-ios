@@ -29,6 +29,10 @@ jobs:
           MESSAGE="${{ github.event.workflow_run.head_commit.message }}"
           VERSION=$(echo "$MESSAGE" | head -n1 | sed -E 's/^release:[[:space:]]*//' | sed -E 's/[[:space:]]*—.*$//' | sed -E 's/[[:space:]]*-{1,2}.*$//' | xargs)
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+
+      - name: Delete existing tag if exists
+        run: git push origin :refs/tags/${{ env.VERSION }} || true
 
       - name: Create GitHub Release
         env:
@@ -37,3 +41,8 @@ jobs:
           gh release create "${{ steps.version.outputs.version }}" \
             --title "${{ steps.version.outputs.version }}" \
             --notes "${{ github.event.workflow_run.head_commit.message }}"
+
+      - name: Summary
+        run: |
+          echo "✅ GitHub Release ${{ env.VERSION }} created"
+          echo "✅ SPM users can now use: .package(url: \"https://github.com/aks5686/ios-ui-library\", from: \"${{ env.VERSION }}\")"
