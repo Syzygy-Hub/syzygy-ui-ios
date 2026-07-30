@@ -18,15 +18,13 @@ jobs:
 
       - name: Build
         run: swift build
-        working-directory: ios-ui-library
 
       - name: Test
         run: swift test --xunit-output test-results.xml
-        working-directory: ios-ui-library
 
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: ios-ui-library/test-results.xml
+          path: test-results.xml
