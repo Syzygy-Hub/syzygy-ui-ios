@@ -36,11 +36,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Select Xcode 16
-        run: sudo xcode-select -switch /Applications/Xcode_16.app
+      - name: List available Xcodes
+        run: ls /Applications | grep Xcode
 
-      - name: Install iOS platform
-        run: xcodebuild -downloadPlatform iOS
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app
 
       - name: List available simulators
         run: xcrun simctl list devices available
