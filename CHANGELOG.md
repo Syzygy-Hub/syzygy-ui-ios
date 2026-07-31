@@ -24,10 +24,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Layout** (new category): `KeyboardAvoidingScrollView` (keyboard-avoiding scroll wrapper for forms built outside `Form`/`List`)
 - **Transitions**: `AnyTransition.slideTransition(_:)` (left-to-right / right-to-left), `.crossFadeTransition`, `.slideVerticalTransition(_:)` (top-to-bottom / bottom-to-top), `.modalPresentationTransition` (slide-up + fade)
 
-### Fixed
+### Documentation
 
-- CI's `lint` job in `swift.yml` now fetches the shared SwiftLint ruleset from `syzygy-lint-config` (pinned to `v1.0.0`) and runs `swiftlint --config .swiftlint.yml`, instead of running with bare tool defaults.
-- Added the Syzygy brand icon to the top of README.md, above the badge row.
+- Added a Syzygy banner to the top of README.md, below the badge row.
+- Added a "Design Tokens" section documenting the actual `UIColorToken`, `UIFontToken`, `UISpacing`, and `UIRadius` values.
+- Reordered README.md's sections to: Requirements, Installation, Components, Design Tokens, Usage, Contributing & Releases, License.
+- Condensed the Usage section's code examples.
 
 ## [1.0.4] - v1.0.4
 
