@@ -1,9 +1,11 @@
-# ios-ui-library
+# syzygy-ui-ios
+
+<img src="https://raw.githubusercontent.com/Syzygy-Hub/syzygy-brand-assets/main/Assets/syzygy-icon-192.png" alt="Syzygy" width="48">
 
 [![Swift](https://img.shields.io/badge/Swift-6-F05138?logo=swift&logoColor=white)](https://www.swift.org)
 [![Platform](https://img.shields.io/badge/iOS-17%2B-000000?logo=apple&logoColor=white)](https://developer.apple.com/ios/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![CI](https://github.com/aks5686/ios-ui-library/actions/workflows/swift.yml/badge.svg)](https://github.com/aks5686/ios-ui-library/actions/workflows/swift.yml)
+[![CI](https://github.com/Syzygy-Hub/syzygy-ui-ios/actions/workflows/swift.yml/badge.svg)](https://github.com/Syzygy-Hub/syzygy-ui-ios/actions/workflows/swift.yml)
 
 Production-ready SwiftUI component library with semantic design tokens, Dark Mode, Dynamic Type, and zero third-party dependencies.
 
@@ -17,18 +19,18 @@ Production-ready SwiftUI component library with semantic design tokens, Dark Mod
 ### Swift Package Manager
 In Xcode: File → Add Package Dependencies
 
-Paste: https://github.com/aks5686/ios-ui-library
+Paste: https://github.com/Syzygy-Hub/syzygy-ui-ios
 
 ## Usage
 
 ### Add import
 ```swift
-import ios_ui_library
+import syzygy_ui_ios
 ```
 
 ### Apply design tokens
 ```swift
-import ios_ui_library
+import syzygy_ui_ios
 
 // Use color tokens
 let background = UIColorToken.background
@@ -118,12 +120,19 @@ Follow semver: `v{major}.{minor}.{patch}`
 This library is distributed via SPM. Users reference it directly via the GitHub URL — no additional publishing step needed.
 
 ## Components
-- Buttons: PrimaryButton, SecondaryButton, DestructiveButton, GhostButton, IconButton
-- Inputs: TextInput (with optional character counter), SecureInput
-- Feedback: LoadingView, EmptyStateView, ToastView
-- Cards: CardView
-- Badges: Badge
-- Navigation: BackButton
+
+- **Buttons**: PrimaryButton, SecondaryButton, DestructiveButton, GhostButton, IconButton
+- **Cards**: CardView
+- **Badges**: Badge
+- **Inputs**: TextInput (with optional character counter), SecureInput, SearchBar (debounced, with clear button), ToggleSwitch, Checkbox, RadioButton, SliderInput, Dropdown, SegmentedControl, QuantityStepper
+- **Display**: Avatar, DividerView, Chip, ListRow, SectionHeader, LazyImageView, CountBadge, StarRatingView
+- **Feedback**: LoadingView, EmptyStateView, ToastView, ShimmerView, ProgressBar, PullToRefresh, ErrorStateView
+- **Overlay**: ModalView (+ `.modal(isPresented:)` view modifier), BottomSheet (+ `.bottomSheet(isPresented:)` view modifier), CollapsibleView
+- **Navigation**: BackButton, TabBar, BottomNavigationBar, AppBar, PagerView
+- **Layout**: KeyboardAvoidingScrollView
+- **Transitions**: `AnyTransition.slideTransition(_:)`, `.crossFadeTransition`, `.slideVerticalTransition(_:)`, `.modalPresentationTransition`
+
+See [CHANGELOG.md](CHANGELOG.md) for version history.
 
 ## Design Tokens
 All components use semantic tokens from Tokens/ — colors, typography, spacing, and radius.

@@ -28,3 +28,32 @@ jobs:
         with:
           name: test-results
           path: test-results.xml
+
+  build-ios:
+    name: Build (iOS Simulator)
+    runs-on: macos-15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode 16
+        run: sudo xcode-select -switch /Applications/Xcode_16.app
+
+      - name: Build for iOS Simulator
+        run: |
+          xcodebuild build \
+            -scheme syzygy-ui-ios \
+            -destination 'generic/platform=iOS Simulator'
+
+  lint:
+    name: SwiftLint
+    runs-on: macos-15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch shared SwiftLint config
+        run: curl -fsSL https://raw.githubusercontent.com/Syzygy-Hub/syzygy-lint-config/v1.0.0/swiftlint.yml -o .swiftlint.yml
+
+      - name: SwiftLint
+        run: swiftlint --config .swiftlint.yml --reporter github-actions-logging

@@ -32,7 +32,13 @@ jobs:
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
 
       - name: Delete existing tag if exists
-        run: git push origin :refs/tags/${{ env.VERSION }} || true
+        run: |
+          if git ls-remote --exit-code --tags origin "refs/tags/${{ env.VERSION }}" > /dev/null 2>&1; then
+            echo "::warning::Tag ${{ env.VERSION }} already exists on origin — deleting and recreating it. If this wasn't intentional, this release is about to overwrite an existing one."
+            git push origin ":refs/tags/${{ env.VERSION }}"
+          else
+            echo "Tag ${{ env.VERSION }} does not exist yet — proceeding with a fresh release."
+          fi
 
       - name: Create GitHub Release
         env:
@@ -45,4 +51,4 @@ jobs:
       - name: Summary
         run: |
           echo "✅ GitHub Release ${{ env.VERSION }} created"
-          echo "✅ SPM users can now use: .package(url: \"https://github.com/aks5686/ios-ui-library\", from: \"${{ env.VERSION }}\")"
+          echo "✅ SPM users can now use: .package(url: \"https://github.com/Syzygy-Hub/syzygy-ui-ios\", from: \"${{ env.VERSION }}\")"
