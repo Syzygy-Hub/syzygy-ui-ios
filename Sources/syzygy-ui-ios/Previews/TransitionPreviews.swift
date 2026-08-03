@@ -87,3 +87,47 @@ private struct ModalPresentationTransitionPreview: View {
     ModalPresentationTransitionPreview()
         .preferredColorScheme(.light)
 }
+
+private struct ScaleTransitionPreview: View {
+    @State private var isShowing = true
+
+    var body: some View {
+        VStack {
+            Button("Toggle") {
+                withAnimation { isShowing.toggle() }
+            }
+            if isShowing {
+                CardView { Text("Scales in \u{2194} out") }
+                    .transition(.scaleTransition)
+            }
+        }
+        .padding()
+    }
+}
+
+private struct FadeThroughTransitionPreview: View {
+    @State private var isShowing = true
+
+    var body: some View {
+        VStack {
+            Button("Toggle") {
+                withAnimation { isShowing.toggle() }
+            }
+            if isShowing {
+                CardView { Text("Fades through") }
+                    .transition(.fadeThroughTransition)
+            }
+        }
+        .padding()
+    }
+}
+
+#Preview("ScaleTransition - Light") {
+    ScaleTransitionPreview()
+        .preferredColorScheme(.light)
+}
+
+#Preview("FadeThroughTransition - Light") {
+    FadeThroughTransitionPreview()
+        .preferredColorScheme(.light)
+}

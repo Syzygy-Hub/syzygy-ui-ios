@@ -152,3 +152,65 @@ import SwiftUI
     .padding()
     .preferredColorScheme(.dark)
 }
+
+#Preview("PagerView - Light") {
+    PagerView(currentPage: .constant(0)) {
+        Color.red.tag(0)
+        Color.green.tag(1)
+        Color.blue.tag(2)
+    }
+    .frame(height: 200)
+    .preferredColorScheme(.light)
+}
+
+#Preview("PagerView - Dark") {
+    PagerView(currentPage: .constant(0)) {
+        Color.red.tag(0)
+        Color.green.tag(1)
+        Color.blue.tag(2)
+    }
+    .frame(height: 200)
+    .preferredColorScheme(.dark)
+}
+
+#Preview("AvatarGroup - Light") {
+    AvatarGroup(initials: ["AK", "BC", "DE", "FG", "HI"], max: 4)
+        .padding()
+        .preferredColorScheme(.light)
+}
+
+#Preview("AvatarGroup - Dark") {
+    AvatarGroup(initials: ["AK", "BC", "DE", "FG", "HI"], max: 4)
+        .padding()
+        .preferredColorScheme(.dark)
+}
+
+#Preview("StatsCard - Light") {
+    HStack(spacing: UISpacing.md) {
+        StatsCard(label: "Revenue", value: "$12.4k", trend: .up, trendValue: "+12%")
+        StatsCard(label: "Churn", value: "2.1%", trend: .down, trendValue: "-0.4%")
+    }
+    .padding()
+    .preferredColorScheme(.light)
+}
+
+#Preview("StatsCard - Dark") {
+    HStack(spacing: UISpacing.md) {
+        StatsCard(label: "Revenue", value: "$12.4k", trend: .up, trendValue: "+12%")
+        StatsCard(label: "Churn", value: "2.1%", trend: .down, trendValue: "-0.4%")
+    }
+    .padding()
+    .preferredColorScheme(.dark)
+}
+
+#Preview("RatingInput - Light") {
+    RatingInput(rating: .constant(3))
+        .padding()
+        .preferredColorScheme(.light)
+}
+
+#Preview("RatingInput - Dark") {
+    RatingInput(rating: .constant(3))
+        .padding()
+        .preferredColorScheme(.dark)
+}

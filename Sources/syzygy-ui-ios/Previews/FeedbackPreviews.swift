@@ -131,3 +131,77 @@ import SwiftUI
     )
     .preferredColorScheme(.dark)
 }
+
+#Preview("SkeletonView - Light") {
+    VStack(spacing: UISpacing.sm) {
+        SkeletonView(shape: .rectangle(), width: 200, height: 16)
+        SkeletonView(shape: .circle, width: 48, height: 48)
+    }
+    .padding()
+    .preferredColorScheme(.light)
+}
+
+#Preview("SkeletonView - Dark") {
+    VStack(spacing: UISpacing.sm) {
+        SkeletonView(shape: .rectangle(), width: 200, height: 16)
+        SkeletonView(shape: .circle, width: 48, height: 48)
+    }
+    .padding()
+    .preferredColorScheme(.dark)
+}
+
+#Preview("CircularProgress - Light") {
+    HStack(spacing: UISpacing.lg) {
+        CircularProgress(progress: 0.65)
+        CircularProgress(progress: nil)
+    }
+    .padding()
+    .preferredColorScheme(.light)
+}
+
+#Preview("CircularProgress - Dark") {
+    HStack(spacing: UISpacing.lg) {
+        CircularProgress(progress: 0.65)
+        CircularProgress(progress: nil)
+    }
+    .padding()
+    .preferredColorScheme(.dark)
+}
+
+#Preview("InlineAlert - Light") {
+    VStack(spacing: UISpacing.sm) {
+        InlineAlert(message: "New version available", variant: .info)
+        InlineAlert(message: "Changes saved", variant: .success)
+        InlineAlert(message: "Storage almost full", variant: .warning)
+        InlineAlert(message: "Failed to sync", variant: .error)
+    }
+    .padding()
+    .preferredColorScheme(.light)
+}
+
+#Preview("InlineAlert - Dark") {
+    VStack(spacing: UISpacing.sm) {
+        InlineAlert(message: "New version available", variant: .info)
+        InlineAlert(message: "Changes saved", variant: .success)
+        InlineAlert(message: "Storage almost full", variant: .warning)
+        InlineAlert(message: "Failed to sync", variant: .error)
+    }
+    .padding()
+    .preferredColorScheme(.dark)
+}
+
+#Preview("Snackbar - Light") {
+    ZStack(alignment: .bottom) {
+        Color.clear
+        Snackbar(message: "Item deleted", actionLabel: "Undo", onAction: {}, isPresented: .constant(true))
+    }
+    .preferredColorScheme(.light)
+}
+
+#Preview("Snackbar - Dark") {
+    ZStack(alignment: .bottom) {
+        Color.clear
+        Snackbar(message: "Item deleted", actionLabel: "Undo", onAction: {}, isPresented: .constant(true))
+    }
+    .preferredColorScheme(.dark)
+}

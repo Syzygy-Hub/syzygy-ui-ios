@@ -59,3 +59,45 @@ import SwiftUI
         .padding()
         .preferredColorScheme(.dark)
 }
+
+#Preview("LoadingButton - Light") {
+    VStack(spacing: UISpacing.md) {
+        LoadingButton(label: "Submit", isLoading: false) {}
+        LoadingButton(label: "Submit", isLoading: true) {}
+    }
+    .padding()
+    .preferredColorScheme(.light)
+}
+
+#Preview("LoadingButton - Dark") {
+    VStack(spacing: UISpacing.md) {
+        LoadingButton(label: "Submit", isLoading: false) {}
+        LoadingButton(label: "Submit", isLoading: true) {}
+    }
+    .padding()
+    .preferredColorScheme(.dark)
+}
+
+#Preview("FloatingActionButton - Light") {
+    FloatingActionButton(systemName: "plus", accessibilityLabel: "Add") {}
+        .padding()
+        .preferredColorScheme(.light)
+}
+
+#Preview("FloatingActionButton - Dark") {
+    FloatingActionButton(systemName: "plus", accessibilityLabel: "Add") {}
+        .padding()
+        .preferredColorScheme(.dark)
+}
+
+#Preview("ButtonGroup - Light") {
+    ButtonGroup(options: ["Day", "Week", "Month"], selection: .constant("Week"))
+        .padding()
+        .preferredColorScheme(.light)
+}
+
+#Preview("ButtonGroup - Dark") {
+    ButtonGroup(options: ["Day", "Week", "Month"], selection: .constant(Set(["Week"])), multiSelect: true)
+        .padding()
+        .preferredColorScheme(.dark)
+}

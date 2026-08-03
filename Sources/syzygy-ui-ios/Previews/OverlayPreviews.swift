@@ -85,3 +85,59 @@ import SwiftUI
     .padding()
     .preferredColorScheme(.dark)
 }
+
+#Preview("ActionSheet - Light") {
+    VStack {
+        Spacer()
+    }
+    .actionSheet(isPresented: .constant(true), actions: [
+        ActionSheetAction(label: "Share", action: {}),
+        ActionSheetAction(label: "Delete", isDestructive: true, action: {})
+    ])
+    .preferredColorScheme(.light)
+}
+
+#Preview("ActionSheet - Dark") {
+    VStack {
+        Spacer()
+    }
+    .actionSheet(isPresented: .constant(true), actions: [
+        ActionSheetAction(label: "Share", action: {}),
+        ActionSheetAction(label: "Delete", isDestructive: true, action: {})
+    ])
+    .preferredColorScheme(.dark)
+}
+
+#Preview("Popover - Light") {
+    Text("Tap for info")
+        .styledPopover(isPresented: .constant(true)) {
+            Text("Additional details go here.")
+                .font(UIFontToken.body)
+        }
+        .padding()
+        .preferredColorScheme(.light)
+}
+
+#Preview("Popover - Dark") {
+    Text("Tap for info")
+        .styledPopover(isPresented: .constant(true)) {
+            Text("Additional details go here.")
+                .font(UIFontToken.body)
+        }
+        .padding()
+        .preferredColorScheme(.dark)
+}
+
+#Preview("Tooltip - Light") {
+    Image(systemName: "questionmark.circle")
+        .tooltip("Long-press to see this tip")
+        .padding()
+        .preferredColorScheme(.light)
+}
+
+#Preview("Tooltip - Dark") {
+    Image(systemName: "questionmark.circle")
+        .tooltip("Long-press to see this tip")
+        .padding()
+        .preferredColorScheme(.dark)
+}

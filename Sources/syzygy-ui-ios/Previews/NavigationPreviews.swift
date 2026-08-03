@@ -64,22 +64,72 @@ private let previewTabItems = [
     .preferredColorScheme(.dark)
 }
 
-#Preview("PagerView - Light") {
-    PagerView(currentPage: .constant(0)) {
-        Color.red.tag(0)
-        Color.green.tag(1)
-        Color.blue.tag(2)
-    }
-    .frame(height: 200)
+#Preview("FloatingTabBar - Light") {
+    FloatingTabBar(items: previewTabItems, selection: .constant(PreviewTab.home))
+        .padding()
+        .preferredColorScheme(.light)
+}
+
+#Preview("FloatingTabBar - Dark") {
+    FloatingTabBar(items: previewTabItems, selection: .constant(PreviewTab.home))
+        .padding()
+        .preferredColorScheme(.dark)
+}
+
+#Preview("SideMenu - Light") {
+    Color.clear
+        .sideMenu(isOpen: .constant(true)) {
+            VStack(alignment: .leading, spacing: UISpacing.md) {
+                Text("Menu").font(UIFontToken.title)
+                Text("Home")
+                Text("Settings")
+            }
+            .padding()
+        }
+        .preferredColorScheme(.light)
+}
+
+#Preview("SideMenu - Dark") {
+    Color.clear
+        .sideMenu(isOpen: .constant(true)) {
+            VStack(alignment: .leading, spacing: UISpacing.md) {
+                Text("Menu").font(UIFontToken.title)
+                Text("Home")
+                Text("Settings")
+            }
+            .padding()
+        }
+        .preferredColorScheme(.dark)
+}
+
+#Preview("StepIndicator - Light") {
+    StepIndicator(steps: ["Cart", "Shipping", "Payment", "Review"], currentStep: 1)
+        .padding()
+        .preferredColorScheme(.light)
+}
+
+#Preview("StepIndicator - Dark") {
+    StepIndicator(steps: ["Cart", "Shipping", "Payment", "Review"], currentStep: 1)
+        .padding()
+        .preferredColorScheme(.dark)
+}
+
+#Preview("Breadcrumbs - Light") {
+    Breadcrumbs(items: [
+        Breadcrumbs.Item(label: "Home", action: {}),
+        Breadcrumbs.Item(label: "Settings", action: {}),
+        Breadcrumbs.Item(label: "Profile", action: {})
+    ])
+    .padding()
     .preferredColorScheme(.light)
 }
 
-#Preview("PagerView - Dark") {
-    PagerView(currentPage: .constant(0)) {
-        Color.red.tag(0)
-        Color.green.tag(1)
-        Color.blue.tag(2)
-    }
-    .frame(height: 200)
+#Preview("Breadcrumbs - Dark") {
+    Breadcrumbs(items: [
+        Breadcrumbs.Item(label: "Home", action: {}),
+        Breadcrumbs.Item(label: "Settings", action: {}),
+        Breadcrumbs.Item(label: "Profile", action: {})
+    ])
+    .padding()
     .preferredColorScheme(.dark)
 }

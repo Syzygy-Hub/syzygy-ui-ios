@@ -59,4 +59,18 @@ public extension AnyTransition {
     static var modalPresentationTransition: AnyTransition {
         .move(edge: .bottom).combined(with: .opacity)
     }
+
+    /// A scale-in/out transition combined with opacity for a smoother effect.
+    static var scaleTransition: AnyTransition {
+        .scale(scale: 0.9).combined(with: .opacity)
+    }
+
+    /// A fade-through transition: the outgoing view fades out first, then
+    /// the incoming view fades in — sequential, not a simultaneous cross-fade.
+    static var fadeThroughTransition: AnyTransition {
+        .asymmetric(
+            insertion: .opacity.animation(UIAnimation.Easing.standard(UIAnimation.Duration.fast).delay(UIAnimation.Duration.fast)),
+            removal: .opacity.animation(UIAnimation.Easing.standard(UIAnimation.Duration.fast))
+        )
+    }
 }

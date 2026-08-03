@@ -145,3 +145,107 @@ import SwiftUI
         .padding()
         .preferredColorScheme(.dark)
 }
+
+#Preview("TextArea - Light") {
+    TextArea(label: "Bio", text: .constant("Hello there"), placeholder: "Tell us about yourself")
+        .padding()
+        .preferredColorScheme(.light)
+}
+
+#Preview("TextArea - Dark") {
+    TextArea(label: "Bio", text: .constant(""), placeholder: "Tell us about yourself")
+        .padding()
+        .preferredColorScheme(.dark)
+}
+
+#Preview("OTPInput - Light") {
+    OTPInput(length: 6, code: .constant("123"))
+        .padding()
+        .preferredColorScheme(.light)
+}
+
+#Preview("OTPInput - Dark") {
+    OTPInput(length: 6, code: .constant("123"))
+        .padding()
+        .preferredColorScheme(.dark)
+}
+
+#Preview("TagInput - Light") {
+    TagInput(tags: .constant(["Swift", "SwiftUI"]))
+        .padding()
+        .preferredColorScheme(.light)
+}
+
+#Preview("TagInput - Dark") {
+    TagInput(tags: .constant(["Swift", "SwiftUI"]))
+        .padding()
+        .preferredColorScheme(.dark)
+}
+
+#Preview("DatePickerField - Light") {
+    DatePickerField(label: "Birthday", date: .constant(Date()))
+        .padding()
+        .preferredColorScheme(.light)
+}
+
+#Preview("DatePickerField - Dark") {
+    DatePickerField(label: "Birthday", date: .constant(Date()))
+        .padding()
+        .preferredColorScheme(.dark)
+}
+
+#Preview("TimePickerField - Light") {
+    TimePickerField(label: "Reminder", time: .constant(Date()))
+        .padding()
+        .preferredColorScheme(.light)
+}
+
+#Preview("TimePickerField - Dark") {
+    TimePickerField(label: "Reminder", time: .constant(Date()))
+        .padding()
+        .preferredColorScheme(.dark)
+}
+
+#Preview("FormField - Light") {
+    VStack(spacing: UISpacing.md) {
+        FormField(label: "Email", errorMessage: "Enter a valid email") {
+            TextField("you@example.com", text: .constant("bad"))
+        }
+        FormField(label: "Username", helperText: "This will be public") {
+            TextField("Username", text: .constant(""))
+        }
+    }
+    .padding()
+    .preferredColorScheme(.light)
+}
+
+#Preview("FormField - Dark") {
+    VStack(spacing: UISpacing.md) {
+        FormField(label: "Email", errorMessage: "Enter a valid email") {
+            TextField("you@example.com", text: .constant("bad"))
+        }
+        FormField(label: "Username", helperText: "This will be public") {
+            TextField("Username", text: .constant(""))
+        }
+    }
+    .padding()
+    .preferredColorScheme(.dark)
+}
+
+#Preview("PasswordStrengthIndicator - Light") {
+    VStack(spacing: UISpacing.md) {
+        PasswordStrengthIndicator(password: "abc")
+        PasswordStrengthIndicator(password: "Abcdef123!")
+    }
+    .padding()
+    .preferredColorScheme(.light)
+}
+
+#Preview("PasswordStrengthIndicator - Dark") {
+    VStack(spacing: UISpacing.md) {
+        PasswordStrengthIndicator(password: "abc")
+        PasswordStrengthIndicator(password: "Abcdef123!")
+    }
+    .padding()
+    .preferredColorScheme(.dark)
+}

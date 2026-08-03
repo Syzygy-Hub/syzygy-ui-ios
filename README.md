@@ -1,5 +1,6 @@
 # syzygy-ui-ios
 
+[![Version](https://img.shields.io/badge/Version-2.1.0-blue.svg)](CHANGELOG.md)
 [![Swift](https://img.shields.io/badge/Swift-6-F05138?logo=swift&logoColor=white)](https://www.swift.org)
 [![Platform](https://img.shields.io/badge/iOS-17%2B-000000?logo=apple&logoColor=white)](https://developer.apple.com/ios/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -26,16 +27,18 @@ Paste: https://github.com/Syzygy-Hub/syzygy-ui-ios
 
 ## Components
 
-- **Buttons**: PrimaryButton, SecondaryButton, DestructiveButton, GhostButton, IconButton
+68 components across 9 categories, plus 6 `AnyTransition` helpers in Transitions.
+
+- **Buttons**: PrimaryButton, SecondaryButton, DestructiveButton, GhostButton, IconButton, LoadingButton (built-in loading spinner state), FloatingActionButton, ButtonGroup (single- or multi-select segmented row)
 - **Cards**: CardView
 - **Badges**: Badge
-- **Inputs**: TextInput (with optional character counter), SecureInput, SearchBar (debounced, with clear button), ToggleSwitch, Checkbox, RadioButton, SliderInput, Dropdown, SegmentedControl, QuantityStepper
-- **Display**: Avatar, DividerView, Chip, ListRow, SectionHeader, LazyImageView, CountBadge, StarRatingView
-- **Feedback**: LoadingView, EmptyStateView, ToastView, ShimmerView, ProgressBar, PullToRefresh, ErrorStateView
-- **Overlay**: ModalView (+ `.modal(isPresented:)` view modifier), BottomSheet (+ `.bottomSheet(isPresented:)` view modifier), CollapsibleView
-- **Navigation**: BackButton, TabBar, BottomNavigationBar, AppBar, PagerView
-- **Layout**: KeyboardAvoidingScrollView
-- **Transitions**: `AnyTransition.slideTransition(_:)`, `.crossFadeTransition`, `.slideVerticalTransition(_:)`, `.modalPresentationTransition`
+- **Inputs**: TextInput (with optional character counter), SecureInput, SearchBar (debounced, with clear button), ToggleSwitch, Checkbox, RadioButton, SliderInput, Dropdown, SegmentedControl, QuantityStepper, TextArea, OTPInput (auto-advancing OTP/PIN entry), TagInput (MultiSelect chip entry), DatePickerField, TimePickerField, FormField (generic label/content/error/helper wrapper), PasswordStrengthIndicator
+- **Display**: Avatar, DividerView, Chip, ListRow, SectionHeader, LazyImageView, CountBadge, StarRatingView, PagerView (swipeable paged content, not navigation chrome — reports the current page index for you to use as local state or feed into a navigator, as needed), AvatarGroup, StatsCard (aka MetricCard), RatingInput (interactive counterpart to StarRatingView)
+- **Feedback**: LoadingView, EmptyStateView, ToastView, ShimmerView, ProgressBar, PullToRefresh, ErrorStateView, SkeletonView, CircularProgress (determinate + indeterminate), InlineAlert (aka Banner), Snackbar
+- **Overlay**: ModalView (+ `.modal(isPresented:)` view modifier), BottomSheet (+ `.bottomSheet(isPresented:)` view modifier), CollapsibleView, ActionSheet (+ `.actionSheet(isPresented:actions:)` view modifier), Popover (+ `.styledPopover(isPresented:)` view modifier), Tooltip (+ `.tooltip(_:)` view modifier)
+- **Navigation**: BackButton, TabBar, BottomNavigationBar, AppBar, FloatingTabBar (floating + icon+label, distinct from BottomNavigationBar's floating + icon-only), SideMenu (aka Drawer), StepIndicator (aka WizardSteps), Breadcrumbs
+- **Layout**: KeyboardAvoidingScrollView, AdaptiveStack, FlowLayout, StickyHeader
+- **Transitions**: `AnyTransition.slideTransition(_:)`, `.crossFadeTransition`, `.slideVerticalTransition(_:)`, `.modalPresentationTransition`, `.scaleTransition`, `.fadeThroughTransition`
 
 See [CHANGELOG.md](CHANGELOG.md) for version history.
 
@@ -44,7 +47,6 @@ See [CHANGELOG.md](CHANGELOG.md) for version history.
 All tokens live under `Tokens/` and are consumed as static members — e.g. `UIColorToken.primary`, `UISpacing.md`.
 
 ### Colors (`UIColorToken`)
-Each color is an adaptive `Color` with separate light/dark values, so no `.preferredColorScheme` handling is needed in consumer code.
 
 | Token | Light | Dark |
 |---|---|---|
@@ -59,35 +61,106 @@ Each color is an adaptive `Color` with separate light/dark values, so no `.prefe
 | `textSecondary` | `#6E6E73` | `#9B9BA1` |
 | `textOnPrimary` | `#FFFFFF` | `#FFFFFF` |
 | `border` | `#D1D1D6` | `#38383A` |
+| `primaryMuted` | `#D6E7FF` | `#0F2A54` |
+| `destructiveMuted` | `#FBDADA` | `#4A1A1A` |
+| `successMuted` | `#D9F0E0` | `#0F3A1E` |
+| `warningMuted` | `#FCE9C7` | `#4A330A` |
+| `surfaceSecondary` | `#F2F2F7` | `#2C2C2E` |
+| `surfaceTertiary` | `#E5E5EA` | `#3A3A3C` |
+| `textTertiary` | `#AEAEB2` | `#6E6E73` |
+| `overlay` | `#000000` | `#000000` |
+| `link` | `#0066FF` | `#3D8BFF` |
+| `focus` | `#0066FF` | `#3D8BFF` |
+| `separator` | `#D1D1D6` | `#38383A` |
 
 ### Typography (`UIFontToken`)
-Each token wraps a Dynamic Type text style, so text scales with the user's preferred size automatically.
 
-`display` · `title` · `headline` · `body` · `callout` · `subheadline` · `footnote` · `caption`
-
-```swift
-Text("Hello").font(UIFontToken.title)
-```
+| Token | Description |
+|---|---|
+| `largeTitle` | 34pt bold, `.largeTitle` text style |
+| `display` | Same as `largeTitle` |
+| `title` | `.title`, semibold |
+| `headline` | `.headline` |
+| `body` | `.body` |
+| `callout` | `.callout` |
+| `subheadline` | `.subheadline` |
+| `footnote` | `.footnote` |
+| `caption` | `.caption` |
 
 ### Spacing (`UISpacing`)
 
 | Token | Value |
 |---|---|
+| `xxs` | 2 |
 | `xs` | 4 |
 | `sm` | 8 |
 | `md` | 16 |
 | `lg` | 24 |
 | `xl` | 32 |
 | `xxl` | 48 |
+| `xxxl` | 64 |
 
 ### Corner Radius (`UIRadius`)
 
 | Token | Value |
 |---|---|
+| `xs` | 2 |
 | `sm` | 6 |
 | `md` | 12 |
 | `lg` | 20 |
+| `xl` | 16 |
 | `full` | 9999 (pill/capsule shapes) |
+
+### Elevation (`UIElevation`)
+
+Each level is a shadow spec (radius, y-offset, opacity), applied via `.elevation(_:)`.
+
+| Token | Radius | Y-offset | Opacity |
+|---|---|---|---|
+| `none` | 0 | 0 | 0 |
+| `sm` | 4 | 1 | 0.08 |
+| `md` | 8 | 2 | 0.12 |
+| `lg` | 16 | 4 | 0.16 |
+
+### Opacity (`UIOpacity`)
+
+| Token | Value |
+|---|---|
+| `disabled` | 0.38 |
+| `secondary` | 0.60 |
+| `overlay` | 0.54 |
+
+### Border Width (`UIBorderWidth`)
+
+| Token | Value |
+|---|---|
+| `thin` | 0.5 |
+| `regular` | 1 |
+| `thick` | 2 |
+
+### Icon Size (`UIIconSize`)
+
+| Token | Value |
+|---|---|
+| `sm` | 16 |
+| `md` | 20 |
+| `lg` | 24 |
+| `xl` | 32 |
+
+### Animation (`UIAnimation`)
+
+| Duration | Value (seconds) |
+|---|---|
+| `fast` | 0.15 |
+| `normal` | 0.3 |
+| `slow` | 0.5 |
+
+| Easing | Maps to |
+|---|---|
+| `standard(_:)` | `.easeInOut(duration:)` |
+| `decelerate(_:)` | `.easeOut(duration:)` |
+| `accelerate(_:)` | `.easeIn(duration:)` |
+| `spring(_:)` | `.spring(duration:)` |
 
 ## Usage
 
