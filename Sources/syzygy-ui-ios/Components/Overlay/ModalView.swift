@@ -41,9 +41,10 @@ public extension View {
             self
 
             if isPresented.wrappedValue {
-                ModalView(onDismissBackground: { isPresented.wrappedValue = false }) {
-                    content()
-                }
+                ModalView(
+                    onDismissBackground: { isPresented.wrappedValue = false },
+                    content: content
+                )
                 .transition(.opacity.combined(with: .scale(scale: 0.95)))
                 .zIndex(1)
             }

@@ -1,6 +1,6 @@
 # syzygy-ui-ios
 
-[![Version](https://img.shields.io/badge/Version-2.1.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-2.2.0-blue.svg)](CHANGELOG.md)
 [![Swift](https://img.shields.io/badge/Swift-6-F05138?logo=swift&logoColor=white)](https://www.swift.org)
 [![Platform](https://img.shields.io/badge/iOS-17%2B-000000?logo=apple&logoColor=white)](https://developer.apple.com/ios/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -27,17 +27,17 @@ Paste: https://github.com/Syzygy-Hub/syzygy-ui-ios
 
 ## Components
 
-68 components across 9 categories, plus 6 `AnyTransition` helpers in Transitions.
+79 components across 9 categories, plus 6 `AnyTransition` helpers in Transitions.
 
 - **Buttons**: PrimaryButton, SecondaryButton, DestructiveButton, GhostButton, IconButton, LoadingButton (built-in loading spinner state), FloatingActionButton, ButtonGroup (single- or multi-select segmented row)
 - **Cards**: CardView
 - **Badges**: Badge
-- **Inputs**: TextInput (with optional character counter), SecureInput, SearchBar (debounced, with clear button), ToggleSwitch, Checkbox, RadioButton, SliderInput, Dropdown, SegmentedControl, QuantityStepper, TextArea, OTPInput (auto-advancing OTP/PIN entry), TagInput (MultiSelect chip entry), DatePickerField, TimePickerField, FormField (generic label/content/error/helper wrapper), PasswordStrengthIndicator
-- **Display**: Avatar, DividerView, Chip, ListRow, SectionHeader, LazyImageView, CountBadge, StarRatingView, PagerView (swipeable paged content, not navigation chrome — reports the current page index for you to use as local state or feed into a navigator, as needed), AvatarGroup, StatsCard (aka MetricCard), RatingInput (interactive counterpart to StarRatingView)
-- **Feedback**: LoadingView, EmptyStateView, ToastView, ShimmerView, ProgressBar, PullToRefresh, ErrorStateView, SkeletonView, CircularProgress (determinate + indeterminate), InlineAlert (aka Banner), Snackbar
+- **Inputs**: TextInput (with optional character counter), SecureInput, SearchBar (debounced, with clear button), ToggleSwitch, Checkbox, RadioButton, SliderInput, Dropdown, SegmentedControl, QuantityStepper, TextArea, OTPInput (auto-advancing OTP/PIN entry), TagInput (MultiSelect chip entry), DatePickerField, TimePickerField, FormField (generic label/content/error/helper wrapper), PasswordStrengthIndicator, SearchableDropdown (inline-filtering, standalone tappable list), PhoneInput (country-code prefix selector, formatted + raw digit bindings), CurrencyInput (locale-aware `NumberFormatter` display, raw numeric value)
+- **Display**: Avatar, DividerView, Chip, ListRow, SectionHeader, LazyImageView, CountBadge, StarRatingView, PagerView (swipeable paged content, not navigation chrome — reports the current page index for you to use as local state or feed into a navigator, as needed), AvatarGroup, StatsCard (aka MetricCard), RatingInput (interactive counterpart to StarRatingView), PageControl (aka DotIndicator; read-only page dots syncing with `PagerView`), Accordion (managed group of expandable sections, single- or multi-open), Timeline (aka ActivityFeed; connected-line event list, leading or trailing icon alignment), ColorSwatch (circle/square color preview with optional label and selected state)
+- **Feedback**: LoadingView, EmptyStateView, ToastView, ShimmerView, ProgressBar, PullToRefresh, ErrorStateView, SkeletonView, CircularProgress (determinate + indeterminate), InlineAlert (aka Banner), Snackbar, NetworkStatusBanner (`NWPathMonitor`-backed offline banner, auto-dismissing), ConfirmDialog (+ `.confirmDialog(isPresented:...)` modifier, built on `ModalView`)
 - **Overlay**: ModalView (+ `.modal(isPresented:)` view modifier), BottomSheet (+ `.bottomSheet(isPresented:)` view modifier), CollapsibleView, ActionSheet (+ `.actionSheet(isPresented:actions:)` view modifier), Popover (+ `.styledPopover(isPresented:)` view modifier), Tooltip (+ `.tooltip(_:)` view modifier)
 - **Navigation**: BackButton, TabBar, BottomNavigationBar, AppBar, FloatingTabBar (floating + icon+label, distinct from BottomNavigationBar's floating + icon-only), SideMenu (aka Drawer), StepIndicator (aka WizardSteps), Breadcrumbs
-- **Layout**: KeyboardAvoidingScrollView, AdaptiveStack, FlowLayout, StickyHeader
+- **Layout**: KeyboardAvoidingScrollView, AdaptiveStack, FlowLayout, StickyHeader, SafeAreaWrapper (configurable-edges safe-area API), LabeledDivider (centered/leading/trailing label breaking a `DividerView` line)
 - **Transitions**: `AnyTransition.slideTransition(_:)`, `.crossFadeTransition`, `.slideVerticalTransition(_:)`, `.modalPresentationTransition`, `.scaleTransition`, `.fadeThroughTransition`
 
 See [CHANGELOG.md](CHANGELOG.md) for version history.

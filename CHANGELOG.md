@@ -5,6 +5,19 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2026-08-04
+
+### Added
+
+- **Display**: `PageControl` (aka `DotIndicator`; read-only row of dots syncing with `PagerView`'s `currentPage`), `Accordion` (managed group of expandable sections mirroring `CollapsibleView`'s header/disclosure animation, single- or multi-open via `allowsMultipleOpen`), `Timeline` (aka `ActivityFeed`; connecting-line event list with `TimelineItemAlignment` for leading/trailing icon placement), `ColorSwatch` (circle/square color preview with optional label, border shown when `isSelected`)
+- **Inputs**: `SearchableDropdown` (inline-filtering options list; standalone rather than a `Dropdown` wrapper since `Dropdown`'s native `Menu` backing has no seam for a custom filtered subview), `PhoneInput` (tappable flag + dial-code prefix from a 12-country default list, numeric keypad, separate formatted-display and raw-digits bindings), `CurrencyInput` (configurable prefix/suffix currency symbol, `NumberFormatter`-based locale-aware display formatting, raw `Double` value exposed separately)
+- **Feedback**: `NetworkStatusBanner` (`NWPathMonitor`-backed offline banner, top- or bottom-anchored, auto-dismissing when connectivity returns, with a `manualOverride` for previews/tests), `ConfirmDialog` (+ `.confirmDialog(isPresented:title:message:...)` modifier, built on `ModalView` the same way `ActionSheet` was built on `BottomSheet`; `isDestructive` styles the confirm button with the `destructive` token)
+- **Layout**: `SafeAreaWrapper` (configurable-edges safe-area API; on iOS SwiftUI is already safe-area-aware by default, so this mainly gives a consistent cross-platform-shaped API surface rather than solving a hard problem), `LabeledDivider` (two `DividerView` segments flanking a centered/leading/trailing text label)
+
+### Fixed
+
+- Committed a local `.swiftlint.yml` at the repo root (previously absent — a developer running `swiftlint` locally got SwiftLint's stock defaults instead of this project's actual CI ruleset, since CI fetches the shared config from `syzygy-lint-config` at runtime and the checked-in repo had never had a local copy). Local and CI now lint against an identical ruleset. `swiftlint` was not available in this environment to run and report a violation count against the new config — see the report for a manual read-through of the fetched ruleset instead.
+
 ## [2.1.0] - 2026-08-03
 
 ### Added

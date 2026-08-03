@@ -249,3 +249,43 @@ import SwiftUI
     .padding()
     .preferredColorScheme(.dark)
 }
+
+#Preview("SearchableDropdown - Light") {
+    SearchableDropdown(
+        label: "Country", selection: .constant("USA"), options: ["USA", "Canada", "UK", "Germany"]
+    ) { $0 }
+        .padding()
+        .preferredColorScheme(.light)
+}
+
+#Preview("SearchableDropdown - Dark") {
+    SearchableDropdown(
+        label: "Country", selection: .constant("USA"), options: ["USA", "Canada", "UK", "Germany"]
+    ) { $0 }
+        .padding()
+        .preferredColorScheme(.dark)
+}
+
+#Preview("PhoneInput - Light") {
+    PhoneInput(label: "Phone", selectedCountry: .constant(.defaultCountries[0]), digits: .constant("5551234567"))
+        .padding()
+        .preferredColorScheme(.light)
+}
+
+#Preview("PhoneInput - Dark") {
+    PhoneInput(label: "Phone", selectedCountry: .constant(.defaultCountries[0]), digits: .constant("5551234567"))
+        .padding()
+        .preferredColorScheme(.dark)
+}
+
+#Preview("CurrencyInput - Light") {
+    CurrencyInput(label: "Price", value: .constant(19.99))
+        .padding()
+        .preferredColorScheme(.light)
+}
+
+#Preview("CurrencyInput - Dark") {
+    CurrencyInput(label: "Price", value: .constant(19.99), symbol: "€", symbolPosition: .suffix)
+        .padding()
+        .preferredColorScheme(.dark)
+}

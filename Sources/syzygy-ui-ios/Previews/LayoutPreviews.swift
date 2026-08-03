@@ -66,6 +66,40 @@ import SwiftUI
     .preferredColorScheme(.dark)
 }
 
+#Preview("SafeAreaWrapper - Light") {
+    SafeAreaWrapper(edges: [.top, .bottom]) {
+        Color.blue.opacity(0.2)
+    }
+    .preferredColorScheme(.light)
+}
+
+#Preview("SafeAreaWrapper - Dark") {
+    SafeAreaWrapper(edges: [.top, .bottom]) {
+        Color.blue.opacity(0.2)
+    }
+    .preferredColorScheme(.dark)
+}
+
+#Preview("LabeledDivider - Light") {
+    VStack(spacing: UISpacing.md) {
+        LabeledDivider("OR")
+        LabeledDivider("Section", alignment: .leading)
+        LabeledDivider("End", alignment: .trailing)
+    }
+    .padding()
+    .preferredColorScheme(.light)
+}
+
+#Preview("LabeledDivider - Dark") {
+    VStack(spacing: UISpacing.md) {
+        LabeledDivider("OR")
+        LabeledDivider("Section", alignment: .leading)
+        LabeledDivider("End", alignment: .trailing)
+    }
+    .padding()
+    .preferredColorScheme(.dark)
+}
+
 #Preview("StickyHeader - Light") {
     StickyHeader {
         Text("Section Header")

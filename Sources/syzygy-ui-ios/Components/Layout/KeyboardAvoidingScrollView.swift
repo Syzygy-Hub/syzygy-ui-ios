@@ -25,7 +25,9 @@ public struct KeyboardAvoidingScrollView<Content: View>: View {
             Color.clear.frame(height: keyboardHeight)
         }
         #if canImport(UIKit)
-        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)) { notification in
+        .onReceive(
+            NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)
+        ) { notification in
             guard let frame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
             keyboardHeight = frame.height
         }

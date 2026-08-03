@@ -20,7 +20,9 @@ public struct BottomNavigationBar<Tag: Hashable & Sendable>: View {
                 } label: {
                     Image(systemName: item.systemImage)
                         .font(UIFontToken.body)
-                        .foregroundStyle(selection == item.tag ? UIColorToken.textOnPrimary : UIColorToken.textSecondary)
+                        .foregroundStyle(
+                            selection == item.tag ? UIColorToken.textOnPrimary : UIColorToken.textSecondary
+                        )
                         .frame(width: 44, height: 44)
                         .background(selection == item.tag ? UIColorToken.primary : Color.clear)
                         .clipShape(Circle())

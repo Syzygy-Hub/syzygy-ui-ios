@@ -214,3 +214,71 @@ import SwiftUI
         .padding()
         .preferredColorScheme(.dark)
 }
+
+#Preview("PageControl - Light") {
+    PageControl(pageCount: 4, currentPage: 1)
+        .padding()
+        .preferredColorScheme(.light)
+}
+
+#Preview("PageControl - Dark") {
+    PageControl(pageCount: 4, currentPage: 1)
+        .padding()
+        .preferredColorScheme(.dark)
+}
+
+#Preview("Accordion - Light") {
+    Accordion(sections: [
+        AccordionSection(id: "1", title: "Shipping") { Text("Ships in 2-3 days.") },
+        AccordionSection(id: "2", title: "Returns") { Text("30-day return window.") }
+    ])
+    .padding()
+    .preferredColorScheme(.light)
+}
+
+#Preview("Accordion - Dark") {
+    Accordion(sections: [
+        AccordionSection(id: "1", title: "Shipping") { Text("Ships in 2-3 days.") },
+        AccordionSection(id: "2", title: "Returns") { Text("30-day return window.") }
+    ])
+    .padding()
+    .preferredColorScheme(.dark)
+}
+
+#Preview("Timeline - Light") {
+    Timeline(items: [
+        TimelineItem(title: "Order placed", timestamp: "9:00 AM"),
+        TimelineItem(title: "Shipped", subtitle: "Via FedEx", timestamp: "2:00 PM"),
+        TimelineItem(title: "Delivered", timestamp: "5:30 PM", systemImage: "checkmark.circle.fill")
+    ])
+    .padding()
+    .preferredColorScheme(.light)
+}
+
+#Preview("Timeline - Dark") {
+    Timeline(items: [
+        TimelineItem(title: "Order placed", timestamp: "9:00 AM"),
+        TimelineItem(title: "Shipped", subtitle: "Via FedEx", timestamp: "2:00 PM"),
+        TimelineItem(title: "Delivered", timestamp: "5:30 PM", systemImage: "checkmark.circle.fill")
+    ])
+    .padding()
+    .preferredColorScheme(.dark)
+}
+
+#Preview("ColorSwatch - Light") {
+    HStack(spacing: UISpacing.md) {
+        ColorSwatch(color: .red, label: "Red", shape: .circle, isSelected: true)
+        ColorSwatch(color: .blue, label: "Blue", shape: .square)
+    }
+    .padding()
+    .preferredColorScheme(.light)
+}
+
+#Preview("ColorSwatch - Dark") {
+    HStack(spacing: UISpacing.md) {
+        ColorSwatch(color: .red, label: "Red", shape: .circle, isSelected: true)
+        ColorSwatch(color: .blue, label: "Blue", shape: .square)
+    }
+    .padding()
+    .preferredColorScheme(.dark)
+}

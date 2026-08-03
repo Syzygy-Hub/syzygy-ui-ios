@@ -69,7 +69,9 @@ public extension AnyTransition {
     /// the incoming view fades in — sequential, not a simultaneous cross-fade.
     static var fadeThroughTransition: AnyTransition {
         .asymmetric(
-            insertion: .opacity.animation(UIAnimation.Easing.standard(UIAnimation.Duration.fast).delay(UIAnimation.Duration.fast)),
+            insertion: .opacity.animation(
+                UIAnimation.Easing.standard(UIAnimation.Duration.fast).delay(UIAnimation.Duration.fast)
+            ),
             removal: .opacity.animation(UIAnimation.Easing.standard(UIAnimation.Duration.fast))
         )
     }

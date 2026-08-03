@@ -89,28 +89,34 @@ import SwiftUI
 }
 
 #Preview("PullToRefresh - Light") {
-    PullToRefresh(onRefresh: {}) {
-        VStack(spacing: UISpacing.sm) {
-            ForEach(0..<5, id: \.self) { index in
-                Text("Row \(index)")
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
+    PullToRefresh(
+        onRefresh: {},
+        content: {
+            VStack(spacing: UISpacing.sm) {
+                ForEach(0..<5, id: \.self) { index in
+                    Text("Row \(index)")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding()
+                }
             }
         }
-    }
+    )
     .preferredColorScheme(.light)
 }
 
 #Preview("PullToRefresh - Dark") {
-    PullToRefresh(onRefresh: {}) {
-        VStack(spacing: UISpacing.sm) {
-            ForEach(0..<5, id: \.self) { index in
-                Text("Row \(index)")
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
+    PullToRefresh(
+        onRefresh: {},
+        content: {
+            VStack(spacing: UISpacing.sm) {
+                ForEach(0..<5, id: \.self) { index in
+                    Text("Row \(index)")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding()
+                }
             }
         }
-    }
+    )
     .preferredColorScheme(.dark)
 }
 
@@ -204,4 +210,38 @@ import SwiftUI
         Snackbar(message: "Item deleted", actionLabel: "Undo", onAction: {}, isPresented: .constant(true))
     }
     .preferredColorScheme(.dark)
+}
+
+#Preview("NetworkStatusBanner - Light") {
+    NetworkStatusBanner(alignment: .top, manualOverride: false)
+        .preferredColorScheme(.light)
+}
+
+#Preview("NetworkStatusBanner - Dark") {
+    NetworkStatusBanner(alignment: .bottom, manualOverride: false)
+        .preferredColorScheme(.dark)
+}
+
+#Preview("ConfirmDialog - Light") {
+    Color.clear
+        .confirmDialog(
+            isPresented: .constant(true),
+            title: "Delete item?",
+            message: "This action cannot be undone.",
+            isDestructive: true,
+            onConfirm: {}
+        )
+        .preferredColorScheme(.light)
+}
+
+#Preview("ConfirmDialog - Dark") {
+    Color.clear
+        .confirmDialog(
+            isPresented: .constant(true),
+            title: "Delete item?",
+            message: "This action cannot be undone.",
+            isDestructive: true,
+            onConfirm: {}
+        )
+        .preferredColorScheme(.dark)
 }

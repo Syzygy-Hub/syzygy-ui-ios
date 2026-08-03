@@ -202,7 +202,7 @@ struct ComponentInitTests {
     }
 
     @Test func pullToRefresh() {
-        _ = PullToRefresh(onRefresh: {}) { Text("Content") }
+        _ = PullToRefresh(onRefresh: {}, content: { Text("Content") })
     }
 
     @Test func errorStateView() {
