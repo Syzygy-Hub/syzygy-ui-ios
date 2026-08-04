@@ -20,20 +20,20 @@ import SwiftUI
     .preferredColorScheme(.dark)
 }
 
-#Preview("DividerView - Light") {
+#Preview("DividerLine - Light") {
     VStack(spacing: UISpacing.md) {
         Text("Above")
-        DividerView()
+        DividerLine()
         Text("Below")
     }
     .padding()
     .preferredColorScheme(.light)
 }
 
-#Preview("DividerView - Dark") {
+#Preview("DividerLine - Dark") {
     VStack(spacing: UISpacing.md) {
         Text("Above")
-        DividerView()
+        DividerLine()
         Text("Below")
     }
     .padding()
@@ -61,7 +61,7 @@ import SwiftUI
 #Preview("ListRow - Light") {
     VStack(spacing: 0) {
         ListRow(title: "Settings", subtitle: "Manage your preferences", systemImage: "gearshape") {}
-        DividerView()
+        DividerLine()
         ListRow(title: "Notifications", systemImage: "bell") {
             Image(systemName: "chevron.right")
                 .foregroundStyle(UIColorToken.textSecondary)
@@ -73,7 +73,7 @@ import SwiftUI
 #Preview("ListRow - Dark") {
     VStack(spacing: 0) {
         ListRow(title: "Settings", subtitle: "Manage your preferences", systemImage: "gearshape") {}
-        DividerView()
+        DividerLine()
         ListRow(title: "Notifications", systemImage: "bell") {
             Image(systemName: "chevron.right")
                 .foregroundStyle(UIColorToken.textSecondary)

@@ -3,7 +3,7 @@ import SwiftUI
 /// A centered dialog card over a dimmed scrim. Tapping the scrim invokes
 /// `onDismissBackground`, if provided.
 @MainActor
-public struct ModalView<Content: View>: View {
+public struct ModalDialog<Content: View>: View {
     private let content: Content
     private let onDismissBackground: (() -> Void)?
 
@@ -30,7 +30,7 @@ public struct ModalView<Content: View>: View {
     }
 }
 
-/// Presents a `ModalView` above the current view when `isPresented` is true.
+/// Presents a `ModalDialog` above the current view when `isPresented` is true.
 public extension View {
     @MainActor
     func modal<ModalContent: View>(
@@ -41,7 +41,7 @@ public extension View {
             self
 
             if isPresented.wrappedValue {
-                ModalView(
+                ModalDialog(
                     onDismissBackground: { isPresented.wrappedValue = false },
                     content: content
                 )

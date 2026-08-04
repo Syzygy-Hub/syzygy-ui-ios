@@ -55,7 +55,7 @@ public extension AnyTransition {
     }
 
     /// A slide-up-and-fade transition suited to modal/sheet presentation,
-    /// used by `ModalView`/`BottomSheet`'s presentation modifiers.
+    /// used by `ModalDialog`/`BottomSheet`'s presentation modifiers.
     static var modalPresentationTransition: AnyTransition {
         .move(edge: .bottom).combined(with: .opacity)
     }

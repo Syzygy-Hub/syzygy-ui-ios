@@ -1,5 +1,7 @@
 import SwiftUI
 
+private let errorIconSize: CGFloat = 40
+
 /// An icon, title, subtitle, and retry action for error states.
 /// Mirrors `EmptyStateView`'s structure with a destructive-tinted icon
 /// and a mandatory retry action.
@@ -28,7 +30,7 @@ public struct ErrorStateView: View {
     public var body: some View {
         VStack(spacing: UISpacing.md) {
             Image(systemName: systemImage)
-                .font(.system(size: 40))
+                .font(.system(size: errorIconSize))
                 .foregroundStyle(UIColorToken.destructive)
 
             Text(title)

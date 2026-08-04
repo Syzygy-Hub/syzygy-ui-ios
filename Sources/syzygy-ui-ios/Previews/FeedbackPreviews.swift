@@ -34,9 +34,9 @@ import SwiftUI
 
 #Preview("ToastView - Light") {
     VStack(spacing: UISpacing.md) {
-        ToastView(message: "Saved successfully", style: .success)
-        ToastView(message: "Check your connection", style: .warning)
-        ToastView(message: "Something went wrong", style: .error)
+        ToastView(message: "Saved successfully", variant: .success)
+        ToastView(message: "Check your connection", variant: .warning)
+        ToastView(message: "Something went wrong", variant: .error)
     }
     .padding()
     .preferredColorScheme(.light)
@@ -44,9 +44,9 @@ import SwiftUI
 
 #Preview("ToastView - Dark") {
     VStack(spacing: UISpacing.md) {
-        ToastView(message: "Saved successfully", style: .success)
-        ToastView(message: "Check your connection", style: .warning)
-        ToastView(message: "Something went wrong", style: .error)
+        ToastView(message: "Saved successfully", variant: .success)
+        ToastView(message: "Check your connection", variant: .warning)
+        ToastView(message: "Something went wrong", variant: .error)
     }
     .padding()
     .preferredColorScheme(.dark)

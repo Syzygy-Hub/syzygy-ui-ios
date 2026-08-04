@@ -2,7 +2,7 @@ import SwiftUI
 
 /// A +/- quantity control. Named `QuantityStepper` (rather than `Stepper`)
 /// to avoid colliding with `SwiftUI.Stepper`, the same pattern used by
-/// `SliderInput`/`DividerView` elsewhere in this library.
+/// `SliderInput`/`DividerLine` elsewhere in this library.
 @MainActor
 public struct QuantityStepper: View {
     @Binding private var value: Int

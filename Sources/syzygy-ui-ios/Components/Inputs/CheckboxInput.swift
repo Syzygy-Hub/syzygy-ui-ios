@@ -2,7 +2,7 @@ import SwiftUI
 
 /// A labeled checkbox with a filled/outline square glyph.
 @MainActor
-public struct Checkbox: View {
+public struct CheckboxInput: View {
     private let label: String
     @Binding private var isChecked: Bool
 

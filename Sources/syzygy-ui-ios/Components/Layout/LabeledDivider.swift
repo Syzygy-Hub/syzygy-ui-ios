@@ -1,7 +1,7 @@
 import SwiftUI
 
-/// A horizontal `DividerView`-based rule with a centered text label breaking
-/// the line (e.g. "OR"), built from two `DividerView` segments flanking the
+/// A horizontal `DividerLine`-based rule with a centered text label breaking
+/// the line (e.g. "OR"), built from two `DividerLine` segments flanking the
 /// label — sized asymmetrically per `alignment` so the label sits leading,
 /// centered, or trailing along the line.
 @MainActor
@@ -17,7 +17,7 @@ public struct LabeledDivider: View {
     public var body: some View {
         HStack(spacing: UISpacing.sm) {
             if alignment != .leading {
-                DividerView()
+                DividerLine()
             }
 
             Text(label)
@@ -26,7 +26,7 @@ public struct LabeledDivider: View {
                 .fixedSize()
 
             if alignment != .trailing {
-                DividerView()
+                DividerLine()
             }
         }
         .accessibilityElement(children: .combine)

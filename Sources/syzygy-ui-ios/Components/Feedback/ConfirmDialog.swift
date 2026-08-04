@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// A themed, opinionated confirm/cancel dialog preset built on top of the
-/// existing `ModalView` primitive (mirroring how v2.1.0's `ActionSheet` was
+/// existing `ModalDialog` primitive (mirroring how v2.1.0's `ActionSheet` was
 /// built on top of `BottomSheet`), rather than reimplementing modal
 /// presentation from scratch. `isDestructive` styles the confirm button
 /// using the `destructive` color token.

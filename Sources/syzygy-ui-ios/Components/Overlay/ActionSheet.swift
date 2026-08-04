@@ -34,7 +34,7 @@ private struct ActionSheetContent: View {
                 }
 
                 if action.id != actions.last?.id {
-                    DividerView()
+                    DividerLine()
                 }
             }
         }

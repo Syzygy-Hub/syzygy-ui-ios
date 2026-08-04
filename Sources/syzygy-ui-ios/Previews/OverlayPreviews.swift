@@ -1,7 +1,7 @@
 import SwiftUI
 
-#Preview("ModalView - Light") {
-    ModalView {
+#Preview("ModalDialog - Light") {
+    ModalDialog {
         VStack(spacing: UISpacing.md) {
             Text("Delete item?")
                 .font(UIFontToken.title)
@@ -15,8 +15,8 @@ import SwiftUI
     .preferredColorScheme(.light)
 }
 
-#Preview("ModalView - Dark") {
-    ModalView {
+#Preview("ModalDialog - Dark") {
+    ModalDialog {
         VStack(spacing: UISpacing.md) {
             Text("Delete item?")
                 .font(UIFontToken.title)

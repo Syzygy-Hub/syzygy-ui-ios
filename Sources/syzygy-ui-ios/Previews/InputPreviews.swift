@@ -32,14 +32,14 @@ import SwiftUI
         .preferredColorScheme(.dark)
 }
 
-#Preview("SearchBar - Light") {
-    SearchBar(text: .constant("Coffee"))
+#Preview("SearchInput - Light") {
+    SearchInput(text: .constant("Coffee"))
         .padding()
         .preferredColorScheme(.light)
 }
 
-#Preview("SearchBar - Dark") {
-    SearchBar(text: .constant(""), placeholder: "Search products")
+#Preview("SearchInput - Dark") {
+    SearchInput(text: .constant(""), placeholder: "Search products")
         .padding()
         .preferredColorScheme(.dark)
 }
@@ -62,37 +62,37 @@ import SwiftUI
     .preferredColorScheme(.dark)
 }
 
-#Preview("Checkbox - Light") {
+#Preview("CheckboxInput - Light") {
     VStack(spacing: UISpacing.md) {
-        Checkbox(label: "Remember me", isChecked: .constant(true))
-        Checkbox(label: "Subscribe to newsletter", isChecked: .constant(false))
+        CheckboxInput(label: "Remember me", isChecked: .constant(true))
+        CheckboxInput(label: "Subscribe to newsletter", isChecked: .constant(false))
     }
     .padding()
     .preferredColorScheme(.light)
 }
 
-#Preview("Checkbox - Dark") {
+#Preview("CheckboxInput - Dark") {
     VStack(spacing: UISpacing.md) {
-        Checkbox(label: "Remember me", isChecked: .constant(true))
-        Checkbox(label: "Subscribe to newsletter", isChecked: .constant(false))
+        CheckboxInput(label: "Remember me", isChecked: .constant(true))
+        CheckboxInput(label: "Subscribe to newsletter", isChecked: .constant(false))
     }
     .padding()
     .preferredColorScheme(.dark)
 }
 
-#Preview("RadioButton - Light") {
+#Preview("RadioButtonInput - Light") {
     VStack(spacing: UISpacing.md) {
-        RadioButton(label: "Small", isSelected: true) {}
-        RadioButton(label: "Large", isSelected: false) {}
+        RadioButtonInput(label: "Small", isSelected: true) {}
+        RadioButtonInput(label: "Large", isSelected: false) {}
     }
     .padding()
     .preferredColorScheme(.light)
 }
 
-#Preview("RadioButton - Dark") {
+#Preview("RadioButtonInput - Dark") {
     VStack(spacing: UISpacing.md) {
-        RadioButton(label: "Small", isSelected: true) {}
-        RadioButton(label: "Large", isSelected: false) {}
+        RadioButtonInput(label: "Small", isSelected: true) {}
+        RadioButtonInput(label: "Large", isSelected: false) {}
     }
     .padding()
     .preferredColorScheme(.dark)

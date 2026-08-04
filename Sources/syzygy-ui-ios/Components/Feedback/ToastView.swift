@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// A transient success / warning / error toast.
-public enum ToastStyle {
+public enum ToastVariant {
     case success
     case warning
     case error
@@ -26,17 +26,17 @@ public enum ToastStyle {
 @MainActor
 public struct ToastView: View {
     private let message: String
-    private let style: ToastStyle
+    private let variant: ToastVariant
 
-    public init(message: String, style: ToastStyle) {
+    public init(message: String, variant: ToastVariant) {
         self.message = message
-        self.style = style
+        self.variant = variant
     }
 
     public var body: some View {
         HStack(spacing: UISpacing.sm) {
-            Image(systemName: style.systemImage)
-                .foregroundStyle(style.color)
+            Image(systemName: variant.systemImage)
+                .foregroundStyle(variant.color)
 
             Text(message)
                 .font(UIFontToken.subheadline)

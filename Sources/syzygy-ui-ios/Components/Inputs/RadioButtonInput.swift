@@ -3,7 +3,7 @@ import SwiftUI
 /// A single labeled radio option. Compose several in a group and drive
 /// `isSelected` from shared parent state to build a radio group.
 @MainActor
-public struct RadioButton: View {
+public struct RadioButtonInput: View {
     private let label: String
     private let isSelected: Bool
     private let action: () -> Void

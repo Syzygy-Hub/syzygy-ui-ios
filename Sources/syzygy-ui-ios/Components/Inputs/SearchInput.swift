@@ -2,7 +2,7 @@ import SwiftUI
 
 /// A search field with a leading icon, trailing clear button, and built-in debounce.
 @MainActor
-public struct SearchBar: View {
+public struct SearchInput: View {
     @Binding private var text: String
     private let placeholder: String
     private let debounceInterval: Duration

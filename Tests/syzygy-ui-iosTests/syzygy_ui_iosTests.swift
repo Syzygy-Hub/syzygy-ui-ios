@@ -14,9 +14,9 @@ struct TokenTests {
     }
 
     @Test func radiusValues() {
-        #expect(UIRadius.sm == 6)
-        #expect(UIRadius.md == 12)
-        #expect(UIRadius.lg == 20)
+        #expect(UIRadius.sm == 4)
+        #expect(UIRadius.md == 8)
+        #expect(UIRadius.lg == 16)
         #expect(UIRadius.full == 9999)
     }
 
@@ -90,7 +90,7 @@ struct ComponentInitTests {
     }
 
     @Test func toastView() {
-        _ = ToastView(message: "Done", style: .success)
+        _ = ToastView(message: "Done", variant: .success)
     }
 
     @Test func cardView() {
@@ -107,20 +107,20 @@ struct ComponentInitTests {
 
     // MARK: Inputs
 
-    @Test func searchBar() {
-        _ = SearchBar(text: .constant(""))
+    @Test func searchInput() {
+        _ = SearchInput(text: .constant(""))
     }
 
     @Test func toggleSwitch() {
         _ = ToggleSwitch(label: "Notifications", isOn: .constant(true))
     }
 
-    @Test func checkbox() {
-        _ = Checkbox(label: "Remember me", isChecked: .constant(false))
+    @Test func checkboxInput() {
+        _ = CheckboxInput(label: "Remember me", isChecked: .constant(false))
     }
 
-    @Test func radioButton() {
-        _ = RadioButton(label: "Small", isSelected: true) {}
+    @Test func radioButtonInput() {
+        _ = RadioButtonInput(label: "Small", isSelected: true) {}
     }
 
     @Test func sliderInput() {
@@ -145,8 +145,8 @@ struct ComponentInitTests {
         _ = Avatar(initials: "AK")
     }
 
-    @Test func dividerView() {
-        _ = DividerView()
+    @Test func dividerLine() {
+        _ = DividerLine()
     }
 
     @Test func chip() {
@@ -211,8 +211,8 @@ struct ComponentInitTests {
 
     // MARK: Overlay
 
-    @Test func modalView() {
-        _ = ModalView { Text("Content") }
+    @Test func modalDialog() {
+        _ = ModalDialog { Text("Content") }
     }
 
     @Test func bottomSheet() {

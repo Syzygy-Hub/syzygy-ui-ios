@@ -5,6 +5,20 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.1] - 2026-08-04
+
+### Changed
+- `Checkbox` → `CheckboxInput`, `RadioButton` → `RadioButtonInput`, `SearchBar` → `SearchInput`, `DividerView` → `DividerLine`, `ModalView` → `ModalDialog` — cross-platform naming alignment (breaking rename)
+- `ToastView`: prop `style:` → `variant:`, type `ToastStyle` → `ToastVariant` — matches Android/RN/Flutter naming (breaking rename)
+- Radius scale aligned with other platforms: `UIRadius.sm` 6→4, `md` 12→8, `lg` 20→16 (visual breaking change; `xs`, `xl`, `full` unchanged)
+
+### Added
+- `ColorSwatch`: `size: CGFloat = 32` parameter lets callers override the swatch diameter/side length
+
+### Fixed
+- `ErrorStateView`: replaced magic number `.system(size: 40)` with `errorIconSize` private constant
+- README: version badge color updated to `#2F6FED`; component list updated with new names
+
 ## [2.2.0] - 2026-08-04
 
 ### Added

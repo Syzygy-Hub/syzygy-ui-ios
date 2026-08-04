@@ -13,18 +13,26 @@ public struct ColorSwatch: View {
     private let label: String?
     private let shape: Shape
     private let isSelected: Bool
+    private let size: CGFloat
 
-    public init(color: Color, label: String? = nil, shape: Shape = .circle, isSelected: Bool = false) {
+    public init(
+        color: Color,
+        label: String? = nil,
+        shape: Shape = .circle,
+        isSelected: Bool = false,
+        size: CGFloat = 32
+    ) {
         self.color = color
         self.label = label
         self.shape = shape
         self.isSelected = isSelected
+        self.size = size
     }
 
     public var body: some View {
         VStack(spacing: UISpacing.xs) {
             swatch
-                .frame(width: 32, height: 32)
+                .frame(width: size, height: size)
                 .overlay(border)
 
             if let label {
