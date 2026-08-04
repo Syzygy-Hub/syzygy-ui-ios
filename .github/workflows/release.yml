@@ -28,6 +28,7 @@ jobs:
         run: |
           MESSAGE="${{ github.event.workflow_run.head_commit.message }}"
           VERSION=$(echo "$MESSAGE" | head -n1 | sed -E 's/^release:[[:space:]]*//' | sed -E 's/[[:space:]]*—.*$//' | sed -E 's/[[:space:]]*-{1,2}.*$//' | xargs)
+          VERSION="${VERSION#v}"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
 

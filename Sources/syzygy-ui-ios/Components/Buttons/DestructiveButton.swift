@@ -15,7 +15,7 @@ public struct DestructiveButton: View {
         Button(action: action) {
             Text(title)
                 .font(UIFontToken.headline)
-                .foregroundStyle(UIColorToken.textOnPrimary)
+                .foregroundStyle(UIColorToken.onPrimary)
                 .frame(maxWidth: .infinity, minHeight: 44)
                 .padding(.horizontal, UISpacing.md)
         }

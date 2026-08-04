@@ -33,7 +33,7 @@ public struct Snackbar: View {
                 HStack(spacing: UISpacing.md) {
                     Text(message)
                         .font(UIFontToken.subheadline)
-                        .foregroundStyle(UIColorToken.textOnPrimary)
+                        .foregroundStyle(UIColorToken.onPrimary)
 
                     Spacer()
 
@@ -43,7 +43,7 @@ public struct Snackbar: View {
                             isPresented = false
                         }
                         .font(UIFontToken.subheadline.weight(.semibold))
-                        .foregroundStyle(UIColorToken.textOnPrimary)
+                        .foregroundStyle(UIColorToken.onPrimary)
                     }
                 }
                 .padding(.horizontal, UISpacing.md)

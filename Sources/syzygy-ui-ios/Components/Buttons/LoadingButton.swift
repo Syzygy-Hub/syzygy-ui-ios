@@ -24,10 +24,10 @@ public struct LoadingButton: View {
 
                 if isLoading {
                     ProgressView()
-                        .tint(UIColorToken.textOnPrimary)
+                        .tint(UIColorToken.onPrimary)
                 }
             }
-            .foregroundStyle(UIColorToken.textOnPrimary)
+            .foregroundStyle(UIColorToken.onPrimary)
             .frame(maxWidth: .infinity, minHeight: 44)
             .padding(.horizontal, UISpacing.md)
         }

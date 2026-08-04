@@ -40,7 +40,7 @@ public struct ButtonGroup: View {
                 } label: {
                     Text(option)
                         .font(UIFontToken.subheadline)
-                        .foregroundStyle(isSelected ? UIColorToken.textOnPrimary : UIColorToken.textPrimary)
+                        .foregroundStyle(isSelected ? UIColorToken.onPrimary : UIColorToken.textPrimary)
                         .frame(maxWidth: .infinity, minHeight: 36)
                         .background(isSelected ? UIColorToken.primary : Color.clear)
                 }

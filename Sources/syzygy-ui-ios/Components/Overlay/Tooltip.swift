@@ -39,7 +39,7 @@ private struct TooltipModifier: ViewModifier {
                 if isVisible {
                     Text(text)
                         .font(UIFontToken.caption)
-                        .foregroundStyle(UIColorToken.textOnPrimary)
+                        .foregroundStyle(UIColorToken.onPrimary)
                         .padding(.horizontal, UISpacing.sm)
                         .padding(.vertical, UISpacing.xs)
                         .background(UIColorToken.textPrimary)

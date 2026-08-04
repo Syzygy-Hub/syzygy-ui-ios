@@ -5,6 +5,17 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] - 2026-08-05
+
+### Changed (Breaking)
+- **Color token vocabulary alignment** — `UIColorToken` extended to the canonical token set; renamed tokens:
+  - `textOnPrimary` → `onPrimary` (all button/badge/navigation components updated)
+- **New tokens added**: `onPrimary`, `onError`, `onDestructive`, `onSuccess`, `onWarning`, `onSurface`, `error`, `errorMuted`, `primarySubtle`, `textDisabled`, `textInverse`, `scrim` (Material3 `on*` naming pattern)
+- Old `textOnPrimary` removed; 16 component files updated to use new names
+
+### Fixed
+- CI `release.yml`: added `VERSION="${VERSION#v}"` defensive strip so bare-version commit messages (`release: 2.3.0`) and `v`-prefixed ones (`release: v2.3.0`) both produce a bare tag and GitHub Release title
+
 ## [2.2.1] - 2026-08-04
 
 ### Changed

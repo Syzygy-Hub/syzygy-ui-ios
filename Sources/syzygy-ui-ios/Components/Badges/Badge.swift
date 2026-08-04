@@ -30,7 +30,7 @@ public struct Badge: View {
     public var body: some View {
         Text(text)
             .font(UIFontToken.caption)
-            .foregroundStyle(UIColorToken.textOnPrimary)
+            .foregroundStyle(UIColorToken.onPrimary)
             .padding(.horizontal, UISpacing.sm)
             .padding(.vertical, UISpacing.xs)
             .background(style.color)

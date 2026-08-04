@@ -43,7 +43,7 @@ public struct Avatar: View {
                     .fill(UIColorToken.primary)
                 Text(initials)
                     .font(UIFontToken.headline)
-                    .foregroundStyle(UIColorToken.textOnPrimary)
+                    .foregroundStyle(UIColorToken.onPrimary)
             case .image(let image):
                 image
                     .resizable()

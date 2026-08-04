@@ -1,6 +1,6 @@
 # syzygy-ui-ios
 
-[![Version](https://img.shields.io/badge/Version-2.2.1-2F6FED.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-2.3.0-2F6FED.svg)](CHANGELOG.md)
 [![Swift](https://img.shields.io/badge/Swift-6-F05138?logo=swift&logoColor=white)](https://www.swift.org)
 [![Platform](https://img.shields.io/badge/iOS-17%2B-000000?logo=apple&logoColor=white)](https://developer.apple.com/ios/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)

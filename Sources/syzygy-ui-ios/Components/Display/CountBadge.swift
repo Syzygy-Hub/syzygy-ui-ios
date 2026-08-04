@@ -17,7 +17,7 @@ public struct CountBadge: View {
             if let count, count > 0 {
                 Text(displayText(for: count))
                     .font(UIFontToken.caption)
-                    .foregroundStyle(UIColorToken.textOnPrimary)
+                    .foregroundStyle(UIColorToken.onPrimary)
                     .padding(.horizontal, count > 9 ? UISpacing.xs : 0)
                     .frame(minWidth: 16, minHeight: 16)
                     .background(UIColorToken.destructive)

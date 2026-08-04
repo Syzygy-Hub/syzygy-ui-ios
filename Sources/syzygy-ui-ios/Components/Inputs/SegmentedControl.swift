@@ -23,7 +23,7 @@ public struct SegmentedControl<Option: Hashable>: View {
                 } label: {
                     Text(title(option))
                         .font(UIFontToken.subheadline)
-                        .foregroundStyle(option == selection ? UIColorToken.textOnPrimary : UIColorToken.textPrimary)
+                        .foregroundStyle(option == selection ? UIColorToken.onPrimary : UIColorToken.textPrimary)
                         .frame(maxWidth: .infinity, minHeight: 44)
                         .background(option == selection ? UIColorToken.primary : Color.clear)
                         .clipShape(RoundedRectangle(cornerRadius: UIRadius.sm))

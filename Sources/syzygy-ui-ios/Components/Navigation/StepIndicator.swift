@@ -43,7 +43,7 @@ public struct StepIndicator: View {
                 .overlay(
                     Image(systemName: "checkmark")
                         .font(.caption2)
-                        .foregroundStyle(UIColorToken.textOnPrimary)
+                        .foregroundStyle(UIColorToken.onPrimary)
                 )
                 .frame(width: 24, height: 24)
         } else if index == currentStep {

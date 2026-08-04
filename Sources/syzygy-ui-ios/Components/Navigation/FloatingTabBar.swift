@@ -34,7 +34,7 @@ public struct FloatingTabBar<Tag: Hashable & Sendable>: View {
                         Text(item.label)
                             .font(UIFontToken.caption)
                     }
-                    .foregroundStyle(selection == item.tag ? UIColorToken.textOnPrimary : UIColorToken.textSecondary)
+                    .foregroundStyle(selection == item.tag ? UIColorToken.onPrimary : UIColorToken.textSecondary)
                     .padding(.horizontal, UISpacing.sm)
                     .frame(minWidth: 64, minHeight: 48)
                     .background(selection == item.tag ? UIColorToken.primary : Color.clear)

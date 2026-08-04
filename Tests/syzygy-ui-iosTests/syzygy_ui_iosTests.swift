@@ -30,7 +30,7 @@ struct TokenTests {
         _ = UIColorToken.background
         _ = UIColorToken.textPrimary
         _ = UIColorToken.textSecondary
-        _ = UIColorToken.textOnPrimary
+        _ = UIColorToken.onPrimary
         _ = UIColorToken.border
     }
 

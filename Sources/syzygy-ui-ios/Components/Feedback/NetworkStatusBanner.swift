@@ -71,7 +71,7 @@ public struct NetworkStatusBanner: View {
                     Text("No internet connection")
                         .font(UIFontToken.subheadline)
                 }
-                .foregroundStyle(UIColorToken.textOnPrimary)
+                .foregroundStyle(UIColorToken.onPrimary)
                 .padding(UISpacing.sm)
                 .frame(maxWidth: .infinity)
                 .background(UIColorToken.destructive)

@@ -21,7 +21,7 @@ public struct BottomNavigationBar<Tag: Hashable & Sendable>: View {
                     Image(systemName: item.systemImage)
                         .font(UIFontToken.body)
                         .foregroundStyle(
-                            selection == item.tag ? UIColorToken.textOnPrimary : UIColorToken.textSecondary
+                            selection == item.tag ? UIColorToken.onPrimary : UIColorToken.textSecondary
                         )
                         .frame(width: 44, height: 44)
                         .background(selection == item.tag ? UIColorToken.primary : Color.clear)

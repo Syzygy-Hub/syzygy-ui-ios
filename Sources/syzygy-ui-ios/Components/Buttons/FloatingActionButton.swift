@@ -22,7 +22,7 @@ public struct FloatingActionButton: View {
         Button(action: action) {
             icon
                 .font(UIFontToken.headline)
-                .foregroundStyle(UIColorToken.textOnPrimary)
+                .foregroundStyle(UIColorToken.onPrimary)
                 .frame(width: 56, height: 56)
                 .background(Circle().fill(UIColorToken.primary))
         }
