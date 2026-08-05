@@ -5,6 +5,8 @@ import SwiftUI
 /// toggling of each option.
 @MainActor
 public struct ButtonGroup: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let options: [String]
     private let multiSelect: Bool
     @Binding private var selection: Set<String>
@@ -39,19 +41,21 @@ public struct ButtonGroup: View {
                     toggle(option)
                 } label: {
                     Text(option)
-                        .font(UIFontToken.subheadline)
-                        .foregroundStyle(isSelected ? UIColorToken.onPrimary : UIColorToken.textPrimary)
+                        .font(theme.typography.subheadline)
+                        .foregroundStyle(isSelected ? theme.colors.onPrimary : theme.colors.textPrimary)
                         .frame(maxWidth: .infinity, minHeight: 36)
-                        .background(isSelected ? UIColorToken.primary : Color.clear)
+                        .background(isSelected ? theme.colors.primary : Color.clear)
                 }
+                .accessibilityLabel(option)
+                .accessibilityAddTraits(.isButton)
                 .accessibilityAddTraits(isSelected ? [.isSelected] : [])
             }
         }
-        .background(UIColorToken.surfaceSecondary)
-        .clipShape(RoundedRectangle(cornerRadius: UIRadius.sm))
+        .background(theme.colors.surfaceSecondary)
+        .clipShape(RoundedRectangle(cornerRadius: theme.radius.sm))
         .overlay(
-            RoundedRectangle(cornerRadius: UIRadius.sm)
-                .stroke(UIColorToken.border, lineWidth: UIBorderWidth.thin)
+            RoundedRectangle(cornerRadius: theme.radius.sm)
+                .stroke(theme.colors.border, lineWidth: UIBorderWidth.thin)
         )
     }
 

@@ -5,6 +5,8 @@ import SwiftUI
 /// animation implementation.
 @MainActor
 public struct SkeletonView: View {
+    @Environment(\.syzygyTheme) private var theme
+
     public enum Shape {
         case rectangle(cornerRadius: CGFloat = UIRadius.sm)
         case circle
@@ -38,11 +40,11 @@ public struct SkeletonView: View {
         switch shape {
         case .rectangle(let cornerRadius):
             RoundedRectangle(cornerRadius: cornerRadius)
-                .fill(UIColorToken.border.opacity(0.3))
+                .fill(theme.colors.border.opacity(0.3))
                 .overlay(shimmerOverlay.clipShape(RoundedRectangle(cornerRadius: cornerRadius)))
         case .circle:
             Circle()
-                .fill(UIColorToken.border.opacity(0.3))
+                .fill(theme.colors.border.opacity(0.3))
                 .overlay(shimmerOverlay.clipShape(Circle()))
         }
     }
@@ -50,7 +52,7 @@ public struct SkeletonView: View {
     private var shimmerOverlay: some View {
         GeometryReader { geometry in
             LinearGradient(
-                colors: [.clear, UIColorToken.surface.opacity(0.6), .clear],
+                colors: [.clear, theme.colors.surface.opacity(0.6), .clear],
                 startPoint: .leading,
                 endPoint: .trailing
             )

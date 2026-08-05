@@ -4,6 +4,8 @@ import SwiftUI
 /// unread count). Distinct from `Badge`, which is a standalone labeled pill.
 @MainActor
 public struct CountBadge: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let count: Int?
     private let maxDisplayCount: Int
 
@@ -16,15 +18,15 @@ public struct CountBadge: View {
         Group {
             if let count, count > 0 {
                 Text(displayText(for: count))
-                    .font(UIFontToken.caption)
-                    .foregroundStyle(UIColorToken.onPrimary)
-                    .padding(.horizontal, count > 9 ? UISpacing.xs : 0)
+                    .font(theme.typography.caption)
+                    .foregroundStyle(theme.colors.onPrimary)
+                    .padding(.horizontal, count > 9 ? theme.spacing.xs : 0)
                     .frame(minWidth: 16, minHeight: 16)
-                    .background(UIColorToken.destructive)
+                    .background(theme.colors.destructive)
                     .clipShape(Capsule())
             } else {
                 Circle()
-                    .fill(UIColorToken.destructive)
+                    .fill(theme.colors.destructive)
                     .frame(width: 10, height: 10)
             }
         }

@@ -5,6 +5,8 @@ import SwiftUI
 /// scrim.
 @MainActor
 public struct SideMenu<Content: View>: View {
+    @Environment(\.syzygyTheme) private var theme
+
     @Binding private var isOpen: Bool
     private let width: CGFloat
     private let content: Content
@@ -18,19 +20,23 @@ public struct SideMenu<Content: View>: View {
     public var body: some View {
         ZStack(alignment: .leading) {
             if isOpen {
-                UIColorToken.overlay
+                theme.colors.overlay
                     .opacity(UIOpacity.overlay)
                     .ignoresSafeArea()
                     .onTapGesture {
                         withAnimation(UIAnimation.Easing.standard()) { isOpen = false }
                     }
+                    .accessibilityLabel("Close menu")
+                    .accessibilityHint("Double tap to dismiss the side menu")
                     .transition(.opacity)
 
                 content
                     .frame(width: width)
                     .frame(maxHeight: .infinity)
-                    .background(UIColorToken.surface)
-                    .elevation(UIElevation.lg)
+                    .background(theme.colors.surface)
+                    .themedElevation(theme.elevation.lg)
+                    .accessibilityLabel("Side menu")
+                    .accessibilityHint("Swipe or tap outside to close")
                     .transition(.move(edge: .leading))
             }
         }

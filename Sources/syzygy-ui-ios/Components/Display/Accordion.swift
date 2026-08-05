@@ -22,6 +22,8 @@ public struct AccordionSection: Identifiable {
 
 @MainActor
 public struct Accordion: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let sections: [AccordionSection]
     private let allowsMultipleOpen: Bool
 
@@ -38,7 +40,7 @@ public struct Accordion: View {
     }
 
     public var body: some View {
-        VStack(spacing: UISpacing.sm) {
+        VStack(spacing: theme.spacing.sm) {
             ForEach(sections) { section in
                 sectionView(section)
             }
@@ -56,16 +58,16 @@ public struct Accordion: View {
             } label: {
                 HStack {
                     Text(section.title)
-                        .font(UIFontToken.headline)
-                        .foregroundStyle(UIColorToken.textPrimary)
+                        .font(theme.typography.headline)
+                        .foregroundStyle(theme.colors.textPrimary)
 
                     Spacer()
 
                     Image(systemName: "chevron.down")
-                        .foregroundStyle(UIColorToken.textSecondary)
+                        .foregroundStyle(theme.colors.textSecondary)
                         .rotationEffect(.degrees(isExpanded ? 180 : 0))
                 }
-                .padding(.horizontal, UISpacing.md)
+                .padding(.horizontal, theme.spacing.md)
                 .frame(minHeight: 44)
             }
             .accessibilityLabel(section.title)
@@ -74,13 +76,13 @@ public struct Accordion: View {
 
             if isExpanded {
                 section.content
-                    .padding(.horizontal, UISpacing.md)
-                    .padding(.bottom, UISpacing.md)
+                    .padding(.horizontal, theme.spacing.md)
+                    .padding(.bottom, theme.spacing.md)
                     .transition(.opacity.combined(with: .move(edge: .top)))
             }
         }
-        .background(UIColorToken.surface)
-        .clipShape(RoundedRectangle(cornerRadius: UIRadius.md))
+        .background(theme.colors.surface)
+        .clipShape(RoundedRectangle(cornerRadius: theme.radius.md))
     }
 
     private func toggle(_ id: String) {

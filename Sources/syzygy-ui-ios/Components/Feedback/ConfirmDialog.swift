@@ -7,6 +7,8 @@ import SwiftUI
 /// using the `destructive` color token.
 @MainActor
 private struct ConfirmDialogContent: View {
+    @Environment(\.syzygyTheme) private var theme
+
     let title: String
     let message: String
     let confirmLabel: String
@@ -16,25 +18,25 @@ private struct ConfirmDialogContent: View {
     let onCancel: () -> Void
 
     var body: some View {
-        VStack(spacing: UISpacing.md) {
+        VStack(spacing: theme.spacing.md) {
             Text(title)
-                .font(UIFontToken.headline)
-                .foregroundStyle(UIColorToken.textPrimary)
+                .font(theme.typography.headline)
+                .foregroundStyle(theme.colors.textPrimary)
 
             Text(message)
-                .font(UIFontToken.subheadline)
-                .foregroundStyle(UIColorToken.textSecondary)
+                .font(theme.typography.subheadline)
+                .foregroundStyle(theme.colors.textSecondary)
                 .multilineTextAlignment(.center)
 
-            HStack(spacing: UISpacing.sm) {
+            HStack(spacing: theme.spacing.sm) {
                 Button(cancelLabel, action: onCancel)
-                    .font(UIFontToken.body)
-                    .foregroundStyle(UIColorToken.textSecondary)
+                    .font(theme.typography.body)
+                    .foregroundStyle(theme.colors.textSecondary)
                     .frame(maxWidth: .infinity, minHeight: 44)
 
                 Button(confirmLabel, action: onConfirm)
-                    .font(UIFontToken.body.weight(.semibold))
-                    .foregroundStyle(isDestructive ? UIColorToken.destructive : UIColorToken.primary)
+                    .font(theme.typography.body.weight(.semibold))
+                    .foregroundStyle(isDestructive ? theme.colors.destructive : theme.colors.primary)
                     .frame(maxWidth: .infinity, minHeight: 44)
             }
         }

@@ -1,6 +1,6 @@
 # syzygy-ui-ios
 
-[![Version](https://img.shields.io/badge/Version-2.3.0-2F6FED.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-2.4.0-2F6FED.svg)](CHANGELOG.md)
 [![Swift](https://img.shields.io/badge/Swift-6-F05138?logo=swift&logoColor=white)](https://www.swift.org)
 [![Platform](https://img.shields.io/badge/iOS-17%2B-000000?logo=apple&logoColor=white)](https://developer.apple.com/ios/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -185,6 +185,80 @@ CardView {
 ```
 
 See the [Components](#components) list above for everything else available.
+
+## Theming
+
+v2.4.0 introduces `SyzygyTheme` — a runtime-swappable snapshot of all visual tokens (colors, radius, spacing, typography, elevation, animation) injected through the SwiftUI `Environment`.
+
+### Wrapping your app
+
+```swift
+import syzygy_ui_ios
+
+@main
+struct MyApp: App {
+    var body: some Scene {
+        WindowGroup {
+            SyzygyThemeProvider { _ in
+                ContentView()
+            }
+        }
+    }
+}
+```
+
+`SyzygyThemeProvider` injects the chosen theme into the environment so every `syzygy-ui-ios` component below it reads tokens from the theme automatically.
+
+### Runtime theme switching
+
+`SyzygyThemeProvider` exposes a `Binding<SyzygyTheme>` so you can swap the theme at runtime without rebuilding the view hierarchy:
+
+```swift
+SyzygyThemeProvider(theme: .dark) { $theme in
+    VStack {
+        ContentView()
+
+        Button("Switch to High Contrast") {
+            theme = .highContrast
+        }
+    }
+}
+```
+
+### Built-in themes
+
+| Theme | Description |
+|---|---|
+| `.default` | Adaptive light/dark (matches system appearance via `UIColorToken`) |
+| `.dark` | Fixed dark-mode palette with pinned hex values |
+| `.highContrast` | WCAG-AA+ contrast, heavier type weights, sharp radius (0 on all corners) |
+
+### Component-level override
+
+Apply a different theme to a subtree without affecting siblings:
+
+```swift
+CardView {
+    Text("High contrast card")
+}
+.syzygyTheme(.highContrast)
+```
+
+### Custom themes
+
+Build a one-off theme by mutating a preset:
+
+```swift
+let brandTheme = SyzygyTheme.default.with(
+    colors: SyzygyColors(
+        primary: Color(red: 0.2, green: 0.6, blue: 1.0),
+        // ... other colors
+    ),
+    radius: SyzygyRadius(xs: 0, sm: 2, md: 4, lg: 8, xl: 12, full: 9999)
+)
+```
+
+All `SyzygyTheme` sub-structs (`SyzygyColors`, `SyzygyRadius`, `SyzygySpacing`, `SyzygyTypography`, `SyzygyElevation`, `SyzygyAnimation`) conform to `Equatable` and `Sendable`, so they are safe to pass across actor boundaries and drive `withAnimation` transitions.
 
 ## Contributing & Releases
 

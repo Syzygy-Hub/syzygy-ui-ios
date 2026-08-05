@@ -4,6 +4,8 @@ import SwiftUI
 /// scrolls beneath it, using `LazyVStack` with pinned section headers.
 @MainActor
 public struct StickyHeader<Header: View, Content: View>: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let header: Header
     private let content: Content
 
@@ -19,7 +21,7 @@ public struct StickyHeader<Header: View, Content: View>: View {
                     content
                 } header: {
                     header
-                        .background(UIColorToken.surface)
+                        .background(theme.colors.surface)
                 }
             }
         }

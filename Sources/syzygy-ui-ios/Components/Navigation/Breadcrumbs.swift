@@ -4,6 +4,8 @@ import SwiftUI
 /// separator glyph.
 @MainActor
 public struct Breadcrumbs: View {
+    @Environment(\.syzygyTheme) private var theme
+
     public struct Item: Identifiable {
         public let id = UUID()
         public let label: String
@@ -22,19 +24,19 @@ public struct Breadcrumbs: View {
     }
 
     public var body: some View {
-        HStack(spacing: UISpacing.xs) {
+        HStack(spacing: theme.spacing.xs) {
             ForEach(Array(items.enumerated()), id: \.element.id) { index, item in
                 Button(action: item.action) {
                     Text(item.label)
-                        .font(UIFontToken.subheadline)
-                        .foregroundStyle(index == items.count - 1 ? UIColorToken.textPrimary : UIColorToken.link)
+                        .font(theme.typography.subheadline)
+                        .foregroundStyle(index == items.count - 1 ? theme.colors.textPrimary : theme.colors.link)
                 }
                 .disabled(index == items.count - 1)
 
                 if index < items.count - 1 {
                     Text("›")
-                        .font(UIFontToken.subheadline)
-                        .foregroundStyle(UIColorToken.separator)
+                        .font(theme.typography.subheadline)
+                        .foregroundStyle(theme.colors.separator)
                 }
             }
         }

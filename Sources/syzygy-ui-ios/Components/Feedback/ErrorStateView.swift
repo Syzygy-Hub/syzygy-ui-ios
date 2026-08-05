@@ -7,6 +7,8 @@ private let errorIconSize: CGFloat = 40
 /// and a mandatory retry action.
 @MainActor
 public struct ErrorStateView: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let systemImage: String
     private let title: String
     private let subtitle: String
@@ -28,25 +30,25 @@ public struct ErrorStateView: View {
     }
 
     public var body: some View {
-        VStack(spacing: UISpacing.md) {
+        VStack(spacing: theme.spacing.md) {
             Image(systemName: systemImage)
                 .font(.system(size: errorIconSize))
-                .foregroundStyle(UIColorToken.destructive)
+                .foregroundStyle(theme.colors.destructive)
 
             Text(title)
-                .font(UIFontToken.title)
-                .foregroundStyle(UIColorToken.textPrimary)
+                .font(theme.typography.title)
+                .foregroundStyle(theme.colors.textPrimary)
                 .multilineTextAlignment(.center)
 
             Text(subtitle)
-                .font(UIFontToken.body)
-                .foregroundStyle(UIColorToken.textSecondary)
+                .font(theme.typography.body)
+                .foregroundStyle(theme.colors.textSecondary)
                 .multilineTextAlignment(.center)
 
             PrimaryButton(retryTitle, action: retryAction)
-                .padding(.top, UISpacing.sm)
+                .padding(.top, theme.spacing.sm)
         }
-        .padding(UISpacing.xl)
+        .padding(theme.spacing.xl)
         .accessibilityElement(children: .contain)
     }
 }

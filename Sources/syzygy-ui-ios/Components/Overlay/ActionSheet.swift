@@ -17,6 +17,8 @@ public struct ActionSheetAction: Identifiable {
 
 @MainActor
 private struct ActionSheetContent: View {
+    @Environment(\.syzygyTheme) private var theme
+
     let actions: [ActionSheetAction]
     let dismiss: () -> Void
 
@@ -28,17 +30,19 @@ private struct ActionSheetContent: View {
                     dismiss()
                 } label: {
                     Text(action.label)
-                        .font(UIFontToken.body)
-                        .foregroundStyle(action.isDestructive ? UIColorToken.destructive : UIColorToken.textPrimary)
+                        .font(theme.typography.body)
+                        .foregroundStyle(action.isDestructive ? theme.colors.destructive : theme.colors.textPrimary)
                         .frame(maxWidth: .infinity, minHeight: 52)
                 }
+                .accessibilityLabel(action.label)
+                .accessibilityAddTraits(.isButton)
 
                 if action.id != actions.last?.id {
                     DividerLine()
                 }
             }
         }
-        .padding(.bottom, UISpacing.md)
+        .padding(.bottom, theme.spacing.md)
     }
 }
 

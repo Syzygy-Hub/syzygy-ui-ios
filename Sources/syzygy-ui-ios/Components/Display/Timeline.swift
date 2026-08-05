@@ -30,6 +30,8 @@ public struct TimelineItem: Identifiable {
 
 @MainActor
 public struct Timeline: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let items: [TimelineItem]
     private let alignment: TimelineItemAlignment
 
@@ -50,37 +52,37 @@ public struct Timeline: View {
         let dot = VStack(spacing: 0) {
             Image(systemName: item.systemImage)
                 .font(.system(size: UIIconSize.sm))
-                .foregroundStyle(UIColorToken.primary)
+                .foregroundStyle(theme.colors.primary)
                 .frame(width: UIIconSize.md, height: UIIconSize.md)
 
             if !isLast {
                 Rectangle()
-                    .fill(UIColorToken.border)
+                    .fill(theme.colors.border)
                     .frame(width: 2)
-                    .frame(minHeight: UISpacing.xl)
+                    .frame(minHeight: theme.spacing.xl)
             }
         }
 
-        let text = VStack(alignment: alignment == .leading ? .leading : .trailing, spacing: UISpacing.xxs) {
+        let text = VStack(alignment: alignment == .leading ? .leading : .trailing, spacing: theme.spacing.xxs) {
             Text(item.title)
-                .font(UIFontToken.subheadline)
-                .foregroundStyle(UIColorToken.textPrimary)
+                .font(theme.typography.subheadline)
+                .foregroundStyle(theme.colors.textPrimary)
 
             if let subtitle = item.subtitle {
                 Text(subtitle)
-                    .font(UIFontToken.caption)
-                    .foregroundStyle(UIColorToken.textSecondary)
+                    .font(theme.typography.caption)
+                    .foregroundStyle(theme.colors.textSecondary)
             }
 
             if let timestamp = item.timestamp {
                 Text(timestamp)
-                    .font(UIFontToken.caption)
-                    .foregroundStyle(UIColorToken.textTertiary)
+                    .font(theme.typography.caption)
+                    .foregroundStyle(theme.colors.textTertiary)
             }
         }
-        .padding(.bottom, UISpacing.md)
+        .padding(.bottom, theme.spacing.md)
 
-        return HStack(alignment: .top, spacing: UISpacing.sm) {
+        return HStack(alignment: .top, spacing: theme.spacing.sm) {
             if alignment == .leading {
                 dot
                 text

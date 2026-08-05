@@ -4,6 +4,8 @@ import SwiftUI
 /// corner of the screen.
 @MainActor
 public struct FloatingActionButton: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let icon: Image
     private let accessibilityLabel: String
     private let action: () -> Void
@@ -21,12 +23,13 @@ public struct FloatingActionButton: View {
     public var body: some View {
         Button(action: action) {
             icon
-                .font(UIFontToken.headline)
-                .foregroundStyle(UIColorToken.onPrimary)
+                .font(theme.typography.headline)
+                .foregroundStyle(theme.colors.onPrimary)
                 .frame(width: 56, height: 56)
-                .background(Circle().fill(UIColorToken.primary))
+                .background(Circle().fill(theme.colors.primary))
         }
-        .elevation(UIElevation.lg)
+        .themedElevation(theme.elevation.lg)
         .accessibilityLabel(accessibilityLabel)
+        .accessibilityActivationPoint(CGPoint(x: 0.5, y: 0.5))
     }
 }

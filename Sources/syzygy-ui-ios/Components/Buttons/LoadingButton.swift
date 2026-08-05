@@ -5,6 +5,8 @@ import SwiftUI
 /// the button is disabled.
 @MainActor
 public struct LoadingButton: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let label: String
     private let isLoading: Bool
     private let action: () -> Void
@@ -19,20 +21,20 @@ public struct LoadingButton: View {
         Button(action: action) {
             ZStack {
                 Text(label)
-                    .font(UIFontToken.headline)
+                    .font(theme.typography.headline)
                     .opacity(isLoading ? 0 : 1)
 
                 if isLoading {
                     ProgressView()
-                        .tint(UIColorToken.onPrimary)
+                        .tint(theme.colors.onPrimary)
                 }
             }
-            .foregroundStyle(UIColorToken.onPrimary)
+            .foregroundStyle(theme.colors.onPrimary)
             .frame(maxWidth: .infinity, minHeight: 44)
-            .padding(.horizontal, UISpacing.md)
+            .padding(.horizontal, theme.spacing.md)
         }
-        .background(UIColorToken.primary.opacity(isLoading ? UIOpacity.disabled : 1))
-        .clipShape(RoundedRectangle(cornerRadius: UIRadius.md))
+        .background(theme.colors.primary.opacity(isLoading ? UIOpacity.disabled : 1))
+        .clipShape(RoundedRectangle(cornerRadius: theme.radius.md))
         .disabled(isLoading)
         .accessibilityLabel(label)
         .accessibilityAddTraits(isLoading ? [] : [.isButton])

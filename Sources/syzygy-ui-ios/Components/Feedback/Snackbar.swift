@@ -7,6 +7,8 @@ import SwiftUI
 /// no-hidden-global-state pattern.
 @MainActor
 public struct Snackbar: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let message: String
     private let actionLabel: String?
     private let onAction: (() -> Void)?
@@ -30,10 +32,10 @@ public struct Snackbar: View {
     public var body: some View {
         Group {
             if isPresented {
-                HStack(spacing: UISpacing.md) {
+                HStack(spacing: theme.spacing.md) {
                     Text(message)
-                        .font(UIFontToken.subheadline)
-                        .foregroundStyle(UIColorToken.onPrimary)
+                        .font(theme.typography.subheadline)
+                        .foregroundStyle(theme.colors.onPrimary)
 
                     Spacer()
 
@@ -42,16 +44,16 @@ public struct Snackbar: View {
                             onAction?()
                             isPresented = false
                         }
-                        .font(UIFontToken.subheadline.weight(.semibold))
-                        .foregroundStyle(UIColorToken.onPrimary)
+                        .font(theme.typography.subheadline.weight(.semibold))
+                        .foregroundStyle(theme.colors.onPrimary)
                     }
                 }
-                .padding(.horizontal, UISpacing.md)
+                .padding(.horizontal, theme.spacing.md)
                 .frame(minHeight: 44)
-                .background(UIColorToken.textPrimary)
-                .clipShape(RoundedRectangle(cornerRadius: UIRadius.md))
-                .padding(.horizontal, UISpacing.md)
-                .padding(.bottom, UISpacing.md)
+                .background(theme.colors.textPrimary)
+                .clipShape(RoundedRectangle(cornerRadius: theme.radius.md))
+                .padding(.horizontal, theme.spacing.md)
+                .padding(.bottom, theme.spacing.md)
                 .transition(.move(edge: .bottom).combined(with: .opacity))
                 .task(id: isPresented) {
                     guard isPresented else { return }

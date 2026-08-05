@@ -3,6 +3,8 @@ import SwiftUI
 /// A bottom-anchored sheet with a grab handle and top-rounded corners.
 @MainActor
 public struct BottomSheet<Content: View>: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let content: Content
 
     public init(@ViewBuilder content: () -> Content) {
@@ -12,24 +14,38 @@ public struct BottomSheet<Content: View>: View {
     public var body: some View {
         VStack(spacing: 0) {
             Capsule()
-                .fill(UIColorToken.border)
+                .fill(theme.colors.border)
                 .frame(width: 36, height: 4)
-                .padding(.top, UISpacing.sm)
-                .padding(.bottom, UISpacing.md)
+                .padding(.top, theme.spacing.sm)
+                .padding(.bottom, theme.spacing.md)
 
             content
         }
         .frame(maxWidth: .infinity)
-        .background(UIColorToken.surface)
+        .background(theme.colors.surface)
         .clipShape(
             UnevenRoundedRectangle(
-                topLeadingRadius: UIRadius.lg,
+                topLeadingRadius: theme.radius.lg,
                 bottomLeadingRadius: 0,
                 bottomTrailingRadius: 0,
-                topTrailingRadius: UIRadius.lg
+                topTrailingRadius: theme.radius.lg
             )
         )
         .shadow(color: .black.opacity(0.15), radius: 12, x: 0, y: -4)
+    }
+}
+
+// MARK: - Internal scrim helper
+
+@MainActor
+private struct BottomSheetScrim: View {
+    @Environment(\.syzygyTheme) private var theme
+    let onTap: () -> Void
+
+    var body: some View {
+        Color.black.opacity(theme.colors.overlayAlpha)
+            .ignoresSafeArea()
+            .onTapGesture { onTap() }
     }
 }
 
@@ -45,9 +61,7 @@ public extension View {
             self
 
             if isPresented.wrappedValue {
-                Color.black.opacity(0.4)
-                    .ignoresSafeArea()
-                    .onTapGesture { isPresented.wrappedValue = false }
+                BottomSheetScrim { isPresented.wrappedValue = false }
                     .transition(.opacity)
 
                 BottomSheet(content: content)

@@ -4,6 +4,8 @@ import SwiftUI
 /// partial ring, or `nil` for a continuously spinning indeterminate mode.
 @MainActor
 public struct CircularProgress: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let progress: Double?
     private let lineWidth: CGFloat
 
@@ -17,18 +19,18 @@ public struct CircularProgress: View {
     public var body: some View {
         ZStack {
             Circle()
-                .stroke(UIColorToken.border, lineWidth: lineWidth)
+                .stroke(theme.colors.border, lineWidth: lineWidth)
 
             if let progress {
                 Circle()
                     .trim(from: 0, to: max(0, min(1, progress)))
-                    .stroke(UIColorToken.primary, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
+                    .stroke(theme.colors.primary, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
                     .rotationEffect(.degrees(-90))
                     .animation(UIAnimation.Easing.standard(), value: progress)
             } else {
                 Circle()
                     .trim(from: 0, to: 0.25)
-                    .stroke(UIColorToken.primary, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
+                    .stroke(theme.colors.primary, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
                     .rotationEffect(.degrees(isSpinning ? 360 : 0))
                     .animation(.linear(duration: 0.9).repeatForever(autoreverses: false), value: isSpinning)
                     .onAppear { isSpinning = true }

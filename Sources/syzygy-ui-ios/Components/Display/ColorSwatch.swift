@@ -4,6 +4,8 @@ import SwiftUI
 /// label beneath and a selected-state border using the `focus` token.
 @MainActor
 public struct ColorSwatch: View {
+    @Environment(\.syzygyTheme) private var theme
+
     public enum Shape {
         case circle
         case square
@@ -30,15 +32,15 @@ public struct ColorSwatch: View {
     }
 
     public var body: some View {
-        VStack(spacing: UISpacing.xs) {
+        VStack(spacing: theme.spacing.xs) {
             swatch
                 .frame(width: size, height: size)
                 .overlay(border)
 
             if let label {
                 Text(label)
-                    .font(UIFontToken.caption)
-                    .foregroundStyle(UIColorToken.textSecondary)
+                    .font(theme.typography.caption)
+                    .foregroundStyle(theme.colors.textSecondary)
             }
         }
         .accessibilityElement(children: .ignore)
@@ -52,7 +54,7 @@ public struct ColorSwatch: View {
         case .circle:
             Circle().fill(color)
         case .square:
-            RoundedRectangle(cornerRadius: UIRadius.xs).fill(color)
+            RoundedRectangle(cornerRadius: theme.radius.xs).fill(color)
         }
     }
 
@@ -61,9 +63,10 @@ public struct ColorSwatch: View {
         if isSelected {
             switch shape {
             case .circle:
-                Circle().stroke(UIColorToken.focus, lineWidth: UIBorderWidth.thick)
+                Circle().stroke(theme.colors.focus, lineWidth: UIBorderWidth.thick)
             case .square:
-                RoundedRectangle(cornerRadius: UIRadius.xs).stroke(UIColorToken.focus, lineWidth: UIBorderWidth.thick)
+                RoundedRectangle(cornerRadius: theme.radius.xs)
+                    .stroke(theme.colors.focus, lineWidth: UIBorderWidth.thick)
             }
         }
     }

@@ -4,6 +4,8 @@ import SwiftUI
 /// Also known as `MetricCard` in some design systems.
 @MainActor
 public struct StatsCard: View {
+    @Environment(\.syzygyTheme) private var theme
+
     public enum Trend {
         case up
         case down
@@ -17,13 +19,6 @@ public struct StatsCard: View {
             }
         }
 
-        var color: Color {
-            switch self {
-            case .up: UIColorToken.success
-            case .down: UIColorToken.destructive
-            case .neutral: UIColorToken.textSecondary
-            }
-        }
     }
 
     private let label: String
@@ -39,29 +34,37 @@ public struct StatsCard: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: UISpacing.xs) {
+        VStack(alignment: .leading, spacing: theme.spacing.xs) {
             Text(label)
-                .font(UIFontToken.subheadline)
-                .foregroundStyle(UIColorToken.textSecondary)
+                .font(theme.typography.subheadline)
+                .foregroundStyle(theme.colors.textSecondary)
 
             Text(value)
-                .font(UIFontToken.title)
-                .foregroundStyle(UIColorToken.textPrimary)
+                .font(theme.typography.title)
+                .foregroundStyle(theme.colors.textPrimary)
 
             if let trend, let trendValue {
-                HStack(spacing: UISpacing.xxs) {
+                HStack(spacing: theme.spacing.xxs) {
                     Image(systemName: trend.systemImage)
                     Text(trendValue)
                 }
-                .font(UIFontToken.caption)
-                .foregroundStyle(trend.color)
+                .font(theme.typography.caption)
+                .foregroundStyle(trendColor(trend))
             }
         }
-        .padding(UISpacing.md)
+        .padding(theme.spacing.md)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(UIColorToken.surface)
-        .clipShape(RoundedRectangle(cornerRadius: UIRadius.md))
-        .elevation(UIElevation.sm)
+        .background(theme.colors.surface)
+        .clipShape(RoundedRectangle(cornerRadius: theme.radius.md))
+        .themedElevation(theme.elevation.sm)
         .accessibilityElement(children: .combine)
+    }
+
+    private func trendColor(_ trend: Trend) -> Color {
+        switch trend {
+        case .up: theme.colors.success
+        case .down: theme.colors.destructive
+        case .neutral: theme.colors.textSecondary
+        }
     }
 }

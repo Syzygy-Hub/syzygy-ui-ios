@@ -9,6 +9,8 @@ import SwiftUI
 /// tappable control; pass the same `currentPage` value you feed to `PagerView`.
 @MainActor
 public struct PageControl: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let pageCount: Int
     private let currentPage: Int
     private let activeColor: Color
@@ -27,7 +29,7 @@ public struct PageControl: View {
     }
 
     public var body: some View {
-        HStack(spacing: UISpacing.xs) {
+        HStack(spacing: theme.spacing.xs) {
             ForEach(0..<pageCount, id: \.self) { index in
                 Circle()
                     .fill(index == currentPage ? activeColor : inactiveColor)

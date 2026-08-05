@@ -4,29 +4,13 @@ import SwiftUI
 /// with 4 variants, each drawn from the corresponding *Muted color tokens.
 @MainActor
 public struct InlineAlert: View {
+    @Environment(\.syzygyTheme) private var theme
+
     public enum Variant {
         case info
         case success
         case warning
         case error
-
-        var background: Color {
-            switch self {
-            case .info: UIColorToken.primaryMuted
-            case .success: UIColorToken.successMuted
-            case .warning: UIColorToken.warningMuted
-            case .error: UIColorToken.destructiveMuted
-            }
-        }
-
-        var foreground: Color {
-            switch self {
-            case .info: UIColorToken.primary
-            case .success: UIColorToken.success
-            case .warning: UIColorToken.warning
-            case .error: UIColorToken.destructive
-            }
-        }
 
         var systemImage: String {
             switch self {
@@ -47,19 +31,37 @@ public struct InlineAlert: View {
     }
 
     public var body: some View {
-        HStack(alignment: .top, spacing: UISpacing.sm) {
+        HStack(alignment: .top, spacing: theme.spacing.sm) {
             Image(systemName: variant.systemImage)
-                .foregroundStyle(variant.foreground)
+                .foregroundStyle(variantForeground)
 
             Text(message)
-                .font(UIFontToken.subheadline)
-                .foregroundStyle(variant.foreground)
+                .font(theme.typography.subheadline)
+                .foregroundStyle(variantForeground)
         }
-        .padding(UISpacing.sm)
+        .padding(theme.spacing.sm)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(variant.background)
-        .clipShape(RoundedRectangle(cornerRadius: UIRadius.sm))
+        .background(variantBackground)
+        .clipShape(RoundedRectangle(cornerRadius: theme.radius.sm))
         .accessibilityElement(children: .combine)
         .accessibilityLabel(message)
+    }
+
+    private var variantBackground: Color {
+        switch variant {
+        case .info: theme.colors.primaryMuted
+        case .success: theme.colors.successMuted
+        case .warning: theme.colors.warningMuted
+        case .error: theme.colors.destructiveMuted
+        }
+    }
+
+    private var variantForeground: Color {
+        switch variant {
+        case .info: theme.colors.primary
+        case .success: theme.colors.success
+        case .warning: theme.colors.warning
+        case .error: theme.colors.destructive
+        }
     }
 }

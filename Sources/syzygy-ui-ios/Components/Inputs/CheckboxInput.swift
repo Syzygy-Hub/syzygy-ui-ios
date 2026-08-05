@@ -3,6 +3,8 @@ import SwiftUI
 /// A labeled checkbox with a filled/outline square glyph.
 @MainActor
 public struct CheckboxInput: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let label: String
     @Binding private var isChecked: Bool
 
@@ -15,14 +17,14 @@ public struct CheckboxInput: View {
         Button {
             isChecked.toggle()
         } label: {
-            HStack(spacing: UISpacing.sm) {
+            HStack(spacing: theme.spacing.sm) {
                 Image(systemName: isChecked ? "checkmark.square.fill" : "square")
-                    .font(UIFontToken.body)
-                    .foregroundStyle(isChecked ? UIColorToken.primary : UIColorToken.textSecondary)
+                    .font(theme.typography.body)
+                    .foregroundStyle(isChecked ? theme.colors.primary : theme.colors.textSecondary)
 
                 Text(label)
-                    .font(UIFontToken.body)
-                    .foregroundStyle(UIColorToken.textPrimary)
+                    .font(theme.typography.body)
+                    .foregroundStyle(theme.colors.textPrimary)
             }
             .frame(minHeight: 44)
         }

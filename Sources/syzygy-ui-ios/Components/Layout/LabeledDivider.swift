@@ -6,6 +6,8 @@ import SwiftUI
 /// centered, or trailing along the line.
 @MainActor
 public struct LabeledDivider: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let label: String
     private let alignment: HorizontalAlignment
 
@@ -15,14 +17,14 @@ public struct LabeledDivider: View {
     }
 
     public var body: some View {
-        HStack(spacing: UISpacing.sm) {
+        HStack(spacing: theme.spacing.sm) {
             if alignment != .leading {
                 DividerLine()
             }
 
             Text(label)
-                .font(UIFontToken.caption)
-                .foregroundStyle(UIColorToken.textSecondary)
+                .font(theme.typography.caption)
+                .foregroundStyle(theme.colors.textSecondary)
                 .fixedSize()
 
             if alignment != .trailing {

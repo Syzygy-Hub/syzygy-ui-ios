@@ -4,6 +4,8 @@ import SwiftUI
 /// subtitle, and a trailing accessory view.
 @MainActor
 public struct ListRow<Accessory: View>: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let title: String
     private let subtitle: String?
     private let systemImage: String?
@@ -37,22 +39,22 @@ public struct ListRow<Accessory: View>: View {
     }
 
     private var rowContent: some View {
-        HStack(spacing: UISpacing.sm) {
+        HStack(spacing: theme.spacing.sm) {
             if let systemImage {
                 Image(systemName: systemImage)
-                    .foregroundStyle(UIColorToken.primary)
+                    .foregroundStyle(theme.colors.primary)
                     .frame(width: 24)
             }
 
-            VStack(alignment: .leading, spacing: UISpacing.xs) {
+            VStack(alignment: .leading, spacing: theme.spacing.xs) {
                 Text(title)
-                    .font(UIFontToken.body)
-                    .foregroundStyle(UIColorToken.textPrimary)
+                    .font(theme.typography.body)
+                    .foregroundStyle(theme.colors.textPrimary)
 
                 if let subtitle {
                     Text(subtitle)
-                        .font(UIFontToken.footnote)
-                        .foregroundStyle(UIColorToken.textSecondary)
+                        .font(theme.typography.footnote)
+                        .foregroundStyle(theme.colors.textSecondary)
                 }
             }
 
@@ -60,9 +62,9 @@ public struct ListRow<Accessory: View>: View {
 
             accessory
         }
-        .padding(.horizontal, UISpacing.md)
+        .padding(.horizontal, theme.spacing.md)
         .frame(minHeight: 44)
-        .background(UIColorToken.surface)
+        .background(theme.colors.surface)
         .contentShape(Rectangle())
     }
 }

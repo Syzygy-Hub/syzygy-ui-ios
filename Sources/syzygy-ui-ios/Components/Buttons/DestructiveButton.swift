@@ -3,6 +3,8 @@ import SwiftUI
 /// A filled button for irreversible or destructive actions.
 @MainActor
 public struct DestructiveButton: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let title: String
     private let action: () -> Void
 
@@ -14,13 +16,13 @@ public struct DestructiveButton: View {
     public var body: some View {
         Button(action: action) {
             Text(title)
-                .font(UIFontToken.headline)
-                .foregroundStyle(UIColorToken.onPrimary)
+                .font(theme.typography.headline)
+                .foregroundStyle(theme.colors.onPrimary)
                 .frame(maxWidth: .infinity, minHeight: 44)
-                .padding(.horizontal, UISpacing.md)
+                .padding(.horizontal, theme.spacing.md)
         }
-        .background(UIColorToken.destructive)
-        .clipShape(RoundedRectangle(cornerRadius: UIRadius.md))
+        .background(theme.colors.destructive)
+        .clipShape(RoundedRectangle(cornerRadius: theme.radius.md))
         .accessibilityLabel(title)
     }
 }

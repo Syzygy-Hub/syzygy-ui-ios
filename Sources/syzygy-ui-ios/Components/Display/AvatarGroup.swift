@@ -4,6 +4,8 @@ import SwiftUI
 /// with a trailing "+N" overflow badge for the rest.
 @MainActor
 public struct AvatarGroup: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let initials: [String]
     private let max: Int
     private let size: Avatar.Size
@@ -21,20 +23,20 @@ public struct AvatarGroup: View {
         HStack(spacing: -size.dimension * 0.3) {
             ForEach(Array(visible.enumerated()), id: \.offset) { index, initial in
                 Avatar(initials: initial, size: size)
-                    .overlay(Circle().stroke(UIColorToken.surface, lineWidth: 2))
+                    .overlay(Circle().stroke(theme.colors.surface, lineWidth: 2))
                     .zIndex(Double(visible.count - index))
             }
 
             if overflow > 0 {
                 ZStack {
                     Circle()
-                        .fill(UIColorToken.surfaceSecondary)
+                        .fill(theme.colors.surfaceSecondary)
                     Text("+\(overflow)")
-                        .font(UIFontToken.caption)
-                        .foregroundStyle(UIColorToken.textSecondary)
+                        .font(theme.typography.caption)
+                        .foregroundStyle(theme.colors.textSecondary)
                 }
                 .frame(width: size.dimension, height: size.dimension)
-                .overlay(Circle().stroke(UIColorToken.surface, lineWidth: 2))
+                .overlay(Circle().stroke(theme.colors.surface, lineWidth: 2))
                 .accessibilityLabel("\(overflow) more")
             }
         }

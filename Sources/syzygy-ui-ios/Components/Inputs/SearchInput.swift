@@ -3,6 +3,8 @@ import SwiftUI
 /// A search field with a leading icon, trailing clear button, and built-in debounce.
 @MainActor
 public struct SearchInput: View {
+    @Environment(\.syzygyTheme) private var theme
+
     @Binding private var text: String
     private let placeholder: String
     private let debounceInterval: Duration
@@ -23,13 +25,13 @@ public struct SearchInput: View {
     }
 
     public var body: some View {
-        HStack(spacing: UISpacing.sm) {
+        HStack(spacing: theme.spacing.sm) {
             Image(systemName: "magnifyingglass")
-                .foregroundStyle(UIColorToken.textSecondary)
+                .foregroundStyle(theme.colors.textSecondary)
 
             TextField(placeholder, text: $text)
-                .font(UIFontToken.body)
-                .foregroundStyle(UIColorToken.textPrimary)
+                .font(theme.typography.body)
+                .foregroundStyle(theme.colors.textPrimary)
                 .onChange(of: text) { _, newValue in
                     scheduleDebounce(with: newValue)
                 }
@@ -41,20 +43,20 @@ public struct SearchInput: View {
                     onSearchTextChanged?("")
                 } label: {
                     Image(systemName: "xmark.circle.fill")
-                        .foregroundStyle(UIColorToken.textSecondary)
+                        .foregroundStyle(theme.colors.textSecondary)
                         .frame(width: 44, height: 44)
                 }
                 .accessibilityLabel("Clear search")
             }
         }
-        .padding(.leading, UISpacing.sm)
+        .padding(.leading, theme.spacing.sm)
         .frame(minHeight: 44)
-        .background(UIColorToken.surface)
+        .background(theme.colors.surface)
         .overlay(
-            RoundedRectangle(cornerRadius: UIRadius.sm)
-                .stroke(UIColorToken.border, lineWidth: 1)
+            RoundedRectangle(cornerRadius: theme.radius.sm)
+                .stroke(theme.colors.border, lineWidth: 1)
         )
-        .clipShape(RoundedRectangle(cornerRadius: UIRadius.sm))
+        .clipShape(RoundedRectangle(cornerRadius: theme.radius.sm))
         .accessibilityLabel(placeholder)
     }
 

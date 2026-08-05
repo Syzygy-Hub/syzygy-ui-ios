@@ -4,6 +4,8 @@ import SwiftUI
 /// colliding with `SwiftUI.Slider` and UIKit's `UISlider`.
 @MainActor
 public struct SliderInput: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let label: String
     @Binding private var value: Double
     private let range: ClosedRange<Double>
@@ -22,17 +24,17 @@ public struct SliderInput: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: UISpacing.xs) {
+        VStack(alignment: .leading, spacing: theme.spacing.xs) {
             HStack {
                 Text(label)
-                    .font(UIFontToken.subheadline)
-                    .foregroundStyle(UIColorToken.textSecondary)
+                    .font(theme.typography.subheadline)
+                    .foregroundStyle(theme.colors.textSecondary)
 
                 Spacer()
 
                 Text(value.formatted())
-                    .font(UIFontToken.subheadline)
-                    .foregroundStyle(UIColorToken.textSecondary)
+                    .font(theme.typography.subheadline)
+                    .foregroundStyle(theme.colors.textSecondary)
             }
 
             Group {
@@ -42,7 +44,7 @@ public struct SliderInput: View {
                     Slider(value: $value, in: range)
                 }
             }
-            .tint(UIColorToken.primary)
+            .tint(theme.colors.primary)
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel(label)

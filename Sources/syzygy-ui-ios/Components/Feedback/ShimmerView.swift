@@ -3,6 +3,8 @@ import SwiftUI
 /// An animated skeleton placeholder for list/table rows while content loads.
 @MainActor
 public struct ShimmerView: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let cornerRadius: CGFloat
 
     @State private var phase: CGFloat = -1
@@ -13,11 +15,11 @@ public struct ShimmerView: View {
 
     public var body: some View {
         RoundedRectangle(cornerRadius: cornerRadius)
-            .fill(UIColorToken.border.opacity(0.3))
+            .fill(theme.colors.border.opacity(0.3))
             .overlay(
                 GeometryReader { geometry in
                     LinearGradient(
-                        colors: [.clear, UIColorToken.surface.opacity(0.6), .clear],
+                        colors: [.clear, theme.colors.surface.opacity(0.6), .clear],
                         startPoint: .leading,
                         endPoint: .trailing
                     )

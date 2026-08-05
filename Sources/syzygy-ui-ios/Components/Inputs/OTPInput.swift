@@ -4,6 +4,8 @@ import SwiftUI
 /// auto-advances to the next box as each character is entered.
 @MainActor
 public struct OTPInput: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let length: Int
     @Binding private var code: String
     @FocusState private var focusedIndex: Int?
@@ -14,25 +16,25 @@ public struct OTPInput: View {
     }
 
     public var body: some View {
-        HStack(spacing: UISpacing.sm) {
+        HStack(spacing: theme.spacing.sm) {
             ForEach(0..<length, id: \.self) { index in
                 TextField("", text: characterBinding(for: index))
                     #if os(iOS)
                     .keyboardType(.numberPad)
                     #endif
                     .multilineTextAlignment(.center)
-                    .font(UIFontToken.title)
-                    .foregroundStyle(UIColorToken.textPrimary)
+                    .font(theme.typography.title)
+                    .foregroundStyle(theme.colors.textPrimary)
                     .frame(width: 44, height: 52)
-                    .background(UIColorToken.surface)
+                    .background(theme.colors.surface)
                     .overlay(
-                        RoundedRectangle(cornerRadius: UIRadius.sm)
+                        RoundedRectangle(cornerRadius: theme.radius.sm)
                             .stroke(
-                                focusedIndex == index ? UIColorToken.focus : UIColorToken.border,
+                                focusedIndex == index ? theme.colors.focus : theme.colors.border,
                                 lineWidth: focusedIndex == index ? UIBorderWidth.thick : UIBorderWidth.thin
                             )
                     )
-                    .clipShape(RoundedRectangle(cornerRadius: UIRadius.sm))
+                    .clipShape(RoundedRectangle(cornerRadius: theme.radius.sm))
                     .focused($focusedIndex, equals: index)
                     .accessibilityLabel("Digit \(index + 1) of \(length)")
             }

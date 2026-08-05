@@ -3,6 +3,8 @@ import SwiftUI
 /// A spinner with an optional accompanying message.
 @MainActor
 public struct LoadingView: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let message: String?
 
     public init(message: String? = nil) {
@@ -10,17 +12,17 @@ public struct LoadingView: View {
     }
 
     public var body: some View {
-        VStack(spacing: UISpacing.md) {
+        VStack(spacing: theme.spacing.md) {
             ProgressView()
-                .tint(UIColorToken.primary)
+                .tint(theme.colors.primary)
 
             if let message {
                 Text(message)
-                    .font(UIFontToken.subheadline)
-                    .foregroundStyle(UIColorToken.textSecondary)
+                    .font(theme.typography.subheadline)
+                    .foregroundStyle(theme.colors.textSecondary)
             }
         }
-        .padding(UISpacing.lg)
+        .padding(theme.spacing.lg)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(message ?? "Loading")
     }

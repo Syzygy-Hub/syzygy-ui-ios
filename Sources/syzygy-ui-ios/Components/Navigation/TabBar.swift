@@ -4,6 +4,8 @@ import SwiftUI
 /// but fully token-driven.
 @MainActor
 public struct TabBar<Tag: Hashable & Sendable>: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let items: [TabBarItem<Tag>]
     @Binding private var selection: Tag
 
@@ -18,24 +20,24 @@ public struct TabBar<Tag: Hashable & Sendable>: View {
                 Button {
                     selection = item.tag
                 } label: {
-                    VStack(spacing: UISpacing.xs / 2) {
+                    VStack(spacing: theme.spacing.xs / 2) {
                         Image(systemName: item.systemImage)
-                            .font(UIFontToken.body)
+                            .font(theme.typography.body)
                         Text(item.label)
-                            .font(UIFontToken.caption)
+                            .font(theme.typography.caption)
                     }
-                    .foregroundStyle(selection == item.tag ? UIColorToken.primary : UIColorToken.textSecondary)
+                    .foregroundStyle(selection == item.tag ? theme.colors.primary : theme.colors.textSecondary)
                     .frame(maxWidth: .infinity, minHeight: 44)
                 }
                 .accessibilityLabel(item.label)
                 .accessibilityAddTraits(selection == item.tag ? [.isSelected] : [])
             }
         }
-        .padding(.top, UISpacing.xs)
-        .background(UIColorToken.surface)
+        .padding(.top, theme.spacing.xs)
+        .background(theme.colors.surface)
         .overlay(alignment: .top) {
             Rectangle()
-                .fill(UIColorToken.border)
+                .fill(theme.colors.border)
                 .frame(height: 1)
         }
     }

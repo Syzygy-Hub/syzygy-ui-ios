@@ -4,6 +4,8 @@ import SwiftUI
 /// as a `Chip` you can dismiss to remove it.
 @MainActor
 public struct TagInput: View {
+    @Environment(\.syzygyTheme) private var theme
+
     @Binding private var tags: [String]
     private let placeholder: String
     private let onAdd: ((String) -> Void)?
@@ -24,9 +26,9 @@ public struct TagInput: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: UISpacing.sm) {
+        VStack(alignment: .leading, spacing: theme.spacing.sm) {
             if !tags.isEmpty {
-                FlowLayout(spacing: UISpacing.xs) {
+                FlowLayout(spacing: theme.spacing.xs) {
                     ForEach(tags, id: \.self) { tag in
                         Chip(tag, onRemove: { remove(tag) })
                     }
@@ -34,16 +36,16 @@ public struct TagInput: View {
             }
 
             TextField(placeholder, text: $draft)
-                .font(UIFontToken.body)
-                .foregroundStyle(UIColorToken.textPrimary)
-                .padding(.horizontal, UISpacing.sm)
+                .font(theme.typography.body)
+                .foregroundStyle(theme.colors.textPrimary)
+                .padding(.horizontal, theme.spacing.sm)
                 .frame(minHeight: 44)
-                .background(UIColorToken.surface)
+                .background(theme.colors.surface)
                 .overlay(
-                    RoundedRectangle(cornerRadius: UIRadius.sm)
-                        .stroke(UIColorToken.border, lineWidth: UIBorderWidth.thin)
+                    RoundedRectangle(cornerRadius: theme.radius.sm)
+                        .stroke(theme.colors.border, lineWidth: UIBorderWidth.thin)
                 )
-                .clipShape(RoundedRectangle(cornerRadius: UIRadius.sm))
+                .clipShape(RoundedRectangle(cornerRadius: theme.radius.sm))
                 .onSubmit(commitDraft)
         }
     }

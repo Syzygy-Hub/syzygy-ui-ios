@@ -4,6 +4,8 @@ import SwiftUI
 /// `TabBar` for screens that want a compact, inset navigation surface.
 @MainActor
 public struct BottomNavigationBar<Tag: Hashable & Sendable>: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let items: [TabBarItem<Tag>]
     @Binding private var selection: Tag
 
@@ -13,27 +15,27 @@ public struct BottomNavigationBar<Tag: Hashable & Sendable>: View {
     }
 
     public var body: some View {
-        HStack(spacing: UISpacing.xs) {
+        HStack(spacing: theme.spacing.xs) {
             ForEach(items) { item in
                 Button {
                     selection = item.tag
                 } label: {
                     Image(systemName: item.systemImage)
-                        .font(UIFontToken.body)
+                        .font(theme.typography.body)
                         .foregroundStyle(
-                            selection == item.tag ? UIColorToken.onPrimary : UIColorToken.textSecondary
+                            selection == item.tag ? theme.colors.onPrimary : theme.colors.textSecondary
                         )
                         .frame(width: 44, height: 44)
-                        .background(selection == item.tag ? UIColorToken.primary : Color.clear)
+                        .background(selection == item.tag ? theme.colors.primary : Color.clear)
                         .clipShape(Circle())
                 }
                 .accessibilityLabel(item.label)
                 .accessibilityAddTraits(selection == item.tag ? [.isSelected] : [])
             }
         }
-        .padding(.horizontal, UISpacing.sm)
-        .padding(.vertical, UISpacing.xs)
-        .background(UIColorToken.surface)
+        .padding(.horizontal, theme.spacing.sm)
+        .padding(.vertical, theme.spacing.xs)
+        .background(theme.colors.surface)
         .clipShape(Capsule())
         .shadow(color: .black.opacity(0.12), radius: 8, x: 0, y: 2)
     }

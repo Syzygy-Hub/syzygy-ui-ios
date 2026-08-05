@@ -5,6 +5,30 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.0] - 2026-08-05
+
+### Added
+- **Theme infrastructure** — 8 new Swift files under `Sources/syzygy-ui-ios/Theme/`:
+  - `SyzygyColors` — semantic color snapshot (34 properties); presets: `.default`, `.dark`, `.highContrast`
+  - `SyzygyRadius` — corner-radius snapshot; presets: `.default`, `.sharp`
+  - `SyzygyTypography` — font snapshot (9 properties); presets: `.default`, `.highContrast`
+  - `SyzygySpacing` — spacing snapshot (8 properties); preset: `.default`
+  - `SyzygyElevation` — elevation snapshot (CGFloat blur radii); preset: `.default`; `View.themedElevation(_:)` helper
+  - `SyzygyAnimation` + `SyzygyAnimationDuration` — animation duration + easing helpers; preset: `.default`
+  - `SyzygyTheme` — composite struct (all six above, `Equatable` + `Sendable`); presets: `.default`, `.dark`, `.highContrast`; `.with(...)` mutator
+  - `SyzygyThemeProvider` — generic SwiftUI `View` that injects the theme via `@Environment` and exposes a `Binding<SyzygyTheme>` for runtime switching
+- `EnvironmentValues.syzygyTheme` key and `View.syzygyTheme(_:)` modifier for component-level overrides
+
+### Changed
+- All ~75 component files now read visual tokens from `@Environment(\.syzygyTheme)` instead of static token enums (`UIColorToken`, `UIRadius`, `UISpacing`, `UIFontToken`, `UIElevation`). The static token enums in `Tokens/` are unchanged and remain fully public.
+- `BadgeStyle`, `InlineAlert.Variant`, `StatsCard.Trend`, `ToastVariant`, and `PasswordStrengthIndicator.Strength` — color computed properties moved from enum cases (which cannot access `@Environment`) to parent View methods/properties
+
+### Fixed
+- `ButtonGroup`: each option now sets `.accessibilityLabel`, `.accessibilityAddTraits(.isButton)`, and `.accessibilityAddTraits(.isSelected)` when selected
+- `ActionSheet`: each action row now sets `.accessibilityLabel` and `.accessibilityAddTraits(.isButton)`
+- `SideMenu`: scrim overlay now carries `.accessibilityLabel("Close menu")` + `.accessibilityHint("Double tap to dismiss the side menu")`; content wrapper carries `.accessibilityLabel("Side menu")` + `.accessibilityHint("Swipe or tap outside to close")`
+- `FloatingActionButton`: `.accessibilityActivationPoint(CGPoint(x: 0.5, y: 0.5))` applied so VoiceOver targets the visual centre
+
 ## [2.3.0] - 2026-08-05
 
 ### Changed (Breaking)

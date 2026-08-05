@@ -3,6 +3,8 @@ import SwiftUI
 /// A circular avatar showing either an image or a fallback initials label.
 @MainActor
 public struct Avatar: View {
+    @Environment(\.syzygyTheme) private var theme
+
     public enum Size {
         case small
         case medium
@@ -40,10 +42,10 @@ public struct Avatar: View {
             switch content {
             case .initials(let initials):
                 Circle()
-                    .fill(UIColorToken.primary)
+                    .fill(theme.colors.primary)
                 Text(initials)
-                    .font(UIFontToken.headline)
-                    .foregroundStyle(UIColorToken.onPrimary)
+                    .font(theme.typography.headline)
+                    .foregroundStyle(theme.colors.onPrimary)
             case .image(let image):
                 image
                     .resizable()

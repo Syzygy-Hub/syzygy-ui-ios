@@ -40,6 +40,8 @@ public struct PhoneCountry: Identifiable, Hashable, Sendable {
 
 @MainActor
 public struct PhoneInput: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let label: String
     private let countries: [PhoneCountry]
     @Binding private var selectedCountry: PhoneCountry
@@ -75,18 +77,18 @@ public struct PhoneInput: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: UISpacing.xs) {
+        VStack(alignment: .leading, spacing: theme.spacing.xs) {
             Text(label)
-                .font(UIFontToken.subheadline)
-                .foregroundStyle(UIColorToken.textSecondary)
+                .font(theme.typography.subheadline)
+                .foregroundStyle(theme.colors.textSecondary)
 
-            HStack(spacing: UISpacing.sm) {
+            HStack(spacing: theme.spacing.sm) {
                 Button {
                     isPickerPresented.toggle()
                 } label: {
                     Text("\(selectedCountry.flag) \(selectedCountry.dialCode)")
-                        .font(UIFontToken.body)
-                        .foregroundStyle(UIColorToken.textPrimary)
+                        .font(theme.typography.body)
+                        .foregroundStyle(theme.colors.textPrimary)
                 }
                 .accessibilityLabel("Country code, \(selectedCountry.name)")
 
@@ -97,16 +99,16 @@ public struct PhoneInput: View {
                 #if os(iOS)
                 .keyboardType(.numberPad)
                 #endif
-                .foregroundStyle(UIColorToken.textPrimary)
+                .foregroundStyle(theme.colors.textPrimary)
             }
-            .padding(.horizontal, UISpacing.sm)
+            .padding(.horizontal, theme.spacing.sm)
             .frame(minHeight: 44)
-            .background(UIColorToken.surface)
+            .background(theme.colors.surface)
             .overlay(
-                RoundedRectangle(cornerRadius: UIRadius.sm)
-                    .stroke(UIColorToken.border, lineWidth: UIBorderWidth.thin)
+                RoundedRectangle(cornerRadius: theme.radius.sm)
+                    .stroke(theme.colors.border, lineWidth: UIBorderWidth.thin)
             )
-            .clipShape(RoundedRectangle(cornerRadius: UIRadius.sm))
+            .clipShape(RoundedRectangle(cornerRadius: theme.radius.sm))
             .modal(isPresented: $isPickerPresented) {
                 VStack(alignment: .leading, spacing: 0) {
                     ForEach(countries) { country in
@@ -115,10 +117,10 @@ public struct PhoneInput: View {
                             isPickerPresented = false
                         } label: {
                             Text("\(country.flag) \(country.dialCode)  \(country.name)")
-                                .foregroundStyle(UIColorToken.textPrimary)
+                                .foregroundStyle(theme.colors.textPrimary)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
-                        .padding(.vertical, UISpacing.xs)
+                        .padding(.vertical, theme.spacing.xs)
                     }
                 }
             }

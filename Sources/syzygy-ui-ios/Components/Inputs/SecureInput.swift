@@ -3,6 +3,8 @@ import SwiftUI
 /// A password field with a show/hide toggle.
 @MainActor
 public struct SecureInput: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let label: String
     @Binding private var text: String
     private let placeholder: String
@@ -15,12 +17,12 @@ public struct SecureInput: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: UISpacing.xs) {
+        VStack(alignment: .leading, spacing: theme.spacing.xs) {
             Text(label)
-                .font(UIFontToken.subheadline)
-                .foregroundStyle(UIColorToken.textSecondary)
+                .font(theme.typography.subheadline)
+                .foregroundStyle(theme.colors.textSecondary)
 
-            HStack(spacing: UISpacing.sm) {
+            HStack(spacing: theme.spacing.sm) {
                 Group {
                     if isRevealed {
                         TextField(placeholder, text: $text)
@@ -28,26 +30,26 @@ public struct SecureInput: View {
                         SecureField(placeholder, text: $text)
                     }
                 }
-                .font(UIFontToken.body)
-                .foregroundStyle(UIColorToken.textPrimary)
+                .font(theme.typography.body)
+                .foregroundStyle(theme.colors.textPrimary)
 
                 Button {
                     isRevealed.toggle()
                 } label: {
                     Image(systemName: isRevealed ? "eye.slash" : "eye")
-                        .foregroundStyle(UIColorToken.textSecondary)
+                        .foregroundStyle(theme.colors.textSecondary)
                         .frame(width: 44, height: 44)
                 }
                 .accessibilityLabel(isRevealed ? "Hide password" : "Show password")
             }
-            .padding(.leading, UISpacing.sm)
+            .padding(.leading, theme.spacing.sm)
             .frame(minHeight: 44)
-            .background(UIColorToken.surface)
+            .background(theme.colors.surface)
             .overlay(
-                RoundedRectangle(cornerRadius: UIRadius.sm)
-                    .stroke(UIColorToken.border, lineWidth: 1)
+                RoundedRectangle(cornerRadius: theme.radius.sm)
+                    .stroke(theme.colors.border, lineWidth: 1)
             )
-            .clipShape(RoundedRectangle(cornerRadius: UIRadius.sm))
+            .clipShape(RoundedRectangle(cornerRadius: theme.radius.sm))
             .accessibilityLabel(label)
         }
     }

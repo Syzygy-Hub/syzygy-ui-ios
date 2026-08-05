@@ -3,6 +3,8 @@ import SwiftUI
 /// An icon, title, subtitle, and optional call-to-action for empty states.
 @MainActor
 public struct EmptyStateView: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let systemImage: String
     private let title: String
     private let subtitle: String
@@ -24,27 +26,27 @@ public struct EmptyStateView: View {
     }
 
     public var body: some View {
-        VStack(spacing: UISpacing.md) {
+        VStack(spacing: theme.spacing.md) {
             Image(systemName: systemImage)
                 .font(.system(size: 40))
-                .foregroundStyle(UIColorToken.textSecondary)
+                .foregroundStyle(theme.colors.textSecondary)
 
             Text(title)
-                .font(UIFontToken.title)
-                .foregroundStyle(UIColorToken.textPrimary)
+                .font(theme.typography.title)
+                .foregroundStyle(theme.colors.textPrimary)
                 .multilineTextAlignment(.center)
 
             Text(subtitle)
-                .font(UIFontToken.body)
-                .foregroundStyle(UIColorToken.textSecondary)
+                .font(theme.typography.body)
+                .foregroundStyle(theme.colors.textSecondary)
                 .multilineTextAlignment(.center)
 
             if let ctaTitle, let ctaAction {
                 PrimaryButton(ctaTitle, action: ctaAction)
-                    .padding(.top, UISpacing.sm)
+                    .padding(.top, theme.spacing.sm)
             }
         }
-        .padding(UISpacing.xl)
+        .padding(theme.spacing.xl)
         .accessibilityElement(children: .contain)
     }
 }

@@ -4,6 +4,8 @@ import SwiftUI
 /// while loading and a fallback glyph if the load fails.
 @MainActor
 public struct LazyImageView: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let url: URL?
     private let contentMode: ContentMode
 
@@ -23,15 +25,15 @@ public struct LazyImageView: View {
                     .aspectRatio(contentMode: contentMode)
             case .failure:
                 ZStack {
-                    UIColorToken.surface
+                    theme.colors.surface
                     Image(systemName: "photo")
-                        .foregroundStyle(UIColorToken.textSecondary)
+                        .foregroundStyle(theme.colors.textSecondary)
                 }
             @unknown default:
                 ShimmerView()
             }
         }
-        .clipShape(RoundedRectangle(cornerRadius: UIRadius.sm))
+        .clipShape(RoundedRectangle(cornerRadius: theme.radius.sm))
         .accessibilityLabel("Image")
     }
 }

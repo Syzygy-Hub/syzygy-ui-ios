@@ -5,6 +5,8 @@ import SwiftUI
 /// `SliderInput`/`DividerLine` elsewhere in this library.
 @MainActor
 public struct QuantityStepper: View {
+    @Environment(\.syzygyTheme) private var theme
+
     @Binding private var value: Int
     private let range: ClosedRange<Int>
     private let step: Int
@@ -21,16 +23,16 @@ public struct QuantityStepper: View {
                 value = max(range.lowerBound, value - step)
             } label: {
                 Image(systemName: "minus")
-                    .font(UIFontToken.body)
-                    .foregroundStyle(value <= range.lowerBound ? UIColorToken.textSecondary : UIColorToken.primary)
+                    .font(theme.typography.body)
+                    .foregroundStyle(value <= range.lowerBound ? theme.colors.textSecondary : theme.colors.primary)
                     .frame(width: 44, height: 44)
             }
             .disabled(value <= range.lowerBound)
             .accessibilityLabel("Decrease")
 
             Text("\(value)")
-                .font(UIFontToken.body)
-                .foregroundStyle(UIColorToken.textPrimary)
+                .font(theme.typography.body)
+                .foregroundStyle(theme.colors.textPrimary)
                 .frame(minWidth: 32)
                 .accessibilityHidden(true)
 
@@ -38,19 +40,19 @@ public struct QuantityStepper: View {
                 value = min(range.upperBound, value + step)
             } label: {
                 Image(systemName: "plus")
-                    .font(UIFontToken.body)
-                    .foregroundStyle(value >= range.upperBound ? UIColorToken.textSecondary : UIColorToken.primary)
+                    .font(theme.typography.body)
+                    .foregroundStyle(value >= range.upperBound ? theme.colors.textSecondary : theme.colors.primary)
                     .frame(width: 44, height: 44)
             }
             .disabled(value >= range.upperBound)
             .accessibilityLabel("Increase")
         }
-        .background(UIColorToken.surface)
+        .background(theme.colors.surface)
         .overlay(
-            RoundedRectangle(cornerRadius: UIRadius.sm)
-                .stroke(UIColorToken.border, lineWidth: 1)
+            RoundedRectangle(cornerRadius: theme.radius.sm)
+                .stroke(theme.colors.border, lineWidth: 1)
         )
-        .clipShape(RoundedRectangle(cornerRadius: UIRadius.sm))
+        .clipShape(RoundedRectangle(cornerRadius: theme.radius.sm))
         .accessibilityElement(children: .combine)
         .accessibilityLabel("Quantity")
         .accessibilityValue("\(value)")

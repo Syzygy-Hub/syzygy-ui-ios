@@ -4,6 +4,8 @@ import SwiftUI
 /// `DatePicker` (hour/minute) in a popover for selection.
 @MainActor
 public struct TimePickerField: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let label: String
     @Binding private var time: Date
     private let formatter: DateFormatter
@@ -19,30 +21,30 @@ public struct TimePickerField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: UISpacing.xs) {
+        VStack(alignment: .leading, spacing: theme.spacing.xs) {
             Text(label)
-                .font(UIFontToken.subheadline)
-                .foregroundStyle(UIColorToken.textSecondary)
+                .font(theme.typography.subheadline)
+                .foregroundStyle(theme.colors.textSecondary)
 
             Button {
                 isPresented = true
             } label: {
                 HStack {
                     Text(formatter.string(from: time))
-                        .font(UIFontToken.body)
-                        .foregroundStyle(UIColorToken.textPrimary)
+                        .font(theme.typography.body)
+                        .foregroundStyle(theme.colors.textPrimary)
                     Spacer()
                     Image(systemName: "clock")
-                        .foregroundStyle(UIColorToken.textSecondary)
+                        .foregroundStyle(theme.colors.textSecondary)
                 }
-                .padding(.horizontal, UISpacing.sm)
+                .padding(.horizontal, theme.spacing.sm)
                 .frame(minHeight: 44)
-                .background(UIColorToken.surface)
+                .background(theme.colors.surface)
                 .overlay(
-                    RoundedRectangle(cornerRadius: UIRadius.sm)
-                        .stroke(UIColorToken.border, lineWidth: UIBorderWidth.thin)
+                    RoundedRectangle(cornerRadius: theme.radius.sm)
+                        .stroke(theme.colors.border, lineWidth: UIBorderWidth.thin)
                 )
-                .clipShape(RoundedRectangle(cornerRadius: UIRadius.sm))
+                .clipShape(RoundedRectangle(cornerRadius: theme.radius.sm))
             }
             .accessibilityLabel(label)
             .popover(isPresented: $isPresented) {

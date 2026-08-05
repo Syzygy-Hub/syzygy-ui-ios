@@ -4,6 +4,8 @@ import SwiftUI
 /// showing completed / active / pending states connected by lines.
 @MainActor
 public struct StepIndicator: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let steps: [String]
     private let currentStep: Int
 
@@ -15,17 +17,17 @@ public struct StepIndicator: View {
     public var body: some View {
         HStack(spacing: 0) {
             ForEach(Array(steps.enumerated()), id: \.offset) { index, label in
-                VStack(spacing: UISpacing.xs) {
+                VStack(spacing: theme.spacing.xs) {
                     indicator(for: index)
                     Text(label)
-                        .font(UIFontToken.caption)
-                        .foregroundStyle(index == currentStep ? UIColorToken.textPrimary : UIColorToken.textSecondary)
+                        .font(theme.typography.caption)
+                        .foregroundStyle(index == currentStep ? theme.colors.textPrimary : theme.colors.textSecondary)
                         .lineLimit(1)
                 }
 
                 if index < steps.count - 1 {
                     Rectangle()
-                        .fill(index < currentStep ? UIColorToken.primary : UIColorToken.separator)
+                        .fill(index < currentStep ? theme.colors.primary : theme.colors.border)
                         .frame(height: UIBorderWidth.thick)
                         .offset(y: -14)
                 }
@@ -39,21 +41,21 @@ public struct StepIndicator: View {
     private func indicator(for index: Int) -> some View {
         if index < currentStep {
             Circle()
-                .fill(UIColorToken.primary)
+                .fill(theme.colors.primary)
                 .overlay(
                     Image(systemName: "checkmark")
                         .font(.caption2)
-                        .foregroundStyle(UIColorToken.onPrimary)
+                        .foregroundStyle(theme.colors.onPrimary)
                 )
                 .frame(width: 24, height: 24)
         } else if index == currentStep {
             Circle()
-                .stroke(UIColorToken.primary, lineWidth: UIBorderWidth.thick)
-                .background(Circle().fill(UIColorToken.surface))
+                .stroke(theme.colors.primary, lineWidth: UIBorderWidth.thick)
+                .background(Circle().fill(theme.colors.surface))
                 .frame(width: 24, height: 24)
         } else {
             Circle()
-                .fill(UIColorToken.separator)
+                .fill(theme.colors.surfaceSecondary)
                 .frame(width: 8, height: 8)
                 .frame(width: 24, height: 24)
         }

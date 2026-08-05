@@ -4,6 +4,8 @@ import SwiftUI
 /// tappable; omit it for a read-only display.
 @MainActor
 public struct StarRatingView: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let rating: Int
     private let maxRating: Int
     private let onRatingChanged: ((Int) -> Void)?
@@ -15,13 +17,13 @@ public struct StarRatingView: View {
     }
 
     public var body: some View {
-        HStack(spacing: UISpacing.xs) {
+        HStack(spacing: theme.spacing.xs) {
             ForEach(1...maxRating, id: \.self) { star in
                 Button {
                     onRatingChanged?(star)
                 } label: {
                     Image(systemName: star <= rating ? "star.fill" : "star")
-                        .foregroundStyle(star <= rating ? UIColorToken.warning : UIColorToken.textSecondary)
+                        .foregroundStyle(star <= rating ? theme.colors.warning : theme.colors.textSecondary)
                         .frame(minWidth: 24, minHeight: 44)
                 }
                 .disabled(onRatingChanged == nil)

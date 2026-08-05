@@ -10,6 +10,8 @@ import SwiftUI
 /// filtered list of its own rather than a `Menu`.
 @MainActor
 public struct SearchableDropdown<Option: Hashable>: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let label: String
     @Binding private var selection: Option
     private let options: [Option]
@@ -36,10 +38,10 @@ public struct SearchableDropdown<Option: Hashable>: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: UISpacing.xs) {
+        VStack(alignment: .leading, spacing: theme.spacing.xs) {
             Text(label)
-                .font(UIFontToken.subheadline)
-                .foregroundStyle(UIColorToken.textSecondary)
+                .font(theme.typography.subheadline)
+                .foregroundStyle(theme.colors.textSecondary)
 
             Button {
                 withAnimation(UIAnimation.Easing.standard(UIAnimation.Duration.fast)) {
@@ -48,33 +50,33 @@ public struct SearchableDropdown<Option: Hashable>: View {
             } label: {
                 HStack {
                     Text(optionTitle(selection))
-                        .font(UIFontToken.body)
-                        .foregroundStyle(UIColorToken.textPrimary)
+                        .font(theme.typography.body)
+                        .foregroundStyle(theme.colors.textPrimary)
 
                     Spacer()
 
                     Image(systemName: "chevron.up.chevron.down")
-                        .font(UIFontToken.caption)
-                        .foregroundStyle(UIColorToken.textSecondary)
+                        .font(theme.typography.caption)
+                        .foregroundStyle(theme.colors.textSecondary)
                 }
-                .padding(.horizontal, UISpacing.sm)
+                .padding(.horizontal, theme.spacing.sm)
                 .frame(minHeight: 44)
-                .background(UIColorToken.surface)
+                .background(theme.colors.surface)
                 .overlay(
-                    RoundedRectangle(cornerRadius: UIRadius.sm)
-                        .stroke(UIColorToken.border, lineWidth: UIBorderWidth.thin)
+                    RoundedRectangle(cornerRadius: theme.radius.sm)
+                        .stroke(theme.colors.border, lineWidth: UIBorderWidth.thin)
                 )
-                .clipShape(RoundedRectangle(cornerRadius: UIRadius.sm))
+                .clipShape(RoundedRectangle(cornerRadius: theme.radius.sm))
             }
             .accessibilityLabel(label)
 
             if isExpanded {
-                VStack(alignment: .leading, spacing: UISpacing.xs) {
+                VStack(alignment: .leading, spacing: theme.spacing.xs) {
                     TextField("Search", text: $query)
-                        .padding(.horizontal, UISpacing.sm)
+                        .padding(.horizontal, theme.spacing.sm)
                         .frame(minHeight: 36)
-                        .background(UIColorToken.surfaceSecondary)
-                        .clipShape(RoundedRectangle(cornerRadius: UIRadius.sm))
+                        .background(theme.colors.surfaceSecondary)
+                        .clipShape(RoundedRectangle(cornerRadius: theme.radius.sm))
 
                     ScrollView {
                         VStack(alignment: .leading, spacing: 0) {
@@ -88,14 +90,14 @@ public struct SearchableDropdown<Option: Hashable>: View {
                                 } label: {
                                     HStack {
                                         Text(optionTitle(option))
-                                            .foregroundStyle(UIColorToken.textPrimary)
+                                            .foregroundStyle(theme.colors.textPrimary)
                                         Spacer()
                                         if option == selection {
                                             Image(systemName: "checkmark")
-                                                .foregroundStyle(UIColorToken.primary)
+                                                .foregroundStyle(theme.colors.primary)
                                         }
                                     }
-                                    .padding(.horizontal, UISpacing.sm)
+                                    .padding(.horizontal, theme.spacing.sm)
                                     .frame(minHeight: 40)
                                 }
                             }
@@ -103,13 +105,13 @@ public struct SearchableDropdown<Option: Hashable>: View {
                     }
                     .frame(maxHeight: 200)
                 }
-                .padding(UISpacing.xs)
-                .background(UIColorToken.surface)
+                .padding(theme.spacing.xs)
+                .background(theme.colors.surface)
                 .overlay(
-                    RoundedRectangle(cornerRadius: UIRadius.sm)
-                        .stroke(UIColorToken.border, lineWidth: UIBorderWidth.thin)
+                    RoundedRectangle(cornerRadius: theme.radius.sm)
+                        .stroke(theme.colors.border, lineWidth: UIBorderWidth.thin)
                 )
-                .clipShape(RoundedRectangle(cornerRadius: UIRadius.sm))
+                .clipShape(RoundedRectangle(cornerRadius: theme.radius.sm))
                 .transition(.opacity.combined(with: .move(edge: .top)))
             }
         }

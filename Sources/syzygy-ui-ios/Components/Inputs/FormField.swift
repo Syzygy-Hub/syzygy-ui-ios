@@ -5,6 +5,8 @@ import SwiftUI
 /// precedence over helper text when both are provided.
 @MainActor
 public struct FormField<Content: View>: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let label: String
     private let errorMessage: String?
     private let helperText: String?
@@ -23,21 +25,21 @@ public struct FormField<Content: View>: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: UISpacing.xs) {
+        VStack(alignment: .leading, spacing: theme.spacing.xs) {
             Text(label)
-                .font(UIFontToken.subheadline)
-                .foregroundStyle(UIColorToken.textSecondary)
+                .font(theme.typography.subheadline)
+                .foregroundStyle(theme.colors.textSecondary)
 
             content
 
             if let errorMessage {
                 Text(errorMessage)
-                    .font(UIFontToken.caption)
-                    .foregroundStyle(UIColorToken.destructive)
+                    .font(theme.typography.caption)
+                    .foregroundStyle(theme.colors.destructive)
             } else if let helperText {
                 Text(helperText)
-                    .font(UIFontToken.caption)
-                    .foregroundStyle(UIColorToken.textSecondary)
+                    .font(theme.typography.caption)
+                    .foregroundStyle(theme.colors.textSecondary)
             }
         }
     }

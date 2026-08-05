@@ -4,6 +4,8 @@ import SwiftUI
 /// animated disclosure of its content.
 @MainActor
 public struct CollapsibleView<Content: View>: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let title: String
     private let content: Content
 
@@ -24,16 +26,16 @@ public struct CollapsibleView<Content: View>: View {
             } label: {
                 HStack {
                     Text(title)
-                        .font(UIFontToken.headline)
-                        .foregroundStyle(UIColorToken.textPrimary)
+                        .font(theme.typography.headline)
+                        .foregroundStyle(theme.colors.textPrimary)
 
                     Spacer()
 
                     Image(systemName: "chevron.down")
-                        .foregroundStyle(UIColorToken.textSecondary)
+                        .foregroundStyle(theme.colors.textSecondary)
                         .rotationEffect(.degrees(isExpanded ? 180 : 0))
                 }
-                .padding(.horizontal, UISpacing.md)
+                .padding(.horizontal, theme.spacing.md)
                 .frame(minHeight: 44)
             }
             .accessibilityLabel(title)
@@ -42,12 +44,12 @@ public struct CollapsibleView<Content: View>: View {
 
             if isExpanded {
                 content
-                    .padding(.horizontal, UISpacing.md)
-                    .padding(.bottom, UISpacing.md)
+                    .padding(.horizontal, theme.spacing.md)
+                    .padding(.bottom, theme.spacing.md)
                     .transition(.opacity.combined(with: .move(edge: .top)))
             }
         }
-        .background(UIColorToken.surface)
-        .clipShape(RoundedRectangle(cornerRadius: UIRadius.md))
+        .background(theme.colors.surface)
+        .clipShape(RoundedRectangle(cornerRadius: theme.radius.md))
     }
 }

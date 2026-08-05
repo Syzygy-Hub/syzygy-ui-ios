@@ -3,6 +3,8 @@ import SwiftUI
 /// A labeled multi-line text input, sized to a fixed number of visible lines.
 @MainActor
 public struct TextArea: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let label: String
     @Binding private var text: String
     private let placeholder: String
@@ -24,40 +26,40 @@ public struct TextArea: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: UISpacing.xs) {
+        VStack(alignment: .leading, spacing: theme.spacing.xs) {
             Text(label)
-                .font(UIFontToken.subheadline)
-                .foregroundStyle(UIColorToken.textSecondary)
+                .font(theme.typography.subheadline)
+                .foregroundStyle(theme.colors.textSecondary)
 
             ZStack(alignment: .topLeading) {
                 if text.isEmpty {
                     Text(placeholder)
-                        .font(UIFontToken.body)
-                        .foregroundStyle(UIColorToken.textTertiary)
-                        .padding(.horizontal, UISpacing.xs)
-                        .padding(.vertical, UISpacing.xs)
+                        .font(theme.typography.body)
+                        .foregroundStyle(theme.colors.textTertiary)
+                        .padding(.horizontal, theme.spacing.xs)
+                        .padding(.vertical, theme.spacing.xs)
                 }
 
                 TextEditor(text: $text)
-                    .font(UIFontToken.body)
-                    .foregroundStyle(UIColorToken.textPrimary)
+                    .font(theme.typography.body)
+                    .foregroundStyle(theme.colors.textPrimary)
                     .scrollContentBackground(.hidden)
             }
-            .padding(.horizontal, UISpacing.xs)
+            .padding(.horizontal, theme.spacing.xs)
             .frame(minHeight: lineHeight * CGFloat(minLines), maxHeight: lineHeight * CGFloat(maxLines))
-            .background(UIColorToken.surface)
+            .background(theme.colors.surface)
             .overlay(
-                RoundedRectangle(cornerRadius: UIRadius.sm)
-                    .stroke(UIColorToken.border, lineWidth: UIBorderWidth.thin)
+                RoundedRectangle(cornerRadius: theme.radius.sm)
+                    .stroke(theme.colors.border, lineWidth: UIBorderWidth.thin)
             )
-            .clipShape(RoundedRectangle(cornerRadius: UIRadius.sm))
+            .clipShape(RoundedRectangle(cornerRadius: theme.radius.sm))
             .accessibilityLabel(label)
         }
     }
 
     private var lineHeight: CGFloat {
         #if canImport(UIKit)
-        UIFont.preferredFont(forTextStyle: .body).lineHeight + UISpacing.sm
+        UIFont.preferredFont(forTextStyle: .body).lineHeight + theme.spacing.sm
         #else
         22
         #endif

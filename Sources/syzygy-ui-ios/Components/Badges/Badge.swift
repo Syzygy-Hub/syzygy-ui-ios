@@ -7,18 +7,12 @@ public enum BadgeStyle {
     case warning
     case error
 
-    var color: Color {
-        switch self {
-        case .primary: UIColorToken.primary
-        case .success: UIColorToken.success
-        case .warning: UIColorToken.warning
-        case .error: UIColorToken.destructive
-        }
-    }
 }
 
 @MainActor
 public struct Badge: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let text: String
     private let style: BadgeStyle
 
@@ -29,12 +23,21 @@ public struct Badge: View {
 
     public var body: some View {
         Text(text)
-            .font(UIFontToken.caption)
-            .foregroundStyle(UIColorToken.onPrimary)
-            .padding(.horizontal, UISpacing.sm)
-            .padding(.vertical, UISpacing.xs)
-            .background(style.color)
+            .font(theme.typography.caption)
+            .foregroundStyle(theme.colors.onPrimary)
+            .padding(.horizontal, theme.spacing.sm)
+            .padding(.vertical, theme.spacing.xs)
+            .background(badgeColor)
             .clipShape(Capsule())
             .accessibilityLabel(text)
+    }
+
+    private var badgeColor: Color {
+        switch style {
+        case .primary: theme.colors.primary
+        case .success: theme.colors.success
+        case .warning: theme.colors.warning
+        case .error: theme.colors.destructive
+        }
     }
 }

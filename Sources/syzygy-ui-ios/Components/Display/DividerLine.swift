@@ -4,11 +4,13 @@ import SwiftUI
 /// (rather than `Divider`) to avoid colliding with `SwiftUI.Divider`.
 @MainActor
 public struct DividerLine: View {
+    @Environment(\.syzygyTheme) private var theme
+
     public init() {}
 
     public var body: some View {
         Rectangle()
-            .fill(UIColorToken.border)
+            .fill(theme.colors.border)
             .frame(height: 1)
             .accessibilityHidden(true)
     }

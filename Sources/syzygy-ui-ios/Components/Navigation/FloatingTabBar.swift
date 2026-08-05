@@ -7,6 +7,8 @@ import SwiftUI
 /// floating + labeled — distinct from both.
 @MainActor
 public struct FloatingTabBar<Tag: Hashable & Sendable>: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let items: [TabBarItem<Tag>]
     @Binding private var selection: Tag
     private let onSelectionChange: ((Tag) -> Void)?
@@ -22,31 +24,31 @@ public struct FloatingTabBar<Tag: Hashable & Sendable>: View {
     }
 
     public var body: some View {
-        HStack(spacing: UISpacing.xs) {
+        HStack(spacing: theme.spacing.xs) {
             ForEach(items) { item in
                 Button {
                     selection = item.tag
                     onSelectionChange?(item.tag)
                 } label: {
-                    VStack(spacing: UISpacing.xxs) {
+                    VStack(spacing: theme.spacing.xxs) {
                         Image(systemName: item.systemImage)
-                            .font(UIFontToken.body)
+                            .font(theme.typography.body)
                         Text(item.label)
-                            .font(UIFontToken.caption)
+                            .font(theme.typography.caption)
                     }
-                    .foregroundStyle(selection == item.tag ? UIColorToken.onPrimary : UIColorToken.textSecondary)
-                    .padding(.horizontal, UISpacing.sm)
+                    .foregroundStyle(selection == item.tag ? theme.colors.onPrimary : theme.colors.textSecondary)
+                    .padding(.horizontal, theme.spacing.sm)
                     .frame(minWidth: 64, minHeight: 48)
-                    .background(selection == item.tag ? UIColorToken.primary : Color.clear)
-                    .clipShape(RoundedRectangle(cornerRadius: UIRadius.md))
+                    .background(selection == item.tag ? theme.colors.primary : Color.clear)
+                    .clipShape(RoundedRectangle(cornerRadius: theme.radius.md))
                 }
                 .accessibilityLabel(item.label)
                 .accessibilityAddTraits(selection == item.tag ? [.isSelected] : [])
             }
         }
-        .padding(UISpacing.xs)
-        .background(UIColorToken.surface)
-        .clipShape(RoundedRectangle(cornerRadius: UIRadius.lg))
-        .elevation(UIElevation.md)
+        .padding(theme.spacing.xs)
+        .background(theme.colors.surface)
+        .clipShape(RoundedRectangle(cornerRadius: theme.radius.lg))
+        .themedElevation(theme.elevation.md)
     }
 }

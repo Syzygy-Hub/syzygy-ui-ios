@@ -3,6 +3,8 @@ import SwiftUI
 /// A labeled dropdown / picker backed by a `Menu`, selecting from a fixed list of options.
 @MainActor
 public struct Dropdown<Option: Hashable>: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let label: String
     @Binding private var selection: Option
     private let options: [Option]
@@ -21,10 +23,10 @@ public struct Dropdown<Option: Hashable>: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: UISpacing.xs) {
+        VStack(alignment: .leading, spacing: theme.spacing.xs) {
             Text(label)
-                .font(UIFontToken.subheadline)
-                .foregroundStyle(UIColorToken.textSecondary)
+                .font(theme.typography.subheadline)
+                .foregroundStyle(theme.colors.textSecondary)
 
             Menu {
                 ForEach(options, id: \.self) { option in
@@ -41,23 +43,23 @@ public struct Dropdown<Option: Hashable>: View {
             } label: {
                 HStack {
                     Text(optionTitle(selection))
-                        .font(UIFontToken.body)
-                        .foregroundStyle(UIColorToken.textPrimary)
+                        .font(theme.typography.body)
+                        .foregroundStyle(theme.colors.textPrimary)
 
                     Spacer()
 
                     Image(systemName: "chevron.up.chevron.down")
-                        .font(UIFontToken.caption)
-                        .foregroundStyle(UIColorToken.textSecondary)
+                        .font(theme.typography.caption)
+                        .foregroundStyle(theme.colors.textSecondary)
                 }
-                .padding(.horizontal, UISpacing.sm)
+                .padding(.horizontal, theme.spacing.sm)
                 .frame(minHeight: 44)
-                .background(UIColorToken.surface)
+                .background(theme.colors.surface)
                 .overlay(
-                    RoundedRectangle(cornerRadius: UIRadius.sm)
-                        .stroke(UIColorToken.border, lineWidth: 1)
+                    RoundedRectangle(cornerRadius: theme.radius.sm)
+                        .stroke(theme.colors.border, lineWidth: 1)
                 )
-                .clipShape(RoundedRectangle(cornerRadius: UIRadius.sm))
+                .clipShape(RoundedRectangle(cornerRadius: theme.radius.sm))
             }
             .accessibilityLabel(label)
         }

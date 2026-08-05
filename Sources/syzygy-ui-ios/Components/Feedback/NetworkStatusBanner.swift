@@ -45,6 +45,8 @@ public enum NetworkStatusBannerAlignment {
 
 @MainActor
 public struct NetworkStatusBanner: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let alignment: NetworkStatusBannerAlignment
     private let manualOverride: Bool?
     @StateObject private var monitor = NetworkStatusMonitor()
@@ -66,15 +68,15 @@ public struct NetworkStatusBanner: View {
             if alignment == .bottom { Spacer() }
 
             if isOffline {
-                HStack(spacing: UISpacing.sm) {
+                HStack(spacing: theme.spacing.sm) {
                     Image(systemName: "wifi.slash")
                     Text("No internet connection")
-                        .font(UIFontToken.subheadline)
+                        .font(theme.typography.subheadline)
                 }
-                .foregroundStyle(UIColorToken.onPrimary)
-                .padding(UISpacing.sm)
+                .foregroundStyle(theme.colors.onPrimary)
+                .padding(theme.spacing.sm)
                 .frame(maxWidth: .infinity)
-                .background(UIColorToken.destructive)
+                .background(theme.colors.destructive)
                 .transition(.move(edge: alignment == .top ? .top : .bottom).combined(with: .opacity))
             }
 

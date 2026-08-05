@@ -4,6 +4,8 @@ import SwiftUI
 /// Tapping a star sets `rating` and invokes `onChange`.
 @MainActor
 public struct RatingInput: View {
+    @Environment(\.syzygyTheme) private var theme
+
     @Binding private var rating: Int
     private let maxRating: Int
     private let onChange: ((Int) -> Void)?
@@ -15,14 +17,14 @@ public struct RatingInput: View {
     }
 
     public var body: some View {
-        HStack(spacing: UISpacing.xs) {
+        HStack(spacing: theme.spacing.xs) {
             ForEach(1...maxRating, id: \.self) { star in
                 Button {
                     rating = star
                     onChange?(star)
                 } label: {
                     Image(systemName: star <= rating ? "star.fill" : "star")
-                        .foregroundStyle(star <= rating ? UIColorToken.warning : UIColorToken.textSecondary)
+                        .foregroundStyle(star <= rating ? theme.colors.warning : theme.colors.textSecondary)
                         .frame(minWidth: 24, minHeight: 44)
                 }
                 .accessibilityLabel("\(star) star\(star == 1 ? "" : "s")")

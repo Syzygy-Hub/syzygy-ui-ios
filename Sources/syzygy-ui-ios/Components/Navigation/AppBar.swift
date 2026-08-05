@@ -4,6 +4,8 @@ import SwiftUI
 /// accessory views.
 @MainActor
 public struct AppBar<Leading: View, Trailing: View>: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let title: String
     private let leading: Leading
     private let trailing: Trailing
@@ -23,18 +25,18 @@ public struct AppBar<Leading: View, Trailing: View>: View {
             leading
 
             Text(title)
-                .font(UIFontToken.headline)
-                .foregroundStyle(UIColorToken.textPrimary)
+                .font(theme.typography.headline)
+                .foregroundStyle(theme.colors.textPrimary)
                 .frame(maxWidth: .infinity)
 
             trailing
         }
-        .padding(.horizontal, UISpacing.sm)
+        .padding(.horizontal, theme.spacing.sm)
         .frame(minHeight: 44)
-        .background(UIColorToken.surface)
+        .background(theme.colors.surface)
         .overlay(alignment: .bottom) {
             Rectangle()
-                .fill(UIColorToken.border)
+                .fill(theme.colors.border)
                 .frame(height: 1)
         }
         .accessibilityElement(children: .contain)

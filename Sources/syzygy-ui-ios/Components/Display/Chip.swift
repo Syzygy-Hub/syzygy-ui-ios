@@ -3,6 +3,8 @@ import SwiftUI
 /// A compact tag/chip with an optional trailing remove button.
 @MainActor
 public struct Chip: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let text: String
     private let onRemove: (() -> Void)?
 
@@ -12,26 +14,26 @@ public struct Chip: View {
     }
 
     public var body: some View {
-        HStack(spacing: UISpacing.xs) {
+        HStack(spacing: theme.spacing.xs) {
             Text(text)
-                .font(UIFontToken.caption)
-                .foregroundStyle(UIColorToken.textPrimary)
+                .font(theme.typography.caption)
+                .foregroundStyle(theme.colors.textPrimary)
 
             if let onRemove {
                 Button(action: onRemove) {
                     Image(systemName: "xmark.circle.fill")
-                        .font(UIFontToken.caption)
-                        .foregroundStyle(UIColorToken.textSecondary)
+                        .font(theme.typography.caption)
+                        .foregroundStyle(theme.colors.textSecondary)
                 }
                 .accessibilityLabel("Remove \(text)")
             }
         }
-        .padding(.horizontal, UISpacing.sm)
-        .padding(.vertical, UISpacing.xs)
-        .background(UIColorToken.surface)
+        .padding(.horizontal, theme.spacing.sm)
+        .padding(.vertical, theme.spacing.xs)
+        .background(theme.colors.surface)
         .overlay(
             Capsule()
-                .stroke(UIColorToken.border, lineWidth: 1)
+                .stroke(theme.colors.border, lineWidth: 1)
         )
         .clipShape(Capsule())
         .accessibilityElement(children: .combine)

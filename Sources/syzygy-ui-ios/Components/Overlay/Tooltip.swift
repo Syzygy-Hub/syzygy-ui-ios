@@ -12,6 +12,8 @@ public extension View {
 
 @MainActor
 private struct TooltipModifier: ViewModifier {
+    @Environment(\.syzygyTheme) private var theme
+
     let text: String
     @State private var isVisible = false
 
@@ -38,12 +40,12 @@ private struct TooltipModifier: ViewModifier {
             .overlay(alignment: .top) {
                 if isVisible {
                     Text(text)
-                        .font(UIFontToken.caption)
-                        .foregroundStyle(UIColorToken.onPrimary)
-                        .padding(.horizontal, UISpacing.sm)
-                        .padding(.vertical, UISpacing.xs)
-                        .background(UIColorToken.textPrimary)
-                        .clipShape(RoundedRectangle(cornerRadius: UIRadius.sm))
+                        .font(theme.typography.caption)
+                        .foregroundStyle(theme.colors.onPrimary)
+                        .padding(.horizontal, theme.spacing.sm)
+                        .padding(.vertical, theme.spacing.xs)
+                        .background(theme.colors.textPrimary)
+                        .clipShape(RoundedRectangle(cornerRadius: theme.radius.sm))
                         .offset(y: -36)
                         .transition(.opacity.combined(with: .move(edge: .bottom)))
                         .accessibilityHidden(true)

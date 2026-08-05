@@ -5,6 +5,8 @@ import SwiftUI
 /// rigorous, just a reasonable real-time signal for users).
 @MainActor
 public struct PasswordStrengthIndicator: View {
+    @Environment(\.syzygyTheme) private var theme
+
     public enum Strength: Int, CaseIterable {
         case weak = 1
         case fair = 2
@@ -20,14 +22,6 @@ public struct PasswordStrengthIndicator: View {
             }
         }
 
-        var color: Color {
-            switch self {
-            case .weak: UIColorToken.destructive
-            case .fair: UIColorToken.warning
-            case .strong: UIColorToken.success
-            case .veryStrong: UIColorToken.success
-            }
-        }
     }
 
     private let password: String
@@ -56,20 +50,31 @@ public struct PasswordStrengthIndicator: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: UISpacing.xs) {
-            HStack(spacing: UISpacing.xxs) {
+        VStack(alignment: .leading, spacing: theme.spacing.xs) {
+            HStack(spacing: theme.spacing.xxs) {
                 ForEach(Strength.allCases, id: \.rawValue) { segment in
-                    RoundedRectangle(cornerRadius: UIRadius.xs)
-                        .fill(segment.rawValue <= strength.rawValue ? strength.color : UIColorToken.surfaceTertiary)
+                    let fillColor = segment.rawValue <= strength.rawValue
+                        ? strengthColor(strength)
+                        : theme.colors.surfaceTertiary
+                    RoundedRectangle(cornerRadius: theme.radius.xs)
+                        .fill(fillColor)
                         .frame(height: 4)
                 }
             }
 
             Text(strength.label)
-                .font(UIFontToken.caption)
-                .foregroundStyle(strength.color)
+                .font(theme.typography.caption)
+                .foregroundStyle(strengthColor(strength))
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel("Password strength: \(strength.label)")
+    }
+
+    private func strengthColor(_ strength: Strength) -> Color {
+        switch strength {
+        case .weak: theme.colors.destructive
+        case .fair: theme.colors.warning
+        case .strong, .veryStrong: theme.colors.success
+        }
     }
 }

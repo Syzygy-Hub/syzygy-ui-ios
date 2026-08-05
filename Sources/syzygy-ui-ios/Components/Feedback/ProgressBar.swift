@@ -3,6 +3,8 @@ import SwiftUI
 /// A determinate linear progress indicator.
 @MainActor
 public struct ProgressBar: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let progress: Double
 
     public init(progress: Double) {
@@ -12,11 +14,11 @@ public struct ProgressBar: View {
     public var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .leading) {
-                RoundedRectangle(cornerRadius: UIRadius.full)
-                    .fill(UIColorToken.border)
+                RoundedRectangle(cornerRadius: theme.radius.full)
+                    .fill(theme.colors.border)
 
-                RoundedRectangle(cornerRadius: UIRadius.full)
-                    .fill(UIColorToken.primary)
+                RoundedRectangle(cornerRadius: theme.radius.full)
+                    .fill(theme.colors.primary)
                     .frame(width: geometry.size.width * progress)
             }
         }

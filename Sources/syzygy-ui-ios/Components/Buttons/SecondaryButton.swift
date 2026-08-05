@@ -3,6 +3,8 @@ import SwiftUI
 /// An outlined, medium-emphasis button.
 @MainActor
 public struct SecondaryButton: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let title: String
     private let action: () -> Void
 
@@ -14,17 +16,17 @@ public struct SecondaryButton: View {
     public var body: some View {
         Button(action: action) {
             Text(title)
-                .font(UIFontToken.headline)
-                .foregroundStyle(UIColorToken.primary)
+                .font(theme.typography.headline)
+                .foregroundStyle(theme.colors.primary)
                 .frame(maxWidth: .infinity, minHeight: 44)
-                .padding(.horizontal, UISpacing.md)
+                .padding(.horizontal, theme.spacing.md)
         }
-        .background(UIColorToken.surface)
+        .background(theme.colors.surface)
         .overlay(
-            RoundedRectangle(cornerRadius: UIRadius.md)
-                .stroke(UIColorToken.primary, lineWidth: 1)
+            RoundedRectangle(cornerRadius: theme.radius.md)
+                .stroke(theme.colors.primary, lineWidth: 1)
         )
-        .clipShape(RoundedRectangle(cornerRadius: UIRadius.md))
+        .clipShape(RoundedRectangle(cornerRadius: theme.radius.md))
         .accessibilityLabel(title)
     }
 }

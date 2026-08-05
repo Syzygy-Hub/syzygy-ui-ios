@@ -3,6 +3,8 @@ import SwiftUI
 /// A labeled on/off toggle backed by the native switch control.
 @MainActor
 public struct ToggleSwitch: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let label: String
     @Binding private var isOn: Bool
 
@@ -14,10 +16,10 @@ public struct ToggleSwitch: View {
     public var body: some View {
         Toggle(isOn: $isOn) {
             Text(label)
-                .font(UIFontToken.body)
-                .foregroundStyle(UIColorToken.textPrimary)
+                .font(theme.typography.body)
+                .foregroundStyle(theme.colors.textPrimary)
         }
-        .tint(UIColorToken.primary)
+        .tint(theme.colors.primary)
         .frame(minHeight: 44)
         .accessibilityLabel(label)
     }

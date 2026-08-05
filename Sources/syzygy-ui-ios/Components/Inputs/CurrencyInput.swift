@@ -14,6 +14,8 @@ public enum CurrencySymbolPosition {
 
 @MainActor
 public struct CurrencyInput: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let label: String
     private let symbol: String
     private let symbolPosition: CurrencySymbolPosition
@@ -44,22 +46,22 @@ public struct CurrencyInput: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: UISpacing.xs) {
+        VStack(alignment: .leading, spacing: theme.spacing.xs) {
             Text(label)
-                .font(UIFontToken.subheadline)
-                .foregroundStyle(UIColorToken.textSecondary)
+                .font(theme.typography.subheadline)
+                .foregroundStyle(theme.colors.textSecondary)
 
-            HStack(spacing: UISpacing.xxs) {
+            HStack(spacing: theme.spacing.xxs) {
                 if symbolPosition == .prefix {
                     Text(symbol)
-                        .foregroundStyle(UIColorToken.textSecondary)
+                        .foregroundStyle(theme.colors.textSecondary)
                 }
 
                 TextField("0", text: $text)
                     #if os(iOS)
                     .keyboardType(.decimalPad)
                     #endif
-                    .foregroundStyle(UIColorToken.textPrimary)
+                    .foregroundStyle(theme.colors.textPrimary)
                     .onChange(of: text) { _, newValue in
                         if let parsed = formatter.number(from: newValue)?.doubleValue {
                             value = parsed
@@ -68,17 +70,17 @@ public struct CurrencyInput: View {
 
                 if symbolPosition == .suffix {
                     Text(symbol)
-                        .foregroundStyle(UIColorToken.textSecondary)
+                        .foregroundStyle(theme.colors.textSecondary)
                 }
             }
-            .padding(.horizontal, UISpacing.sm)
+            .padding(.horizontal, theme.spacing.sm)
             .frame(minHeight: 44)
-            .background(UIColorToken.surface)
+            .background(theme.colors.surface)
             .overlay(
-                RoundedRectangle(cornerRadius: UIRadius.sm)
-                    .stroke(UIColorToken.border, lineWidth: UIBorderWidth.thin)
+                RoundedRectangle(cornerRadius: theme.radius.sm)
+                    .stroke(theme.colors.border, lineWidth: UIBorderWidth.thin)
             )
-            .clipShape(RoundedRectangle(cornerRadius: UIRadius.sm))
+            .clipShape(RoundedRectangle(cornerRadius: theme.radius.sm))
         }
         .onAppear {
             text = formatter.string(from: NSNumber(value: value)) ?? ""

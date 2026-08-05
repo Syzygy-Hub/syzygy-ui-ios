@@ -12,11 +12,21 @@ public extension View {
         @ViewBuilder content: @escaping () -> Content
     ) -> some View {
         self.popover(isPresented: isPresented) {
-            content()
-                .padding(UISpacing.md)
-                .background(UIColorToken.surface)
-                .clipShape(RoundedRectangle(cornerRadius: UIRadius.md))
-                .elevation(UIElevation.md)
+            StyledPopoverContent(content: content)
         }
+    }
+}
+
+@MainActor
+private struct StyledPopoverContent<Content: View>: View {
+    @Environment(\.syzygyTheme) private var theme
+    let content: () -> Content
+
+    var body: some View {
+        content()
+            .padding(theme.spacing.md)
+            .background(theme.colors.surface)
+            .clipShape(RoundedRectangle(cornerRadius: theme.radius.md))
+            .themedElevation(theme.elevation.md)
     }
 }

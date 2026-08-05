@@ -4,6 +4,8 @@ import SwiftUI
 /// or above `breakpoint`, and vertically below it.
 @MainActor
 public struct AdaptiveStack<Content: View>: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let breakpoint: CGFloat
     private let spacing: CGFloat
     private let content: Content

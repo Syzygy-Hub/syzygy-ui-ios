@@ -5,6 +5,8 @@ import SwiftUI
 /// are for primary app navigation, not in-place content switching.
 @MainActor
 public struct SegmentedControl<Option: Hashable>: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let options: [Option]
     @Binding private var selection: Option
     private let title: (Option) -> String
@@ -22,22 +24,22 @@ public struct SegmentedControl<Option: Hashable>: View {
                     selection = option
                 } label: {
                     Text(title(option))
-                        .font(UIFontToken.subheadline)
-                        .foregroundStyle(option == selection ? UIColorToken.onPrimary : UIColorToken.textPrimary)
+                        .font(theme.typography.subheadline)
+                        .foregroundStyle(option == selection ? theme.colors.onPrimary : theme.colors.textPrimary)
                         .frame(maxWidth: .infinity, minHeight: 44)
-                        .background(option == selection ? UIColorToken.primary : Color.clear)
-                        .clipShape(RoundedRectangle(cornerRadius: UIRadius.sm))
+                        .background(option == selection ? theme.colors.primary : Color.clear)
+                        .clipShape(RoundedRectangle(cornerRadius: theme.radius.sm))
                 }
                 .accessibilityLabel(title(option))
                 .accessibilityAddTraits(option == selection ? [.isSelected] : [])
             }
         }
-        .padding(UISpacing.xs / 2)
-        .background(UIColorToken.surface)
+        .padding(theme.spacing.xs / 2)
+        .background(theme.colors.surface)
         .overlay(
-            RoundedRectangle(cornerRadius: UIRadius.md)
-                .stroke(UIColorToken.border, lineWidth: 1)
+            RoundedRectangle(cornerRadius: theme.radius.md)
+                .stroke(theme.colors.border, lineWidth: 1)
         )
-        .clipShape(RoundedRectangle(cornerRadius: UIRadius.md))
+        .clipShape(RoundedRectangle(cornerRadius: theme.radius.md))
     }
 }

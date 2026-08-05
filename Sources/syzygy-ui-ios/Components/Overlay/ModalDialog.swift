@@ -4,6 +4,8 @@ import SwiftUI
 /// `onDismissBackground`, if provided.
 @MainActor
 public struct ModalDialog<Content: View>: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let content: Content
     private let onDismissBackground: (() -> Void)?
 
@@ -14,18 +16,18 @@ public struct ModalDialog<Content: View>: View {
 
     public var body: some View {
         ZStack {
-            Color.black.opacity(0.4)
+            Color.black.opacity(theme.colors.overlayAlpha)
                 .ignoresSafeArea()
                 .onTapGesture {
                     onDismissBackground?()
                 }
 
             content
-                .padding(UISpacing.lg)
-                .background(UIColorToken.surface)
-                .clipShape(RoundedRectangle(cornerRadius: UIRadius.lg))
+                .padding(theme.spacing.lg)
+                .background(theme.colors.surface)
+                .clipShape(RoundedRectangle(cornerRadius: theme.radius.lg))
                 .shadow(color: .black.opacity(0.2), radius: 16, x: 0, y: 8)
-                .padding(UISpacing.xl)
+                .padding(theme.spacing.xl)
         }
     }
 }

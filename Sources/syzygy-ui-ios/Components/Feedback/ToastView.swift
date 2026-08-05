@@ -6,14 +6,6 @@ public enum ToastVariant {
     case warning
     case error
 
-    var color: Color {
-        switch self {
-        case .success: UIColorToken.success
-        case .warning: UIColorToken.warning
-        case .error: UIColorToken.destructive
-        }
-    }
-
     var systemImage: String {
         switch self {
         case .success: "checkmark.circle.fill"
@@ -25,6 +17,8 @@ public enum ToastVariant {
 
 @MainActor
 public struct ToastView: View {
+    @Environment(\.syzygyTheme) private var theme
+
     private let message: String
     private let variant: ToastVariant
 
@@ -34,20 +28,28 @@ public struct ToastView: View {
     }
 
     public var body: some View {
-        HStack(spacing: UISpacing.sm) {
+        HStack(spacing: theme.spacing.sm) {
             Image(systemName: variant.systemImage)
-                .foregroundStyle(variant.color)
+                .foregroundStyle(variantColor)
 
             Text(message)
-                .font(UIFontToken.subheadline)
-                .foregroundStyle(UIColorToken.textPrimary)
+                .font(theme.typography.subheadline)
+                .foregroundStyle(theme.colors.textPrimary)
         }
-        .padding(.horizontal, UISpacing.md)
+        .padding(.horizontal, theme.spacing.md)
         .frame(minHeight: 44)
-        .background(UIColorToken.surface)
-        .clipShape(RoundedRectangle(cornerRadius: UIRadius.md))
+        .background(theme.colors.surface)
+        .clipShape(RoundedRectangle(cornerRadius: theme.radius.md))
         .shadow(radius: 4)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(message)
+    }
+
+    private var variantColor: Color {
+        switch variant {
+        case .success: theme.colors.success
+        case .warning: theme.colors.warning
+        case .error: theme.colors.destructive
+        }
     }
 }
