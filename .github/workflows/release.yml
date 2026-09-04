@@ -1,55 +1,15 @@
 name: Release
 
 on:
-  workflow_run:
-    workflows: ["Swift"]
-    types:
-      - completed
-    branches:
-      - main
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+
+permissions:
+  contents: write
+  id-token: write
 
 jobs:
   release:
-    if: >
-      github.event.workflow_run.conclusion == 'success' &&
-      startsWith(github.event.workflow_run.head_commit.message, 'release:')
-    runs-on: macos-15
-
-    permissions:
-      contents: write
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.workflow_run.head_sha }}
-
-      - name: Extract version
-        id: version
-        run: |
-          MESSAGE="${{ github.event.workflow_run.head_commit.message }}"
-          VERSION=$(echo "$MESSAGE" | head -n1 | sed -E 's/^release:[[:space:]]*//' | sed -E 's/[[:space:]]*—.*$//' | sed -E 's/[[:space:]]*-{1,2}.*$//' | xargs)
-          VERSION="${VERSION#v}"
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
-
-      - name: Delete existing tag if exists
-        run: |
-          if git ls-remote --exit-code --tags origin "refs/tags/${{ env.VERSION }}" > /dev/null 2>&1; then
-            echo "::warning::Tag ${{ env.VERSION }} already exists on origin — deleting and recreating it. If this wasn't intentional, this release is about to overwrite an existing one."
-            git push origin ":refs/tags/${{ env.VERSION }}"
-          else
-            echo "Tag ${{ env.VERSION }} does not exist yet — proceeding with a fresh release."
-          fi
-
-      - name: Create GitHub Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh release create "${{ steps.version.outputs.version }}" \
-            --title "${{ steps.version.outputs.version }}" \
-            --notes "${{ github.event.workflow_run.head_commit.message }}"
-
-      - name: Summary
-        run: |
-          echo "✅ GitHub Release ${{ env.VERSION }} created"
-          echo "✅ SPM users can now use: .package(url: \"https://github.com/Syzygy-Hub/syzygy-ui-ios\", from: \"${{ env.VERSION }}\")"
+    uses: Syzygy-Hub/.github/.github/workflows/ios-release.yml@main
+    secrets: inherit

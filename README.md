@@ -1,17 +1,25 @@
 # syzygy-ui-ios
 
-[![Version](https://img.shields.io/badge/Version-2.4.0-2F6FED.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-2.5.0-2F6FED.svg)](CHANGELOG.md)
 [![Swift](https://img.shields.io/badge/Swift-6-F05138?logo=swift&logoColor=white)](https://www.swift.org)
 [![Platform](https://img.shields.io/badge/iOS-17%2B-000000?logo=apple&logoColor=white)](https://developer.apple.com/ios/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![CI](https://github.com/Syzygy-Hub/syzygy-ui-ios/actions/workflows/swift.yml/badge.svg)](https://github.com/Syzygy-Hub/syzygy-ui-ios/actions/workflows/swift.yml)
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Syzygy-Hub/syzygy-brand-assets/main/Assets/syzygy-banner-dark-2400.png">
-  <img src="https://raw.githubusercontent.com/Syzygy-Hub/syzygy-brand-assets/main/Assets/syzygy-banner-light-2400.png" alt="Syzygy" width="500">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Syzygy-Hub/.github/main/brand/assets/banners/syzygy-banner-dark-2400.png">
+  <img src="https://raw.githubusercontent.com/Syzygy-Hub/.github/main/brand/assets/banners/syzygy-banner-light-2400.png" alt="Syzygy" width="500">
 </picture>
 
+The cross-platform design system layer of the Syzygy ecosystem — providing SyzygyTheme, runtime theme switching, and UI components across iOS, Android, React Native and Flutter.
+
 Production-ready SwiftUI component library with semantic design tokens, Dark Mode, Dynamic Type, and zero third-party dependencies.
+
+## Role in the Syzygy Ecosystem
+
+`syzygy-ui-ios` is the design system layer. It depends only on `syzygy-foundation-ios` and is independently usable without adopting Core, Services or AI.
+
+Full ecosystem architecture: [ecosystem-fragment.md](https://github.com/Syzygy-Hub/.github/blob/main/docs/ecosystem-fragment.md)
 
 ## Requirements
 - iOS 17+
@@ -25,6 +33,80 @@ In Xcode: File → Add Package Dependencies
 
 Paste: https://github.com/Syzygy-Hub/syzygy-ui-ios
 
+## Theming
+
+v2.4.0 introduces `SyzygyTheme` — a runtime-swappable snapshot of all visual tokens (colors, radius, spacing, typography, elevation, animation) injected through the SwiftUI `Environment`.
+
+### Wrapping your app
+
+```swift
+import syzygy_ui_ios
+
+@main
+struct MyApp: App {
+    var body: some Scene {
+        WindowGroup {
+            SyzygyThemeProvider { _ in
+                ContentView()
+            }
+        }
+    }
+}
+```
+
+`SyzygyThemeProvider` injects the chosen theme into the environment so every `syzygy-ui-ios` component below it reads tokens from the theme automatically.
+
+### Runtime theme switching
+
+`SyzygyThemeProvider` exposes a `Binding<SyzygyTheme>` so you can swap the theme at runtime without rebuilding the view hierarchy:
+
+```swift
+SyzygyThemeProvider(theme: .dark) { $theme in
+    VStack {
+        ContentView()
+
+        Button("Switch to High Contrast") {
+            theme = .highContrast
+        }
+    }
+}
+```
+
+### Built-in themes
+
+| Theme | Description |
+|---|---|
+| `.default` | Adaptive light/dark (matches system appearance via `UIColorToken`) |
+| `.dark` | Fixed dark-mode palette with pinned hex values |
+| `.highContrast` | WCAG-AA+ contrast, heavier type weights, sharp radius (0 on all corners) |
+
+### Component-level override
+
+Apply a different theme to a subtree without affecting siblings:
+
+```swift
+CardView {
+    Text("High contrast card")
+}
+.syzygyTheme(.highContrast)
+```
+
+### Custom themes
+
+Build a one-off theme by mutating a preset:
+
+```swift
+let brandTheme = SyzygyTheme.default.with(
+    colors: SyzygyColors(
+        primary: Color(red: 0.2, green: 0.6, blue: 1.0),
+        // ... other colors
+    ),
+    radius: SyzygyRadius(xs: 0, sm: 2, md: 4, lg: 8, xl: 12, full: 9999)
+)
+```
+
+All `SyzygyTheme` sub-structs (`SyzygyColors`, `SyzygyRadius`, `SyzygySpacing`, `SyzygyTypography`, `SyzygyElevation`, `SyzygyAnimation`) conform to `Equatable` and `Sendable`, so they are safe to pass across actor boundaries and drive `withAnimation` transitions.
+
 ## Components
 
 79 components across 9 categories, plus 6 `AnyTransition` helpers in Transitions.
@@ -33,12 +115,14 @@ Paste: https://github.com/Syzygy-Hub/syzygy-ui-ios
 - **Cards**: CardView
 - **Badges**: Badge
 - **Inputs**: TextInput (with optional character counter), SecureInput, SearchInput (debounced, with clear button), ToggleSwitch, CheckboxInput, RadioButtonInput, SliderInput, Dropdown, SegmentedControl, QuantityStepper, TextArea, OTPInput (auto-advancing OTP/PIN entry), TagInput (MultiSelect chip entry), DatePickerField, TimePickerField, FormField (generic label/content/error/helper wrapper), PasswordStrengthIndicator, SearchableDropdown (inline-filtering, standalone tappable list), PhoneInput (country-code prefix selector, formatted + raw digit bindings), CurrencyInput (locale-aware `NumberFormatter` display, raw numeric value)
-- **Display**: Avatar, DividerLine, Chip, ListRow, SectionHeader, LazyImageView, CountBadge, StarRatingView, PagerView (swipeable paged content, not navigation chrome — reports the current page index for you to use as local state or feed into a navigator, as needed), AvatarGroup, StatsCard (aka MetricCard), RatingInput (interactive counterpart to StarRatingView), PageControl (aka DotIndicator; read-only page dots syncing with `PagerView`), Accordion (managed group of expandable sections, single- or multi-open), Timeline (aka ActivityFeed; connected-line event list, leading or trailing icon alignment), ColorSwatch (circle/square color preview with optional label and selected state)
+- **Display**: Avatar, DividerLine, Chip, ListRow, SectionHeader, LazyImageView, CountBadge, StarRatingView, AvatarGroup, StatsCard (aka MetricCard), RatingInput (interactive counterpart to StarRatingView), PageControl (aka DotIndicator; read-only page dots syncing with `PagerView`), Accordion (managed group of expandable sections, single- or multi-open), Timeline (aka ActivityFeed; connected-line event list, leading or trailing icon alignment), ColorSwatch (circle/square color preview with optional label and selected state)
 - **Feedback**: LoadingView, EmptyStateView, ToastView, ShimmerView, ProgressBar, PullToRefresh, ErrorStateView, SkeletonView, CircularProgress (determinate + indeterminate), InlineAlert (aka Banner), Snackbar, NetworkStatusBanner (`NWPathMonitor`-backed self-detecting offline banner, auto-dismissing — see cross-platform note below), ConfirmDialog (+ `.confirmDialog(isPresented:...)` modifier, built on `ModalDialog`)
 - **Overlay**: ModalDialog (+ `.modal(isPresented:)` view modifier), BottomSheet (+ `.bottomSheet(isPresented:)` view modifier), CollapsibleView, ActionSheet (+ `.actionSheet(isPresented:actions:)` view modifier), Popover (+ `.styledPopover(isPresented:)` view modifier), Tooltip (+ `.tooltip(_:)` view modifier)
 - **Navigation**: BackButton, TabBar, BottomNavigationBar, AppBar, FloatingTabBar (floating + icon+label, distinct from BottomNavigationBar's floating + icon-only), SideMenu (aka Drawer), StepIndicator (aka WizardSteps), Breadcrumbs
-- **Layout**: KeyboardAvoidingScrollView, AdaptiveStack, FlowLayout, StickyHeader, SafeAreaWrapper (configurable-edges safe-area API), LabeledDivider (centered/leading/trailing label breaking a `DividerLine`)
+- **Layout**: KeyboardAvoidingScrollView, PagerView (swipeable paged content — reports the current page index for you to use as local state or feed into a navigator, as needed; PagerView is a presentational paged-content component, not a navigation element), AdaptiveStack, FlowLayout, StickyHeader, SafeAreaWrapper (configurable-edges safe-area API), LabeledDivider (centered/leading/trailing label breaking a `DividerLine`)
 - **Transitions**: `AnyTransition.slideTransition(_:)`, `.crossFadeTransition`, `.slideVerticalTransition(_:)`, `.modalPresentationTransition`, `.scaleTransition`, `.fadeThroughTransition`
+
+**PagerView — placement note**: PagerView is a presentational paged-content component, not a navigation element. It is listed under **Layout** to match `syzygy-ui-android`, `syzygy-ui-rn` and `syzygy-ui-flutter` — wire its `onPageChange` output into your own navigator if you want navigation semantics.
 
 **NetworkStatusBanner — cross-platform note**: On iOS and Android, `NetworkStatusBanner` self-detects connectivity via first-party OS APIs (`NWPathMonitor` / `ConnectivityManager`) and requires no `isOffline` prop. On React Native and Flutter, real network detection requires a third-party package that this library deliberately does not bundle, so the banner is controlled/presentational — pass `isOffline` from your own network state.
 
@@ -185,80 +269,6 @@ CardView {
 ```
 
 See the [Components](#components) list above for everything else available.
-
-## Theming
-
-v2.4.0 introduces `SyzygyTheme` — a runtime-swappable snapshot of all visual tokens (colors, radius, spacing, typography, elevation, animation) injected through the SwiftUI `Environment`.
-
-### Wrapping your app
-
-```swift
-import syzygy_ui_ios
-
-@main
-struct MyApp: App {
-    var body: some Scene {
-        WindowGroup {
-            SyzygyThemeProvider { _ in
-                ContentView()
-            }
-        }
-    }
-}
-```
-
-`SyzygyThemeProvider` injects the chosen theme into the environment so every `syzygy-ui-ios` component below it reads tokens from the theme automatically.
-
-### Runtime theme switching
-
-`SyzygyThemeProvider` exposes a `Binding<SyzygyTheme>` so you can swap the theme at runtime without rebuilding the view hierarchy:
-
-```swift
-SyzygyThemeProvider(theme: .dark) { $theme in
-    VStack {
-        ContentView()
-
-        Button("Switch to High Contrast") {
-            theme = .highContrast
-        }
-    }
-}
-```
-
-### Built-in themes
-
-| Theme | Description |
-|---|---|
-| `.default` | Adaptive light/dark (matches system appearance via `UIColorToken`) |
-| `.dark` | Fixed dark-mode palette with pinned hex values |
-| `.highContrast` | WCAG-AA+ contrast, heavier type weights, sharp radius (0 on all corners) |
-
-### Component-level override
-
-Apply a different theme to a subtree without affecting siblings:
-
-```swift
-CardView {
-    Text("High contrast card")
-}
-.syzygyTheme(.highContrast)
-```
-
-### Custom themes
-
-Build a one-off theme by mutating a preset:
-
-```swift
-let brandTheme = SyzygyTheme.default.with(
-    colors: SyzygyColors(
-        primary: Color(red: 0.2, green: 0.6, blue: 1.0),
-        // ... other colors
-    ),
-    radius: SyzygyRadius(xs: 0, sm: 2, md: 4, lg: 8, xl: 12, full: 9999)
-)
-```
-
-All `SyzygyTheme` sub-structs (`SyzygyColors`, `SyzygyRadius`, `SyzygySpacing`, `SyzygyTypography`, `SyzygyElevation`, `SyzygyAnimation`) conform to `Equatable` and `Sendable`, so they are safe to pass across actor boundaries and drive `withAnimation` transitions.
 
 ## Contributing & Releases
 
