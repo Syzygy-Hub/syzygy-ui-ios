@@ -53,4 +53,4 @@ jobs:
         run: |
           xcodebuild build \
             -scheme syzygy-ui-ios \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=26.6'
+            -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.5'
