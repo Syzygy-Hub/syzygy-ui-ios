@@ -261,6 +261,259 @@ struct ComponentInitTests {
     }
 }
 
+// MARK: - Theme layer
+
+@Suite("Theme Layer")
+struct ThemeTests {
+    // MARK: SyzygyTheme creation
+
+    @Test func themeDefaultPresetExists() {
+        let theme = SyzygyTheme.default
+        _ = theme.colors
+        _ = theme.radius
+        _ = theme.typography
+        _ = theme.spacing
+        _ = theme.elevation
+        _ = theme.animation
+    }
+
+    @Test func themeDarkPresetExists() {
+        _ = SyzygyTheme.dark
+    }
+
+    @Test func themeHighContrastPresetExists() {
+        _ = SyzygyTheme.highContrast
+    }
+
+    @Test func themeDefaultRadiusXlIs24() {
+        #expect(SyzygyTheme.default.radius.xl == 24)
+    }
+
+    @Test func themeDefaultSpacingMdIs16() {
+        #expect(SyzygyTheme.default.spacing.md == 16)
+    }
+
+    @Test func themeDefaultSpacingValues() {
+        let s = SyzygyTheme.default.spacing
+        #expect(s.xxs == 2)
+        #expect(s.xs == 4)
+        #expect(s.sm == 8)
+        #expect(s.md == 16)
+        #expect(s.lg == 24)
+        #expect(s.xl == 32)
+        #expect(s.xxl == 48)
+        #expect(s.xxxl == 64)
+    }
+
+    @Test func themeDefaultRadiusValues() {
+        let r = SyzygyTheme.default.radius
+        #expect(r.xs == 2)
+        #expect(r.sm == 4)
+        #expect(r.md == 8)
+        #expect(r.lg == 16)
+        #expect(r.xl == 24)
+        #expect(r.full == 9999)
+    }
+
+    @Test func themeHighContrastRadiusIsSharp() {
+        let r = SyzygyTheme.highContrast.radius
+        #expect(r.xs == 0)
+        #expect(r.sm == 0)
+        #expect(r.md == 0)
+        #expect(r.lg == 0)
+        #expect(r.xl == 0)
+    }
+
+    // MARK: copyWith (.with)
+
+    @Test func themeWithRadiusReplacesRadius() {
+        let customRadius = SyzygyRadius(xs: 1, sm: 2, md: 3, lg: 4, xl: 5, full: 100)
+        let modified = SyzygyTheme.default.with(radius: customRadius)
+        #expect(modified.radius.xl == 5)
+        #expect(modified.radius.full == 100)
+    }
+
+    @Test func themeWithRadiusKeepsOtherTokens() {
+        let customRadius = SyzygyRadius(xs: 0, sm: 0, md: 0, lg: 0, xl: 0, full: 0)
+        let modified = SyzygyTheme.default.with(radius: customRadius)
+        #expect(modified.spacing.md == 16)
+    }
+
+    @Test func themeWithNoArgsReturnsCopy() {
+        let original = SyzygyTheme.default
+        let copy = original.with()
+        #expect(copy == original)
+    }
+
+    @Test func themeWithSpacingReplacesSpacing() {
+        let customSpacing = SyzygySpacing(
+            xxs: 1, xs: 2, sm: 3, md: 4, lg: 5, xl: 6, xxl: 7, xxxl: 8
+        )
+        let modified = SyzygyTheme.default.with(spacing: customSpacing)
+        #expect(modified.spacing.md == 4)
+        #expect(modified.spacing.xl == 6)
+    }
+
+    // MARK: SyzygyRadius token access
+
+    @Test func syzygyRadiusDefaultValues() {
+        let r = SyzygyRadius.default
+        #expect(r.xs == 2)
+        #expect(r.sm == 4)
+        #expect(r.md == 8)
+        #expect(r.lg == 16)
+        #expect(r.xl == 24)
+        #expect(r.full == 9999)
+    }
+
+    @Test func syzygyRadiusSharpAllZeros() {
+        let r = SyzygyRadius.sharp
+        #expect(r.xs == 0)
+        #expect(r.sm == 0)
+        #expect(r.md == 0)
+        #expect(r.lg == 0)
+        #expect(r.xl == 0)
+        #expect(r.full == 0)
+    }
+
+    @Test func syzygySpacingDefaultValues() {
+        let s = SyzygySpacing.default
+        #expect(s.xxs == 2)
+        #expect(s.xs == 4)
+        #expect(s.sm == 8)
+        #expect(s.md == 16)
+        #expect(s.lg == 24)
+        #expect(s.xl == 32)
+        #expect(s.xxl == 48)
+        #expect(s.xxxl == 64)
+    }
+}
+
+// MARK: - v2.1+ component behaviour
+
+@Suite("v2.1+ Components")
+@MainActor
+struct V21ComponentTests {
+
+    // MARK: LoadingButton
+
+    @Test func loadingButtonInitNotLoading() {
+        _ = LoadingButton(label: "Save", isLoading: false) {}
+    }
+
+    @Test func loadingButtonInitLoading() {
+        _ = LoadingButton(label: "Save", isLoading: true) {}
+    }
+
+    // MARK: ButtonGroup
+
+    @Test func buttonGroupSingleSelectInit() {
+        _ = ButtonGroup(options: ["A", "B", "C"], selection: .constant("A"))
+    }
+
+    @Test func buttonGroupMultiSelectInit() {
+        _ = ButtonGroup(options: ["A", "B"], selection: .constant(Set<String>(["A"])), multiSelect: true)
+    }
+
+    // MARK: InlineAlert variants and systemImage
+
+    @Test func inlineAlertInfoSystemImage() {
+        #expect(InlineAlert.Variant.info.systemImage == "info.circle.fill")
+    }
+
+    @Test func inlineAlertSuccessSystemImage() {
+        #expect(InlineAlert.Variant.success.systemImage == "checkmark.circle.fill")
+    }
+
+    @Test func inlineAlertWarningSystemImage() {
+        #expect(InlineAlert.Variant.warning.systemImage == "exclamationmark.triangle.fill")
+    }
+
+    @Test func inlineAlertErrorSystemImage() {
+        #expect(InlineAlert.Variant.error.systemImage == "xmark.circle.fill")
+    }
+
+    @Test func inlineAlertInfoInit() {
+        _ = InlineAlert(message: "Note", variant: .info)
+    }
+
+    @Test func inlineAlertErrorInit() {
+        _ = InlineAlert(message: "Error occurred", variant: .error)
+    }
+
+    // MARK: StatsCard trend systemImages
+
+    @Test func statsCardTrendUpSystemImage() {
+        #expect(StatsCard.Trend.up.systemImage == "arrow.up.right")
+    }
+
+    @Test func statsCardTrendDownSystemImage() {
+        #expect(StatsCard.Trend.down.systemImage == "arrow.down.right")
+    }
+
+    @Test func statsCardTrendNeutralSystemImage() {
+        #expect(StatsCard.Trend.neutral.systemImage == "arrow.right")
+    }
+
+    @Test func statsCardInitNoTrend() {
+        _ = StatsCard(label: "Revenue", value: "$1,200")
+    }
+
+    @Test func statsCardInitWithTrend() {
+        _ = StatsCard(label: "Revenue", value: "$1,200", trend: .up, trendValue: "+12%")
+    }
+
+    // MARK: Accordion
+
+    @Test func accordionSingleSectionInit() {
+        let sections = [AccordionSection(id: "a", title: "Section A") { Text("Hello") }]
+        _ = Accordion(sections: sections)
+    }
+
+    @Test func accordionMultipleOpenInit() {
+        let sections = [
+            AccordionSection(id: "a", title: "A") { Text("A content") },
+            AccordionSection(id: "b", title: "B") { Text("B content") }
+        ]
+        _ = Accordion(sections: sections, allowsMultipleOpen: true)
+    }
+
+    @Test func accordionInitiallyExpanded() {
+        let sections = [AccordionSection(id: "a", title: "A") { Text("Content") }]
+        _ = Accordion(sections: sections, initiallyExpanded: ["a"])
+    }
+
+    // MARK: OTPInput
+
+    @Test func otpInputDefaultLength() {
+        _ = OTPInput(code: .constant(""))
+    }
+
+    @Test func otpInputCustomLength() {
+        _ = OTPInput(length: 4, code: .constant(""))
+    }
+
+    // MARK: TagInput
+
+    @Test func tagInputInit() {
+        _ = TagInput(tags: .constant([]))
+    }
+
+    @Test func tagInputWithPlaceholder() {
+        _ = TagInput(tags: .constant(["swift"]), placeholder: "Enter tag")
+    }
+
+    // MARK: StepIndicator
+
+    @Test func stepIndicatorInit() {
+        _ = StepIndicator(steps: ["Start", "Middle", "End"], currentStep: 0)
+    }
+
+    @Test func stepIndicatorCurrentStepMiddle() {
+        _ = StepIndicator(steps: ["A", "B", "C"], currentStep: 1)
+    }
+}
+
 @Suite("Navigation Transitions")
 struct NavigationTransitionTests {
     @Test func slideTransitionExists() {
