@@ -1,10 +1,10 @@
 # syzygy-ui-ios
 
-[![Version](https://img.shields.io/badge/Version-2.5.0-2F6FED.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-3.0.0-2F6FED.svg)](CHANGELOG.md)
 [![Swift](https://img.shields.io/badge/Swift-6-F05138?logo=swift&logoColor=white)](https://www.swift.org)
 [![Platform](https://img.shields.io/badge/iOS-17%2B-000000?logo=apple&logoColor=white)](https://developer.apple.com/ios/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![CI](https://github.com/Syzygy-Hub/syzygy-ui-ios/actions/workflows/swift.yml/badge.svg)](https://github.com/Syzygy-Hub/syzygy-ui-ios/actions/workflows/swift.yml)
+[![CI](https://github.com/Syzygy-Hub/syzygy-ui-ios/actions/workflows/ci.yml/badge.svg)](https://github.com/Syzygy-Hub/syzygy-ui-ios/actions/workflows/ci.yml)
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Syzygy-Hub/.github/main/brand/assets/banners/syzygy-banner-dark-2400.png">
@@ -25,6 +25,7 @@ Full ecosystem architecture: [ecosystem-fragment.md](https://github.com/Syzygy-H
 - iOS 17+
 - Swift 6
 - Xcode 16+
+- syzygy-foundation-ios >= 3.0.0
 
 ## Installation
 
@@ -33,9 +34,17 @@ In Xcode: File → Add Package Dependencies
 
 Paste: https://github.com/Syzygy-Hub/syzygy-ui-ios
 
+Or add to your `Package.swift`:
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/Syzygy-Hub/syzygy-ui-ios", from: "3.0.0"),
+]
+```
+
 ## Theming
 
-v2.4.0 introduces `SyzygyTheme` — a runtime-swappable snapshot of all visual tokens (colors, radius, spacing, typography, elevation, animation) injected through the SwiftUI `Environment`.
+`syzygy-ui-ios` ships a runtime theming system — a runtime-swappable snapshot of all visual tokens (colors, radius, spacing, typography, elevation, animation) injected through the SwiftUI `Environment`.
 
 ### Wrapping your app
 
@@ -126,7 +135,13 @@ All `SyzygyTheme` sub-structs (`SyzygyColors`, `SyzygyRadius`, `SyzygySpacing`, 
 
 **NetworkStatusBanner — cross-platform note**: On iOS and Android, `NetworkStatusBanner` self-detects connectivity via first-party OS APIs (`NWPathMonitor` / `ConnectivityManager`) and requires no `isOffline` prop. On React Native and Flutter, real network detection requires a third-party package that this library deliberately does not bundle, so the banner is controlled/presentational — pass `isOffline` from your own network state.
 
-See [CHANGELOG.md](CHANGELOG.md) for version history.
+## Upgrading to 3.0.0
+
+- **Foundation 3.0.0 is now required** — add `syzygy-foundation-ios` `from: "3.0.0"` to your `Package.swift` if you depend on this package directly.
+- **Radius.xl corrected to 24** (was 16) — if you have hardcoded the value `16` for `xl` corner radius anywhere, update to `24`.
+- **Radius token values corrected across the board** — verify any hardcoded radius values against the updated token table above.
+
+See [CHANGELOG.md](CHANGELOG.md) for the full list of changes.
 
 ## Design Tokens
 
@@ -145,7 +160,7 @@ All tokens live under `Tokens/` and are consumed as static members — e.g. `UIC
 | `background` | `#F2F2F7` | `#000000` |
 | `textPrimary` | `#1C1C1E` | `#F2F2F7` |
 | `textSecondary` | `#6E6E73` | `#9B9BA1` |
-| `textOnPrimary` | `#FFFFFF` | `#FFFFFF` |
+| `onPrimary` | `#FFFFFF` | `#FFFFFF` |
 | `border` | `#D1D1D6` | `#38383A` |
 | `primaryMuted` | `#D6E7FF` | `#0F2A54` |
 | `destructiveMuted` | `#FBDADA` | `#4A1A1A` |
@@ -191,10 +206,10 @@ All tokens live under `Tokens/` and are consumed as static members — e.g. `UIC
 | Token | Value |
 |---|---|
 | `xs` | 2 |
-| `sm` | 6 |
-| `md` | 12 |
-| `lg` | 20 |
-| `xl` | 16 |
+| `sm` | 4 |
+| `md` | 8 |
+| `lg` | 16 |
+| `xl` | 24 |
 | `full` | 9999 (pill/capsule shapes) |
 
 ### Elevation (`UIElevation`)
@@ -283,7 +298,7 @@ Releases are fully automated. To publish a new version:
 
 2. Commit with the release prefix:
 ```sh
-   git commit -m "release: v1.2.0 — description of changes"
+   git commit -m "release: 1.2.0 — description of changes"
    git push origin main
 ```
 
@@ -293,10 +308,10 @@ Releases are fully automated. To publish a new version:
    - SPM users can immediately use the new version
 
 ### Version format
-Follow semver: `v{major}.{minor}.{patch}`
-- Patch: `v1.0.1` — bug fixes
-- Minor: `v1.1.0` — new components or features
-- Major: `v2.0.0` — breaking changes
+Follow semver: `{major}.{minor}.{patch}`
+- Patch: `1.0.1` — bug fixes
+- Minor: `1.1.0` — new components or features
+- Major: `2.0.0` — breaking changes
 
 ### Swift Package Manager
 This library is distributed via SPM. Users reference it directly via the GitHub URL — no additional publishing step needed.

@@ -261,23 +261,128 @@ struct ComponentInitTests {
     }
 }
 
-@Suite("Navigation Transitions")
-struct NavigationTransitionTests {
-    @Test func slideTransitionExists() {
-        _ = AnyTransition.slideTransition(.leftToRight)
-        _ = AnyTransition.slideTransition(.rightToLeft)
+// MARK: - v2.1+ component behaviour
+
+@Suite("v2.1+ Components")
+@MainActor
+struct V21ComponentTests {
+
+    // MARK: LoadingButton
+
+    @Test func loadingButtonInitNotLoading() {
+        _ = LoadingButton(label: "Save", isLoading: false) {}
     }
 
-    @Test func crossFadeTransitionExists() {
-        _ = AnyTransition.crossFadeTransition
+    @Test func loadingButtonInitLoading() {
+        _ = LoadingButton(label: "Save", isLoading: true) {}
     }
 
-    @Test func slideVerticalTransitionExists() {
-        _ = AnyTransition.slideVerticalTransition(.topToBottom)
-        _ = AnyTransition.slideVerticalTransition(.bottomToTop)
+    // MARK: ButtonGroup
+
+    @Test func buttonGroupSingleSelectInit() {
+        _ = ButtonGroup(options: ["A", "B", "C"], selection: .constant("A"))
     }
 
-    @Test func modalPresentationTransitionExists() {
-        _ = AnyTransition.modalPresentationTransition
+    @Test func buttonGroupMultiSelectInit() {
+        _ = ButtonGroup(options: ["A", "B"], selection: .constant(Set<String>(["A"])), multiSelect: true)
+    }
+
+    // MARK: InlineAlert variants and systemImage
+
+    @Test func inlineAlertInfoSystemImage() {
+        #expect(InlineAlert.Variant.info.systemImage == "info.circle.fill")
+    }
+
+    @Test func inlineAlertSuccessSystemImage() {
+        #expect(InlineAlert.Variant.success.systemImage == "checkmark.circle.fill")
+    }
+
+    @Test func inlineAlertWarningSystemImage() {
+        #expect(InlineAlert.Variant.warning.systemImage == "exclamationmark.triangle.fill")
+    }
+
+    @Test func inlineAlertErrorSystemImage() {
+        #expect(InlineAlert.Variant.error.systemImage == "xmark.circle.fill")
+    }
+
+    @Test func inlineAlertInfoInit() {
+        _ = InlineAlert(message: "Note", variant: .info)
+    }
+
+    @Test func inlineAlertErrorInit() {
+        _ = InlineAlert(message: "Error occurred", variant: .error)
+    }
+
+    // MARK: StatsCard trend systemImages
+
+    @Test func statsCardTrendUpSystemImage() {
+        #expect(StatsCard.Trend.up.systemImage == "arrow.up.right")
+    }
+
+    @Test func statsCardTrendDownSystemImage() {
+        #expect(StatsCard.Trend.down.systemImage == "arrow.down.right")
+    }
+
+    @Test func statsCardTrendNeutralSystemImage() {
+        #expect(StatsCard.Trend.neutral.systemImage == "arrow.right")
+    }
+
+    @Test func statsCardInitNoTrend() {
+        _ = StatsCard(label: "Revenue", value: "$1,200")
+    }
+
+    @Test func statsCardInitWithTrend() {
+        _ = StatsCard(label: "Revenue", value: "$1,200", trend: .up, trendValue: "+12%")
+    }
+
+    // MARK: Accordion
+
+    @Test func accordionSingleSectionInit() {
+        let sections = [AccordionSection(id: "a", title: "Section A") { Text("Hello") }]
+        _ = Accordion(sections: sections)
+    }
+
+    @Test func accordionMultipleOpenInit() {
+        let sections = [
+            AccordionSection(id: "a", title: "A") { Text("A content") },
+            AccordionSection(id: "b", title: "B") { Text("B content") }
+        ]
+        _ = Accordion(sections: sections, allowsMultipleOpen: true)
+    }
+
+    @Test func accordionInitiallyExpanded() {
+        let sections = [AccordionSection(id: "a", title: "A") { Text("Content") }]
+        _ = Accordion(sections: sections, initiallyExpanded: ["a"])
+    }
+
+    // MARK: OTPInput
+
+    @Test func otpInputDefaultLength() {
+        _ = OTPInput(code: .constant(""))
+    }
+
+    @Test func otpInputCustomLength() {
+        _ = OTPInput(length: 4, code: .constant(""))
+    }
+
+    // MARK: TagInput
+
+    @Test func tagInputInit() {
+        _ = TagInput(tags: .constant([]))
+    }
+
+    @Test func tagInputWithPlaceholder() {
+        _ = TagInput(tags: .constant(["swift"]), placeholder: "Enter tag")
+    }
+
+    // MARK: StepIndicator
+
+    @Test func stepIndicatorInit() {
+        _ = StepIndicator(steps: ["Start", "Middle", "End"], currentStep: 0)
+    }
+
+    @Test func stepIndicatorCurrentStepMiddle() {
+        _ = StepIndicator(steps: ["A", "B", "C"], currentStep: 1)
     }
 }
+

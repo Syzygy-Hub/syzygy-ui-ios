@@ -1,5 +1,5 @@
 # SwiftLint configuration shared across all Syzygy Swift/SwiftUI repos
-# (syzygy-base-ios, syzygy-ui-ios, and any future iOS libraries/apps).
+# (syzygy-ui-ios, and any future iOS libraries/apps).
 #
 # See README.md for how consuming repos should fetch this file in CI,
 # since SwiftLint has no native support for remote config URLs.

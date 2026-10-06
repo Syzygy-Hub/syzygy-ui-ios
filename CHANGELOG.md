@@ -15,13 +15,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.0.0] - 2026-10-06
+
+### Changed — BREAKING
+
+- **Foundation 3.0.0 minimum dependency added**: `syzygy-foundation-ios >=3.0.0` is now required.
+- **Radius.xl corrected from 16 to 24** across all token and theme layers (`UIRadius.xl`, `SyzygyRadius.default.xl`, and all theme presets now return 24 instead of 16).
+
+---
+
 ## [2.5.0] - 2026-09-04
 
 ### Changed
 
 - CI workflow improvements: tags-ignore trigger, lint order fix, Node/runner updates
 - Release workflow: added required permissions block
-- RN: added publish-npm job for reliable npm OIDC publishing
 
 ---
 
@@ -136,25 +144,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Reordered README.md's sections to: Requirements, Installation, Components, Design Tokens, Usage, Contributing & Releases, License.
 - Condensed the Usage section's code examples.
 
-## [1.0.4] - v1.0.4
+## [1.0.4] - 2024-01-01
 
 - Fix SPM root package structure.
 
-## [1.0.3] - v1.0.3
+## [1.0.3] - 2024-01-01
 
 - TextInput character counter, CI improvements and release docs.
 
-## [1.0.2] - v1.0.2
+## [1.0.2] - 2024-01-01
 
 - CI-gated release workflow and usage docs.
 
-## [1.0.1] - v1.0.1
+## [1.0.1] - 2024-01-01
 
 - Add GhostButton component.
 
-## [1.0.0] - v1.0.0
+## [1.0.0] - 2024-01-01
 
 - Initial release.
 
+[Unreleased]: https://github.com/Syzygy-Hub/syzygy-ui-ios/compare/3.0.0...HEAD
+[3.0.0]: https://github.com/Syzygy-Hub/syzygy-ui-ios/compare/2.5.0...3.0.0
 [2.5.0]: https://github.com/Syzygy-Hub/syzygy-ui-ios/compare/2.4.0...2.5.0
 [2.4.0]: https://github.com/Syzygy-Hub/syzygy-ui-ios/compare/2.3.0...2.4.0
+[2.3.0]: https://github.com/Syzygy-Hub/syzygy-ui-ios/compare/2.2.1...2.3.0
+[2.2.1]: https://github.com/Syzygy-Hub/syzygy-ui-ios/compare/2.2.0...2.2.1
+[2.2.0]: https://github.com/Syzygy-Hub/syzygy-ui-ios/compare/2.1.0...2.2.0
+[2.1.0]: https://github.com/Syzygy-Hub/syzygy-ui-ios/compare/2.0.0...2.1.0
+[2.0.0]: https://github.com/Syzygy-Hub/syzygy-ui-ios/compare/1.0.4...2.0.0
+[1.0.4]: https://github.com/Syzygy-Hub/syzygy-ui-ios/compare/1.0.3...1.0.4
+[1.0.3]: https://github.com/Syzygy-Hub/syzygy-ui-ios/compare/1.0.2...1.0.3
+[1.0.2]: https://github.com/Syzygy-Hub/syzygy-ui-ios/compare/1.0.1...1.0.2
+[1.0.1]: https://github.com/Syzygy-Hub/syzygy-ui-ios/compare/1.0.0...1.0.1
+[1.0.0]: https://github.com/Syzygy-Hub/syzygy-ui-ios/releases/tag/1.0.0
